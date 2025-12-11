@@ -169,21 +169,6 @@ export default function HomePage() {
               <AnimatedElement delay={0.3} className="flex flex-wrap gap-4">
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300"
-                  asChild
-                >
-                  <a
-                    href="https://wa.me/9647700000000"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-primary-foreground">
-                    <Phone className="ml-2 w-5 h-5" />
-                    تواصل واتساب
-                  </a>
-                </Button>
-              <Button
-                  size="lg"
                   className="h-14 px-8 rounded-full bg-primary text-white hover:bg-primary/90 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/25 hover:-translate-y-1"
                   asChild
                 >
@@ -192,12 +177,26 @@ export default function HomePage() {
                     <ArrowRight className="mr-2 w-5 h-5" />
                   </Link>
                 </Button>
-                </AnimatedElement>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300 opacity-50"
+                  asChild
+                >
+                  <a
+                    href="https://wa.me/9647706896134"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-primary-foreground shadow-sm">
+                    <Phone className="ml-2 w-5 h-5" />
+                    تواصل واتساب
+                  </a>
+                </Button>
+              </AnimatedElement>
 
               {/* Scroll Indicator */}
               <div className="absolute bottom-0 right-0 hidden lg:flex items-center gap-4 translate-y-12">
-                <span className="text-sm font-medium text-primary/60 rotate-90 origin-right translate-x-2">تصفح المزيد</span>
-                <div className="w-[1px] h-24 bg-gradient-to-b from-primary/60 to-transparent" />
+
               </div>
             </div>
 
