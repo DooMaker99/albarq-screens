@@ -201,7 +201,7 @@ export default function HomePage() {
             </div>
 
             {/* Right Visual Column - The "Abstract Shape" */}
-            <div className="w-full lg:w-1/2 relative min-h-[50vh] lg:min-h-auto">
+            <div className="w-full lg:w-1/2 relative h-[400px] lg:h-auto lg:min-h-[600px]">
               {/* The organic shape container */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95, borderRadius: "100%" }}
