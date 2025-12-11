@@ -1,0 +1,103 @@
+import { Link } from 'react-router-dom';
+import { Phone, Mail, MapPin } from 'lucide-react';
+
+export default function Footer() {
+  return (
+    <footer className="bg-primary text-primaryForeground">
+      <div className="max-w-[120rem] mx-auto px-6 lg:px-12 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Company Info */}
+          <div>
+            <h3 className="font-heading text-xl font-bold mb-6">ALBARQ FOR SCREENS</h3>
+            <p className="font-paragraph text-sm text-primaryForeground/90 leading-relaxed">
+              شركة رائدة في تجهيز ونصب الشاشات الإعلانية العملاقة في العراق، نقدم حلولاً متكاملة بأعلى معايير الجودة.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="font-heading text-lg font-semibold mb-6">روابط سريعة</h3>
+            <nav className="flex flex-col gap-3">
+              <Link to="/" className="font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
+                الرئيسية
+              </Link>
+              <Link to="/about" className="font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
+                من نحن
+              </Link>
+              <Link to="/services" className="font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
+                خدماتنا
+              </Link>
+              <Link to="/projects" className="font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
+                أعمالنا
+              </Link>
+              <Link to="/contact" className="font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
+                تواصل معنا
+              </Link>
+            </nav>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h3 className="font-heading text-lg font-semibold mb-6">معلومات التواصل</h3>
+            <div className="flex flex-col gap-4">
+              <a href="tel:+9647700000000" className="flex items-center gap-3 font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
+                <Phone className="w-5 h-5" />
+                <span dir="ltr">+964 770 000 0000</span>
+              </a>
+              <a href="tel:+9647800000000" className="flex items-center gap-3 font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
+                <Phone className="w-5 h-5" />
+                <span dir="ltr">+964 780 000 0000</span>
+              </a>
+              <a href="mailto:info@albarqscreens.com" className="flex items-center gap-3 font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
+                <Mail className="w-5 h-5" />
+                info@albarqscreens.com
+              </a>
+              <div className="flex items-start gap-3 font-paragraph text-sm text-primaryForeground/90">
+                <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
+                <span>بغداد، العراق</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Social Media */}
+          <div>
+            <h3 className="font-heading text-lg font-semibold mb-6">تابعنا</h3>
+            <div className="flex flex-col gap-3">
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors"
+              >
+                Facebook
+              </a>
+              <a
+                href="https://www.tiktok.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors"
+              >
+                TikTok
+              </a>
+              <a
+                href="https://wa.me/9647700000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors"
+              >
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="border-t border-primaryForeground/20 mt-12 pt-8 text-center">
+          <p className="font-paragraph text-sm text-primaryForeground/80">
+            © {new Date().getFullYear()} ALBARQ FOR SCREENS. جميع الحقوق محفوظة.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
