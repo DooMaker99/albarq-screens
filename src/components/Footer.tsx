@@ -41,11 +41,11 @@ export default function Footer() {
             <h3 className="font-heading text-lg font-semibold mb-6 text-primary-foreground">معلومات التواصل</h3>
             <div className="flex flex-col gap-4">
               <a href="tel:+9647700000000" className="flex items-center gap-3 font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
-                <Phone className="w-5 h-5" />
-                <span dir="ltr">+964 770 000 0000</span>
+                <Phone className="w-5 h-5 fill-primary-foreground" />
+                <span dir="ltr" className="text-primary-foreground">+964 770 000 0000</span>
               </a>
               <a href="tel:+9647800000000" className="flex items-center gap-3 font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
-                <Phone className="w-5 h-5" />
+                <Phone className="w-5 h-5 fill-primary-foreground" />
                 <span dir="ltr" className="text-primary-foreground">+964 780 000 0000</span>
               </a>
               <a href="mailto:info@albarqscreens.com" className="flex items-center gap-3 font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground">
@@ -53,8 +53,8 @@ export default function Footer() {
                 info@albarqscreens.com
               </a>
               <div className="flex items-start gap-3 font-paragraph text-sm text-primaryForeground/90">
-                <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
-                <span>بغداد، العراق</span>
+                <MapPin className="w-5 h-5 mt-1 flex-shrink-0 fill-primary-foreground" />
+                <span className="text-primary-foreground">بغداد، العراق</span>
               </div>
             </div>
           </div>
