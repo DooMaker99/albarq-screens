@@ -8,7 +8,7 @@ export default function AboutPage() {
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
       {/* Hero Section */}
-      <section className="w-full bg-gradient-to-br from-gradientlightblue to-white py-20 lg:py-32">
+      <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#F0F4FF26]">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -110,7 +110,7 @@ export default function AboutPage() {
               className="bg-white rounded-2xl p-10 lg:p-12"
             >
               <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-6">
-                <Target className="w-8 h-8 text-primaryForeground" />
+                <Target className="w-8 h-8 text-primaryForeground fill-primary-foreground" />
               </div>
               <h2 className="font-heading text-3xl font-bold text-primary mb-6">
                 رسالتنا

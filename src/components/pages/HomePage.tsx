@@ -122,9 +122,7 @@ export default function HomePage() {
         className="fixed top-0 left-0 right-0 h-1 bg-primary z-50 origin-right"
         style={{ scaleX }}
       />
-
       <Header />
-
       <main className="w-full overflow-clip">
         
         {/* --- HERO SECTION --- 
@@ -171,6 +169,21 @@ export default function HomePage() {
               <AnimatedElement delay={0.3} className="flex flex-wrap gap-4">
                 <Button
                   size="lg"
+                  variant="outline"
+                  className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300"
+                  asChild
+                >
+                  <a
+                    href="https://wa.me/9647700000000"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-primary-foreground">
+                    <Phone className="ml-2 w-5 h-5" />
+                    تواصل واتساب
+                  </a>
+                </Button>
+              <Button
+                  size="lg"
                   className="h-14 px-8 rounded-full bg-primary text-white hover:bg-primary/90 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/25 hover:-translate-y-1"
                   asChild
                 >
@@ -179,18 +192,7 @@ export default function HomePage() {
                     <ArrowRight className="mr-2 w-5 h-5" />
                   </Link>
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300"
-                  asChild
-                >
-                  <a href="https://wa.me/9647700000000" target="_blank" rel="noopener noreferrer">
-                    <Phone className="ml-2 w-5 h-5" />
-                    تواصل واتساب
-                  </a>
-                </Button>
-              </AnimatedElement>
+                </AnimatedElement>
 
               {/* Scroll Indicator */}
               <div className="absolute bottom-0 right-0 hidden lg:flex items-center gap-4 translate-y-12">
@@ -459,13 +461,13 @@ export default function HomePage() {
                 ))
               ) : (
                 // Fallback if no projects loaded yet
-                [1, 2, 3].map((_, idx) => (
+                ([1, 2, 3].map((_, idx) => (
                   <div key={idx} className={`animate-pulse ${idx === 1 ? "md:translate-y-16" : ""}`}>
                     <div className="aspect-[4/5] bg-gray-200 rounded-2xl mb-6" />
                     <div className="h-8 bg-gray-200 rounded w-3/4 mb-2" />
                     <div className="h-4 bg-gray-200 rounded w-1/2" />
                   </div>
-                ))
+                )))
               )}
             </div>
 
@@ -519,7 +521,6 @@ export default function HomePage() {
         </section>
 
       </main>
-
       <Footer />
     </div>
   );
