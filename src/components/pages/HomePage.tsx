@@ -137,10 +137,10 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-white z-0" />
           
           {/* The "Card" Container - Mimicking the inspiration image's main shape */}
-          <div className="relative w-full max-w-[115rem] mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex flex-col lg:flex-row items-stretch">
+          <div className="relative w-full max-w-[115rem] mx-auto px-4 sm:px-6 lg:px-8 z-10 flex flex-col lg:flex-row items-stretch gap-8 lg:gap-0">
             
             {/* Left Content Column */}
-            <div className="w-full lg:w-1/2 flex flex-col justify-center py-12 lg:py-24 relative z-20">
+            <div className="w-full lg:w-1/2 flex flex-col justify-center py-12 lg:py-0 relative z-20">
               <AnimatedElement direction="right" className="mb-6">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradientlightblue border border-primary/10 text-primary text-sm font-medium">
                   <span className="relative flex h-2 w-2">
