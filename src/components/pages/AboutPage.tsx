@@ -7,7 +7,6 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
-
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-gradientlightblue to-white py-20 lg:py-32">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -26,7 +25,6 @@ export default function AboutPage() {
           </motion.div>
         </div>
       </section>
-
       {/* About Company */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -82,7 +80,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       {/* Vision & Mission */}
       <section className="w-full bg-gradientlightblue py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -95,7 +92,7 @@ export default function AboutPage() {
               className="bg-white rounded-2xl p-10 lg:p-12"
             >
               <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-6">
-                <Eye className="w-8 h-8 text-primaryForeground" />
+                <Eye className="w-8 h-8 text-primaryForeground fill-primary-foreground" />
               </div>
               <h2 className="font-heading text-3xl font-bold text-primary mb-6">
                 رؤيتنا
@@ -125,7 +122,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       {/* Values */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -186,7 +182,7 @@ export default function AboutPage() {
                 className="bg-gradientlightblue rounded-2xl p-8"
               >
                 <div className="inline-flex items-center justify-center w-14 h-14 bg-primary rounded-xl mb-6">
-                  <value.icon className="w-7 h-7 text-primaryForeground" />
+                  <value.icon className="w-7 h-7 text-primaryForeground fill-primary-foreground" />
                 </div>
                 <h3 className="font-heading text-xl font-semibold text-primary mb-3">
                   {value.title}
@@ -199,7 +195,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       <Footer />
     </div>
   );
