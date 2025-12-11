@@ -52,7 +52,6 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
-
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-gradientlightblue to-white py-20 lg:py-32">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -71,7 +70,6 @@ export default function ContactPage() {
           </motion.div>
         </div>
       </section>
-
       {/* Contact Section */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -317,7 +315,7 @@ export default function ContactPage() {
                       href="https://wa.me/9647706896134"
                       target="_blank"
                       rel="noopener noreferrer"
-                    >
+                      className="text-primary-foreground">
                       <Phone className="w-4 h-4 ml-2" />
                       WhatsApp
                     </a>
@@ -328,7 +326,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-
       {/* Map Section (Placeholder) */}
       <section className="w-full bg-gradientlightblue py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -359,7 +356,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-
       <Footer />
     </div>
   );

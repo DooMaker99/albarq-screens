@@ -180,11 +180,11 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300"
+                  className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300 opacity-60 hover:opacity-100"
                   asChild
                 >
                   <a
-                    href="https://wa.me/9647700000000"
+                    href="https://wa.me/9647706896134"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-primary-foreground shadow-sm">
