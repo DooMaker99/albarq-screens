@@ -137,7 +137,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-white z-0" />
           
           {/* The "Card" Container - Mimicking the inspiration image's main shape */}
-          <div className="relative w-full max-w-[115rem] mx-auto px-4 sm:px-6 lg:px-8 z-10 flex flex-col lg:flex-row items-stretch gap-8 lg:gap-0">
+          <div className="relative w-full max-w-[115rem] mx-auto px-4 sm:px-6 lg:px-8 z-20 flex flex-col lg:flex-row items-stretch gap-8 lg:gap-0">
             
             {/* Left Content Column */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center py-12 lg:py-0 relative z-20">
@@ -201,13 +201,13 @@ export default function HomePage() {
             </div>
 
             {/* Right Visual Column - The "Abstract Shape" */}
-            <div className="w-full lg:w-1/2 relative h-[400px] lg:h-auto lg:min-h-[600px] z-0">
+            <div className="w-full lg:w-1/2 relative h-[400px] lg:h-auto lg:min-h-[600px] z-10">
               {/* The organic shape container */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95, borderRadius: "100%" }}
                 animate={{ opacity: 1, scale: 1, borderRadius: "2rem" }}
                 transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-4 lg:inset-y-8 lg:left-0 lg:right-[-50vw] bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF] overflow-hidden shadow-2xl z-0"
+                className="absolute inset-4 lg:inset-y-8 lg:left-0 lg:right-[-50vw] bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF] overflow-hidden shadow-2xl z-5"
               >
                 {/* Abstract 3D Wave Image Placeholder */}
                 <div className="absolute inset-0 w-full h-full">
