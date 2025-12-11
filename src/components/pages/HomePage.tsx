@@ -140,6 +140,7 @@ export default function HomePage() {
           <div className="relative w-full max-w-[115rem] mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex flex-col lg:flex-row items-stretch">
             
             {/* Left Content Column */}
+            {/* Right Visual Column - The "Abstract Shape" */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center py-12 lg:py-24 relative z-20">
               <AnimatedElement direction="right" className="mb-6">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradientlightblue border border-primary/10 text-primary text-sm font-medium">
@@ -195,13 +196,12 @@ export default function HomePage() {
               </AnimatedElement>
 
               {/* Scroll Indicator */}
-              <div className="absolute bottom-0 right-0 hidden lg:flex items-center gap-4 translate-y-12">
+              <div className="absolute bottom-0 right-0 hidden lg:flex items-center gap-4 translate-y-12 opacity-[0.03]">
                 <span className="text-sm font-medium text-primary/60 whitespace-nowrap">تصفح المزيد</span>
                 <div className="w-[1px] h-24 bg-gradient-to-b from-primary/60 to-transparent" />
               </div>
             </div>
 
-            {/* Right Visual Column - The "Abstract Shape" */}
             <div className="w-full lg:w-1/2 relative min-h-[50vh] lg:min-h-auto">
               {/* The organic shape container */}
               <motion.div 
