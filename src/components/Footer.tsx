@@ -61,7 +61,7 @@ export default function Footer() {
 
           {/* Social Media */}
           <div>
-            <h3 className="font-heading text-lg font-semibold mb-6">تابعنا</h3>
+            <h3 className="font-heading text-lg font-semibold mb-6 text-primary-foreground">تابعنا</h3>
             <div className="flex flex-col gap-3">
               <a
                 href="https://www.facebook.com"
