@@ -16,7 +16,7 @@ export default function Header() {
 
   return (
     <header className="bg-secondary border-b border-gray-100 sticky top-0 z-50">
-      <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
+      <div className="max-w-[120rem] mx-auto px-6 lg:px-12 bg-gradientlightblue">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center">
@@ -64,7 +64,11 @@ export default function Header() {
               className="bg-primary text-primaryForeground hover:bg-primary/90"
               asChild
             >
-              <a href="https://wa.me/9647700000000" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://wa.me/9647700000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-foreground">
                 <Phone className="w-4 h-4 ml-2" />
                 واتساب
               </a>
