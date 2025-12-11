@@ -140,7 +140,7 @@ export default function ContactPage() {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full"
-                    placeholder="+964 770 000 0000"
+                    placeholder="+964 774 944 4469"
                     dir="ltr"
                   />
                 </div>
@@ -228,18 +228,18 @@ export default function ContactPage() {
                     </h3>
                     <div className="space-y-1">
                       <a
-                        href="tel:+9647700000000"
+                        href="tel:9647706896134"
                         className="block font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
                         dir="ltr"
                       >
-                        +964 770 000 0000
+                        +964 770 689 6134
                       </a>
                       <a
-                        href="tel:+9647800000000"
+                        href="tel:+9647901326390"
                         className="block font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
                         dir="ltr"
                       >
-                        +964 780 000 0000
+                        +964 790 132 6390
                       </a>
                     </div>
                   </div>
@@ -289,7 +289,7 @@ export default function ContactPage() {
                     asChild
                   >
                     <a
-                      href="https://www.facebook.com"
+                      href="https://www.facebook.com/albarqforledscreens"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -302,7 +302,7 @@ export default function ContactPage() {
                     asChild
                   >
                     <a
-                      href="https://www.tiktok.com"
+                      href="https://www.tiktok.com/@albarqtoscreens"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -314,7 +314,7 @@ export default function ContactPage() {
                     asChild
                   >
                     <a
-                      href="https://wa.me/9647700000000"
+                      href="https://wa.me/9647706896134"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
