@@ -201,13 +201,13 @@ export default function HomePage() {
             </div>
 
             {/* Right Visual Column - The "Abstract Shape" */}
-            <div className="w-full lg:w-1/2 relative h-[400px] lg:h-auto lg:min-h-[600px]">
+            <div className="w-full lg:w-1/2 relative h-[400px] lg:h-auto lg:min-h-[600px] z-0">
               {/* The organic shape container */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95, borderRadius: "100%" }}
                 animate={{ opacity: 1, scale: 1, borderRadius: "2rem" }}
                 transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-4 lg:inset-y-8 lg:left-0 lg:right-[-50vw] bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF] overflow-hidden shadow-2xl"
+                className="absolute inset-4 lg:inset-y-8 lg:left-0 lg:right-[-50vw] bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF] overflow-hidden shadow-2xl z-0"
               >
                 {/* Abstract 3D Wave Image Placeholder */}
                 <div className="absolute inset-0 w-full h-full">
