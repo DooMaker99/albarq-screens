@@ -180,11 +180,11 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300 opacity-50"
+                  className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300"
                   asChild
                 >
                   <a
-                    href="https://wa.me/9647706896134"
+                    href="https://wa.me/9647700000000"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-primary-foreground shadow-sm">
@@ -196,7 +196,8 @@ export default function HomePage() {
 
               {/* Scroll Indicator */}
               <div className="absolute bottom-0 right-0 hidden lg:flex items-center gap-4 translate-y-12">
-
+                <span className="text-sm font-medium text-primary/60 whitespace-nowrap">تصفح المزيد</span>
+                <div className="w-[1px] h-24 bg-gradient-to-b from-primary/60 to-transparent" />
               </div>
             </div>
 
