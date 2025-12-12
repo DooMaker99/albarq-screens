@@ -140,7 +140,49 @@ export default function HomePage() {
           <div className="relative w-full max-w-[115rem] mx-auto px-4 sm:px-6 lg:px-8 z-20 flex flex-col lg:flex-row items-stretch gap-8 lg:gap-0">
             
             {/* Left Content Column */}
-            <div className="w-full lg:w-1/2 flex flex-col justify-center py-12 lg:py-0 relative z-20">
+            {/* Right Visual Column - The "Abstract Shape" */}
+            <div className="w-full lg:w-1/2 relative h-[400px] lg:h-auto lg:min-h-[600px] z-10">
+              {/* Background Overlay Gradient - Behind everything */}
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent z-0" />
+              
+              {/* The organic shape container */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95, borderRadius: "100%" }}
+                animate={{ opacity: 1, scale: 1, borderRadius: "2rem" }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-4 lg:inset-y-8 lg:left-0 lg:right-[-50vw] bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF] overflow-hidden shadow-2xl z-5"
+              >
+                {/* Abstract 3D Wave Image Placeholder */}
+                <div className="absolute inset-0 w-full h-full">
+                   <Image 
+                    src="https://static.wixstatic.com/media/fe743e_b99d2f91ffff464ca8faab305036a458~mv2.png?originWidth=1600&originHeight=896"
+                    alt="Abstract digital wave representing screen technology"
+                    className="w-full h-full object-cover opacity-80 mix-blend-multiply"
+                    width={1600}
+                   />
+                </div>
+                
+                {/* Floating Elements Parallax */}
+                <motion.div 
+                  className="absolute top-1/4 right-1/4 w-32 h-32 bg-white/30 backdrop-blur-md rounded-2xl border border-white/50 shadow-xl z-10 hidden lg:block"
+                  animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <motion.div 
+                  className="absolute bottom-1/3 left-1/4 w-24 h-24 bg-primary/10 backdrop-blur-md rounded-full border border-white/20 shadow-lg z-10 hidden lg:block"
+                  animate={{ y: [0, 30, 0] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                />
+              </motion.div>
+
+              {/* Vertical Brand Text - Key Motif from Inspiration */}
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-30 hidden xl:block pointer-events-none mix-blend-difference">
+                <h2 className="text-[120px] font-heading font-bold text-white/20 rotate-90 whitespace-nowrap tracking-widest">
+                  ALBARQ
+                </h2>
+              </div>
+            </div>
+          <div className="w-full lg:w-1/2 flex flex-col justify-center py-12 lg:py-0 relative z-20">
               <AnimatedElement direction="right" className="mb-6">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradientlightblue border border-primary/10 text-primary text-sm font-medium">
                   <span className="relative flex h-2 w-2">
@@ -200,49 +242,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Visual Column - The "Abstract Shape" */}
-            <div className="w-full lg:w-1/2 relative h-[400px] lg:h-auto lg:min-h-[600px] z-10">
-              {/* The organic shape container */}
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95, borderRadius: "100%" }}
-                animate={{ opacity: 1, scale: 1, borderRadius: "2rem" }}
-                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-4 lg:inset-y-8 lg:left-0 lg:right-[-50vw] bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF] overflow-hidden shadow-2xl z-5"
-              >
-                {/* Abstract 3D Wave Image Placeholder */}
-                <div className="absolute inset-0 w-full h-full">
-                   <Image 
-                    src="https://static.wixstatic.com/media/fe743e_b99d2f91ffff464ca8faab305036a458~mv2.png?originWidth=1600&originHeight=896"
-                    alt="Abstract digital wave representing screen technology"
-                    className="w-full h-full object-cover opacity-80 mix-blend-multiply"
-                    width={1600}
-                   />
-                </div>
-
-                {/* Overlay Gradient for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent" />
-                
-                {/* Floating Elements Parallax */}
-                <motion.div 
-                  className="absolute top-1/4 right-1/4 w-32 h-32 bg-white/30 backdrop-blur-md rounded-2xl border border-white/50 shadow-xl z-10 hidden lg:block"
-                  animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <motion.div 
-                  className="absolute bottom-1/3 left-1/4 w-24 h-24 bg-primary/10 backdrop-blur-md rounded-full border border-white/20 shadow-lg z-10 hidden lg:block"
-                  animate={{ y: [0, 30, 0] }}
-                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                />
-              </motion.div>
-
-              {/* Vertical Brand Text - Key Motif from Inspiration */}
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-30 hidden xl:block pointer-events-none mix-blend-difference">
-                <h2 className="text-[120px] font-heading font-bold text-white/20 rotate-90 whitespace-nowrap tracking-widest">
-                  ALBARQ
-                </h2>
-              </div>
             </div>
-          </div>
         </section>
 
         {/* --- STATS TICKER SECTION --- */}
