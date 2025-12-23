@@ -145,6 +145,16 @@ export default function HomePage() {
               {/* Background Overlay Gradient - Behind everything */}
               <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent z-0" />
               
+              {/* Background Image - Behind everything */}
+              <div className="absolute inset-4 lg:inset-y-8 lg:left-0 lg:right-[-50vw] z-0">
+                <Image 
+                  src="https://static.wixstatic.com/media/fe743e_b99d2f91ffff464ca8faab305036a458~mv2.png?originWidth=1600&originHeight=896"
+                  alt="Abstract digital wave representing screen technology"
+                  className="w-full h-full object-cover opacity-80 mix-blend-multiply"
+                  width={1600}
+                />
+              </div>
+
               {/* The organic shape container */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95, borderRadius: "100%" }}
@@ -152,16 +162,6 @@ export default function HomePage() {
                 transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                 className="absolute inset-4 lg:inset-y-8 lg:left-0 lg:right-[-50vw] bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF] overflow-hidden shadow-2xl z-5"
               >
-                {/* Abstract 3D Wave Image Placeholder */}
-                <div className="absolute inset-0 w-full h-full z-0">
-                   <Image 
-                    src="https://static.wixstatic.com/media/fe743e_b99d2f91ffff464ca8faab305036a458~mv2.png?originWidth=1600&originHeight=896"
-                    alt="Abstract digital wave representing screen technology"
-                    className="w-full h-full object-cover opacity-80 mix-blend-multiply"
-                    width={1600}
-                   />
-                </div>
-                
                 {/* Floating Elements Parallax */}
                 <motion.div 
                   className="absolute top-1/4 right-1/4 w-32 h-32 bg-white/30 backdrop-blur-md rounded-2xl border border-white/50 shadow-xl z-10 hidden lg:block"
