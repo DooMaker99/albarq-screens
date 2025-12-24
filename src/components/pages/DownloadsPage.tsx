@@ -75,6 +75,22 @@ const FIXED_CARD_DOWNLOAD_LINKS = [
   "https://www.hdwell.com/Download/index_100000010795715.html#download",
 ] as const;
 
+const FIXED_CONFIG_FILES = [
+  {
+    title: "P10 Outdoor - L655 - Huidu - 4 Scan",
+    description: "ملف إعداد للموديول (تصحيح ألوان/Scan/توصيل).",
+    downloadLink: "PUT_YOUR_LINK_HERE",
+  },
+  {
+    title: "P5 Outdoor - Y55 - Novastar",
+    description: "ملف إعداد للموديول (تصحيح ألوان/Scan/توصيل).",
+    downloadLink: "PUT_YOUR_LINK_HERE",
+  },
+  // add the rest...
+] as const;
+
+
+
 type DownloadCategory = "software" | "configuration";
 
 // If your entity typing doesn’t include category yet, this keeps TS happy.
@@ -281,6 +297,19 @@ export default function DownloadsPage() {
 
   const softwareItems = downloads.filter((d) => (d.category ?? "software") === "software");
   const configItems = downloads.filter((d) => d.category === "configuration");
+  const configItemsFinal =
+  configItems.length > 0
+    ? configItems
+    : FIXED_CONFIG_FILES.map((c, i) => ({
+        _id: `fixed-config-${i}`,
+        productName: c.title,
+        description: c.description,
+        downloadLink: c.downloadLink,
+        version: "",
+        fileSize: "",
+        appImage: "",
+        category: "configuration",
+      }));
 
   return (
     <div
@@ -336,11 +365,12 @@ export default function DownloadsPage() {
             />
 
             <DownloadsGrid
-              items={configItems}
-              isLoading={isLoading}
-              expandedKey={expandedConfigKey}
-              setExpandedKey={setExpandedConfigKey}
-            />
+  items={configItemsFinal}
+  isLoading={isLoading}
+  expandedKey={expandedConfigKey}
+  setExpandedKey={setExpandedConfigKey}
+/>
+
           </div>
         </section>
 
