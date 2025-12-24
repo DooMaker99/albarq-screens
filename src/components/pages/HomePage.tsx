@@ -88,6 +88,18 @@ const ParallaxImage = ({ src, alt, className, speed = 0.5 }: { src: string, alt:
 
 // --- Main Component ---
 
+const IMAGE_OVERRIDES: Record<string, string> = {
+  "Albarq Screen Firmware":
+    "https://static.wixstatic.com/media/fe743e_7ff7371ffa724d958c645679b1e5870b~mv2.png",
+  "Albarq LED Doctor":
+    "https://static.wixstatic.com/media/fe743e_08a9b5784c9a4a38809df6429af09685~mv2.png",
+  "Albarq Content Studio":
+    "https://static.wixstatic.com/media/fe743e_8361f5199cd9436eb70bb7808385581f~mv2.png",
+  "Albarq Screen Manager Pro":
+    "https://static.wixstatic.com/media/fe743e_95ff50ab33384f2ca63ec8ea87d00983~mv2.png",
+};
+
+
 export default function HomePage() {
   const [projects, setProjects] = useState<Projects[]>([]);
   const [isLoading, setIsLoading] = useState(true);
