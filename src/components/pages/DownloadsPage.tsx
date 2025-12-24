@@ -51,6 +51,14 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
   );
 };
 
+const FIXED_CARD_IMAGES = [
+  "https://static.wixstatic.com/media/fe743e_7ff7371ffa724d958c645679b1e5870b~mv2.png",
+  "https://static.wixstatic.com/media/fe743e_08a9b5784c9a4a38809df6429af09685~mv2.png",
+  "https://static.wixstatic.com/media/fe743e_8361f5199cd9436eb70bb7808385581f~mv2.png",
+  "https://static.wixstatic.com/media/fe743e_95ff50ab33384f2ca63ec8ea87d00983~mv2.png",
+] as const;
+
+
 export default function DownloadsPage() {
   const [downloads, setDownloads] = useState<SoftwareDownloads[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -114,18 +122,23 @@ export default function DownloadsPage() {
                     <div className="h-full flex flex-col bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
                       {/* App Image Container */}
                       <div className="relative aspect-square bg-gradientlightblue overflow-hidden flex items-center justify-center p-6">
-                        {software.appImage ? (
-                          <Image 
-                            src={software.appImage} 
-                            alt={software.productName || 'Software'} 
-                            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
-                            width={300}
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-gradientmediumblue/10 text-primary/20">
-                            <Download className="w-16 h-16" />
-                          </div>
-                        )}
+                        {(() => {
+  const overrideSrc = idx < FIXED_CARD_IMAGES.length ? FIXED_CARD_IMAGES[idx] : null;
+  const imgSrc = overrideSrc || software.appImage;
+
+  return imgSrc ? (
+    <Image
+      src={imgSrc}
+      alt={software.productName || "Software"}
+      className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+      width={300}
+    />
+  ) : (
+    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-gradientmediumblue/10 text-primary/20">
+      <Download className="w-16 h-16" />
+    </div>
+  );
+})()}
                       </div>
 
                       {/* Content Container */}
