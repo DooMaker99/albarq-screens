@@ -40,7 +40,7 @@ export default function Footer() {
           <div>
             <h3 className="font-heading text-lg font-semibold mb-6 text-primary-foreground">معلومات التواصل</h3>
             <div className="flex flex-col gap-4">
-            <a href="tel:+9647700000000" className="flex items-center gap-3 font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
+            <a href="tel:+9647706896134" className="flex items-center gap-3 font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
               <Phone className="w-5 h-5 fill-primary-foreground" />
               <span dir="ltr" className="text-primary-foreground">+964 770 000 0000</span>
             </a>
