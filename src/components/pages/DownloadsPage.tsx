@@ -58,6 +58,13 @@ const FIXED_CARD_IMAGES = [
   "https://static.wixstatic.com/media/fe743e_95ff50ab33384f2ca63ec8ea87d00983~mv2.png",
 ] as const;
 
+const FIXED_CARD_DESCRIPTIONS = [
+  "اكتب وصف Albarq Screen Firmware الصحيح هنا…",
+  "اكتب وصف Albarq LED Doctor الصحيح هنا…",
+  "اكتب وصف Albarq Content Studio الصحيح هنا…",
+  "اكتب وصف Albarq Screen Manager Pro الصحيح هنا…",
+] as const;
+
 
 export default function DownloadsPage() {
   const [downloads, setDownloads] = useState<SoftwareDownloads[]>([]);
@@ -125,7 +132,7 @@ export default function DownloadsPage() {
                         {(() => {
   const overrideSrc = idx < FIXED_CARD_IMAGES.length ? FIXED_CARD_IMAGES[idx] : null;
   const imgSrc = overrideSrc || software.appImage;
-
+ 
   return imgSrc ? (
     <Image
       src={imgSrc}
