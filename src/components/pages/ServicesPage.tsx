@@ -239,7 +239,7 @@ export default function ServicesPage() {
                 className="bg-white border-2 border-white hover:bg-white/90 text-lg px-10 py-6 text-secondary"
                 asChild
               >
-                <Link to="/contact">تواصل معنا</Link>
+                <Link to="/contact" className="text-primary">تواصل معنا</Link>
               </Button>
               <Button
                 size="lg"
