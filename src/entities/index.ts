@@ -50,30 +50,6 @@ export interface Services {
   installationSupport?: boolean;
 }
 
-/**
- * Collection ID: softwaredownloads
- * Interface for Software Downloads
- */
-export interface SoftwareDownloads {
-  _id: string;
-  _createdDate?: Date;
-  _updatedDate?: Date;
-  /** @wixFieldType text */
-  productName?: string;
-  /** @wixFieldType image */
-  appImage?: string;
-  /** @wixFieldType text */
-  description?: string;
-  /** @wixFieldType text */
-  version?: string;
-  /** @wixFieldType number */
-  fileSize?: number;
-  /** @wixFieldType url */
-  downloadLink?: string;
-  /** @wixFieldType date */
-  lastUpdated?: Date | string;
-}
-
 
 /**
  * Collection ID: softwaredownloads
