@@ -504,7 +504,7 @@ export default function HomePage() {
                   <Link to="/contact">تواصل معنا الآن</Link>
                 </Button>
                 <a 
-                  href="https://wa.me/9647700000000" 
+                  href="https://wa.me/9647706896134" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-white hover:text-gradientmediumblue transition-colors text-lg font-medium group"
