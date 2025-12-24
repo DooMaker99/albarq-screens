@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   Monitor,
@@ -11,6 +11,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Image as ImageIcon,
+  ZoomIn,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -29,7 +30,6 @@ function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
-// Encode URLs safely (helps with spaces and some special chars)
 function safeUrl(url: string) {
   try {
     return encodeURI(url);
@@ -76,6 +76,11 @@ function ImgWithFallback({
   );
 }
 
+/**
+ * Lightbox behavior:
+ * - Thumbnails: DO NOT open anything. They only switch the main preview AND scroll to it.
+ * - Main preview: opens full-screen "zoom" overlay when clicked.
+ */
 function Lightbox({
   open,
   onClose,
@@ -90,6 +95,8 @@ function Lightbox({
   title?: string;
 }) {
   const [index, setIndex] = useState(initialIndex);
+  const [zoomOpen, setZoomOpen] = useState(false);
+  const previewRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (open) setIndex(initialIndex);
@@ -99,7 +106,10 @@ function Lightbox({
     if (!open) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        if (zoomOpen) setZoomOpen(false);
+        else onClose();
+      }
       if (e.key === "ArrowRight") setIndex((i) => (i + 1) % images.length);
       if (e.key === "ArrowLeft") setIndex((i) => (i - 1 + images.length) % images.length);
     };
@@ -110,7 +120,15 @@ function Lightbox({
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
     };
-  }, [open, images.length, onClose]);
+  }, [open, images.length, onClose, zoomOpen]);
+
+  useEffect(() => {
+    if (open) setZoomOpen(false);
+  }, [open]);
+
+  const scrollPreviewIntoView = () => {
+    previewRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   if (!open) return null;
 
@@ -118,91 +136,151 @@ function Lightbox({
   const current = images[index];
 
   return (
-    <div
-      className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-      role="dialog"
-      aria-modal="true"
-      aria-label={title || "image viewer"}
-    >
-      <div className="relative w-full max-w-5xl">
-        <div className="absolute -top-10 right-0 flex items-center gap-3">
-          {title ? <div className="text-white/90 text-sm md:text-base">{title}</div> : null}
-          <button
-            onClick={onClose}
-            className="inline-flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/15 text-white w-10 h-10"
-            aria-label="Close"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="relative overflow-hidden rounded-2xl bg-black">
-          <div className="w-full max-h-[78vh]">
-            <ImgWithFallback
-              src={current}
-              alt={title ? `${title} ${index + 1}` : `image ${index + 1}`}
-              className="w-full max-h-[78vh] object-contain select-none"
-            />
+    <>
+      {/* Main modal */}
+      <div
+        className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+        onMouseDown={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
+        role="dialog"
+        aria-modal="true"
+        aria-label={title || "image viewer"}
+      >
+        <div className="relative w-full max-w-5xl">
+          <div className="absolute -top-10 right-0 flex items-center gap-3">
+            {title ? <div className="text-white/90 text-sm md:text-base">{title}</div> : null}
+            <button
+              onClick={onClose}
+              className="inline-flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/15 text-white w-10 h-10"
+              aria-label="Close"
+              type="button"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
+
+          {/* Preview */}
+          <div ref={previewRef} className="relative overflow-hidden rounded-2xl bg-black">
+            {/* CLICKING THE BIG IMAGE OPENS ZOOM */}
+            <button
+              type="button"
+              className="relative w-full"
+              onClick={() => setZoomOpen(true)}
+              aria-label="Open full screen"
+            >
+              <div className="w-full max-h-[78vh]">
+                <ImgWithFallback
+                  src={current}
+                  alt={title ? `${title} ${index + 1}` : `image ${index + 1}`}
+                  className="w-full max-h-[78vh] object-contain select-none"
+                />
+              </div>
+
+              <div className="absolute bottom-3 right-3 bg-black/35 text-white/90 text-xs md:text-sm px-3 py-1.5 rounded-full inline-flex items-center gap-2">
+                <ZoomIn className="w-4 h-4" />
+                اضغط للتكبير
+              </div>
+            </button>
+
+            {hasMany ? (
+              <>
+                <button
+                  onClick={() => setIndex((i) => (i - 1 + images.length) % images.length)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-2xl bg-white/10 hover:bg-white/15 text-white w-11 h-11"
+                  aria-label="Previous"
+                  type="button"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+
+                <button
+                  onClick={() => setIndex((i) => (i + 1) % images.length)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-2xl bg-white/10 hover:bg-white/15 text-white w-11 h-11"
+                  aria-label="Next"
+                  type="button"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white/90 text-xs md:text-sm bg-black/35 px-3 py-1.5 rounded-full">
+                  {index + 1} / {images.length}
+                </div>
+              </>
+            ) : null}
+          </div>
+
+          {/* Thumbnails: ONLY change preview + scroll to it (NO opening) */}
+          {hasMany ? (
+            <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+              {images.map((src, i) => (
+                <button
+                  key={src + i}
+                  type="button"
+                  onClick={() => {
+                    setIndex(i);
+                    scrollPreviewIntoView();
+                  }}
+                  className={cn(
+                    "relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-xl border",
+                    i === index ? "border-white/70" : "border-white/15 hover:border-white/30"
+                  )}
+                  aria-label={`Show image ${i + 1}`}
+                >
+                  <ImgWithFallback src={src} alt="" className="h-full w-full object-cover" />
+                </button>
+              ))}
+            </div>
+          ) : null}
 
           {hasMany ? (
-            <>
-              <button
-                onClick={() => setIndex((i) => (i - 1 + images.length) % images.length)}
-                className="absolute left-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-2xl bg-white/10 hover:bg-white/15 text-white w-11 h-11"
-                aria-label="Previous"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={() => setIndex((i) => (i + 1) % images.length)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-2xl bg-white/10 hover:bg-white/15 text-white w-11 h-11"
-                aria-label="Next"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white/90 text-xs md:text-sm bg-black/35 px-3 py-1.5 rounded-full">
-                {index + 1} / {images.length}
-              </div>
-            </>
+            <div className="mt-2 text-xs text-white/70">
+              اضغط على أي صورة مصغّرة للتبديل — والتكبير يكون فقط عند الضغط على الصورة الكبيرة
+            </div>
           ) : null}
         </div>
-
-        {hasMany ? (
-          <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
-            {images.map((src, i) => (
-              <button
-                key={src + i}
-                onClick={() => setIndex(i)}
-                className={cn(
-                  "relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-xl border",
-                  i === index ? "border-white/70" : "border-white/15 hover:border-white/30"
-                )}
-                aria-label={`Open image ${i + 1}`}
-              >
-                <ImgWithFallback src={src} alt="" className="h-full w-full object-cover" />
-              </button>
-            ))}
-          </div>
-        ) : null}
       </div>
-    </div>
+
+      {/* Zoom overlay (full screen) */}
+      {zoomOpen ? (
+        <div
+          className="fixed inset-0 z-[110] bg-black/90 flex items-center justify-center p-4"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setZoomOpen(false);
+          }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Zoom viewer"
+        >
+          <div className="relative w-full max-w-6xl">
+            <div className="absolute -top-12 right-0 flex items-center gap-3">
+              <button
+                onClick={() => setZoomOpen(false)}
+                className="inline-flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/15 text-white w-10 h-10"
+                aria-label="Close zoom"
+                type="button"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="rounded-2xl overflow-hidden bg-black">
+              <div className="w-full max-h-[86vh]">
+                <ImgWithFallback
+                  src={current}
+                  alt={title ? `${title} zoom ${index + 1}` : `zoom ${index + 1}`}
+                  className="w-full max-h-[86vh] object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 }
 
 export default function ServicesPage() {
-  /**
-   * Fixes applied:
-   * 1) Removed risky / hotlink-prone images (cgi-bin_mmwebwx...) that frequently fail.
-   * 2) Added ImgWithFallback so broken images don't disappear.
-   * 3) Fixed contrast tokens:
-   *    - Use text-primary-foreground / bg-primary-foreground (shadcn style tokens)
-   *    - Avoid text-primaryForeground which likely doesn't exist in your theme.
-   */
-
   const services: Service[] = useMemo(
     () => [
       {
@@ -219,7 +297,6 @@ export default function ServicesPage() {
           "تحكم عن بعد بالمحتوى",
         ],
         images: [
-          // Outdoor Curved / Outdoor vibe (stable URLs)
           "https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_54_01-PM.png",
           "https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_37_51-PM.png",
           "https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_29_15-PM.png",
@@ -240,7 +317,7 @@ export default function ServicesPage() {
           "خيارات أحجام متعددة",
         ],
         images: [
-          // Shoes image removed: ChatGPT-Image-Jun-11-2025-08_31_28-PM.png
+          // shoes image removed
           "https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-08_47_04-PM.png",
           "https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_47_36-PM.png",
           "https://yiyistar.com/wp-content/uploads/2025/06/default-1.jpg",
@@ -280,7 +357,6 @@ export default function ServicesPage() {
           "متابعة ما بعد التركيب",
         ],
         images: [
-          // Use neutral/stable images (avoid the cgi-bin ones)
           "https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_21_03-PM.png",
           "https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_47_36-PM.png",
           "https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_26_38-PM.png",
@@ -415,7 +491,7 @@ export default function ServicesPage() {
                       ))}
                     </ul>
 
-                    {/* Buttons (contrast enforced) */}
+                    {/* Buttons (contrast OK) */}
                     <div className="flex flex-col sm:flex-row gap-3">
                       {/* Dark button => bright text */}
                       <Button
@@ -440,7 +516,6 @@ export default function ServicesPage() {
                   {/* Images */}
                   <div className={index % 2 === 1 ? "lg:order-1" : ""}>
                     <div className="rounded-2xl overflow-hidden border border-primary/10 bg-gradient-to-br from-gradientlightblue to-gradientmediumblue/20">
-                      {/* Big preview (clickable) */}
                       <button
                         type="button"
                         onClick={() => openLightbox(service.title, service.images, 0)}
@@ -463,7 +538,6 @@ export default function ServicesPage() {
                         </div>
                       </button>
 
-                      {/* Thumbnails */}
                       <div className="p-4">
                         <div className="flex gap-3 overflow-x-auto pb-1">
                           {service.images.slice(0, 8).map((src, i) => (
@@ -511,22 +585,10 @@ export default function ServicesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              {
-                title: "منتجات عالمية",
-                description: "نستورد من أفضل الشركات العالمية المتخصصة في تصنيع الشاشات",
-              },
-              {
-                title: "ضمان شامل",
-                description: "نوفر ضمان شامل على جميع المنتجات والخدمات التي نقدمها",
-              },
-              {
-                title: "أسعار تنافسية",
-                description: "أسعار مناسبة مع إمكانية التقسيط وخطط دفع مرنة",
-              },
-              {
-                title: "خبرة محلية",
-                description: "فهم عميق للسوق العراقي واحتياجات العملاء المحليين",
-              },
+              { title: "منتجات عالمية", description: "نستورد من أفضل الشركات العالمية المتخصصة في تصنيع الشاشات" },
+              { title: "ضمان شامل", description: "نوفر ضمان شامل على جميع المنتجات والخدمات التي نقدمها" },
+              { title: "أسعار تنافسية", description: "أسعار مناسبة مع إمكانية التقسيط وخطط دفع مرنة" },
+              { title: "خبرة محلية", description: "فهم عميق للسوق العراقي واحتياجات العملاء المحليين" },
             ].map((item, i) => (
               <motion.div
                 key={item.title}
@@ -536,19 +598,15 @@ export default function ServicesPage() {
                 transition={{ duration: 0.6, delay: i * 0.08 }}
                 className="bg-white rounded-2xl p-8 text-center border border-primary/10"
               >
-                <h3 className="font-heading text-xl font-semibold text-primary mb-3">
-                  {item.title}
-                </h3>
-                <p className="font-paragraph text-base text-secondaryForeground">
-                  {item.description}
-                </p>
+                <h3 className="font-heading text-xl font-semibold text-primary mb-3">{item.title}</h3>
+                <p className="font-paragraph text-base text-secondaryForeground">{item.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section (contrast enforced, same scheme) */}
+      {/* CTA Section (contrast OK) */}
       <section className="w-full bg-primary py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12 text-center">
           <motion.div
