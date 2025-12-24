@@ -10,7 +10,8 @@ export default function ServicesPage() {
     {
       icon: Monitor,
       title: 'شاشات LED العملاقة الخارجية',
-      description: 'نوفر شاشات LED عملاقة عالية الدقة مصممة خصيصاً للاستخدام الخارجي، مقاومة للعوامل الجوية القاسية مع إضاءة ساطعة تضمن وضوح الصورة في جميع الأوقات.',
+      description:
+        'نوفر شاشات LED عملاقة عالية الدقة مصممة خصيصاً للاستخدام الخارجي، مقاومة للعوامل الجوية القاسية مع إضاءة ساطعة تضمن وضوح الصورة في جميع الأوقات.',
       features: [
         'دقة عالية تصل إلى 4K وأكثر',
         'مقاومة للماء والغبار (IP65)',
@@ -19,12 +20,13 @@ export default function ServicesPage() {
         'عمر افتراضي طويل يصل إلى 100,000 ساعة',
         'تحكم عن بعد بالمحتوى',
       ],
-      image: 'https://static.wixstatic.com/media/fe743e_5c346c54c9d64fb9a85a23e413f8fd6d~mv2.png?originWidth=960&originHeight=512',
+      image: 'https://yiyistar.com/wp-content/uploads/2025/06/default-1.jpg',
     },
     {
       icon: Monitor,
       title: 'شاشات LED الداخلية',
-      description: 'شاشات LED داخلية بدقة فائقة مثالية للمراكز التجارية، المطارات، الفنادق، والمعارض. تتميز بجودة صورة استثنائية وتصاميم أنيقة.',
+      description:
+        'شاشات LED داخلية بدقة فائقة مثالية للمراكز التجارية، المطارات، الفنادق، والمعارض. تتميز بجودة صورة استثنائية وتصاميم أنيقة.',
       features: [
         'دقة عالية جداً للمسافات القريبة',
         'ألوان زاهية ودقيقة',
@@ -33,12 +35,13 @@ export default function ServicesPage() {
         'توافق مع أنظمة إدارة المحتوى',
         'خيارات أحجام متعددة',
       ],
-      image: 'https://static.wixstatic.com/media/fe743e_3fcdda4e700a467aa507bf80cc075c56~mv2.png?originWidth=960&originHeight=512',
+      image: 'https://yiyistar.com/wp-content/uploads/2025/06/default-2.jpg',
     },
     {
       icon: Monitor,
       title: 'شاشات العرض الرقمية (Digital Signage)',
-      description: 'حلول شاشات العرض الرقمية المتكاملة للمحلات التجارية والمطاعم والبنوك، مع أنظمة إدارة محتوى سهلة الاستخدام.',
+      description:
+        'حلول شاشات العرض الرقمية المتكاملة للمحلات التجارية والمطاعم والبنوك، مع أنظمة إدارة محتوى سهلة الاستخدام.',
       features: [
         'شاشات تفاعلية باللمس',
         'نظام إدارة محتوى متطور',
@@ -47,12 +50,13 @@ export default function ServicesPage() {
         'تحديثات عن بعد',
         'تقارير وإحصائيات مفصلة',
       ],
-      image: 'https://static.wixstatic.com/media/fe743e_16119414dfb54a8e8836886b9ea4f069~mv2.png?originWidth=960&originHeight=512',
+      image: 'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_50_54-PM.png',
     },
     {
       icon: Wrench,
       title: 'التركيب والتشغيل',
-      description: 'فريق متخصص من المهندسين والفنيين لتركيب الشاشات بشكل احترافي وآمن، مع اختبار شامل وتدريب على الاستخدام.',
+      description:
+        'فريق متخصص من المهندسين والفنيين لتركيب الشاشات بشكل احترافي وآمن، مع اختبار شامل وتدريب على الاستخدام.',
       features: [
         'دراسة الموقع والتخطيط المسبق',
         'تركيب آمن ومطابق للمعايير',
@@ -61,12 +65,13 @@ export default function ServicesPage() {
         'ضمان على التركيب',
         'متابعة ما بعد التركيب',
       ],
-      image: 'https://static.wixstatic.com/media/fe743e_03a7217f1bf848629f6aff32b462734f~mv2.png?originWidth=960&originHeight=512',
+      image: 'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_37_51-PM.png',
     },
     {
       icon: Settings,
       title: 'الصيانة الدورية',
-      description: 'خدمات صيانة دورية شاملة لضمان الأداء الأمثل للشاشات وإطالة عمرها الافتراضي، مع عقود صيانة مرنة.',
+      description:
+        'خدمات صيانة دورية شاملة لضمان الأداء الأمثل للشاشات وإطالة عمرها الافتراضي، مع عقود صيانة مرنة.',
       features: [
         'فحص دوري شامل',
         'تنظيف وصيانة وقائية',
@@ -75,12 +80,14 @@ export default function ServicesPage() {
         'عقود صيانة سنوية',
         'أولوية في الاستجابة',
       ],
-      image: 'https://static.wixstatic.com/media/fe743e_00d62b3950164abd93cee0f8a7b7f431~mv2.png?originWidth=960&originHeight=512',
+      image:
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_08_14-PM.png',
     },
     {
       icon: Zap,
       title: 'الدعم الفني المتواصل',
-      description: 'دعم فني على مدار الساعة لحل أي مشاكل تقنية بسرعة وكفاءة، مع فريق متخصص جاهز للاستجابة الفورية.',
+      description:
+        'دعم فني على مدار الساعة لحل أي مشاكل تقنية بسرعة وكفاءة، مع فريق متخصص جاهز للاستجابة الفورية.',
       features: [
         'دعم فني 24/7',
         'استجابة سريعة للطوارئ',
@@ -89,7 +96,8 @@ export default function ServicesPage() {
         'فريق فني مدرب ومؤهل',
         'خط ساخن مخصص للعملاء',
       ],
-      image: 'https://static.wixstatic.com/media/fe743e_04de71e0b01b4e9d90a833ac182d8b87~mv2.png?originWidth=960&originHeight=512',
+      image:
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_47_36-PM.png',
     },
   ];
 
@@ -114,6 +122,7 @@ export default function ServicesPage() {
           </motion.div>
         </div>
       </section>
+
       {/* Services List */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -133,12 +142,15 @@ export default function ServicesPage() {
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-xl mb-6">
                     <service.icon className="w-8 h-8 text-primaryForeground" />
                   </div>
+
                   <h2 className="font-heading text-3xl lg:text-4xl font-bold text-primary mb-4">
                     {service.title}
                   </h2>
+
                   <p className="font-paragraph text-base lg:text-lg text-secondaryForeground mb-6 leading-relaxed">
                     {service.description}
                   </p>
+
                   <ul className="space-y-3">
                     {service.features.map((feature, idx) => (
                       <li
@@ -151,9 +163,15 @@ export default function ServicesPage() {
                     ))}
                   </ul>
                 </div>
+
                 <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
                   <div className="aspect-video bg-gradient-to-br from-gradientlightblue to-gradientmediumblue/30 rounded-2xl overflow-hidden">
-                    {/* Placeholder for service image */}
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
               </motion.div>
@@ -161,6 +179,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
       {/* Why Choose Us */}
       <section className="w-full bg-gradientlightblue py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -217,6 +236,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
       {/* CTA Section */}
       <section className="w-full bg-primary py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12 text-center">
@@ -232,6 +252,7 @@ export default function ServicesPage() {
             <p className="font-paragraph text-lg mb-10 max-w-2xl mx-auto text-secondary">
               تواصل معنا الآن للحصول على استشارة مجانية وعرض سعر مخصص لاحتياجاتك
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
@@ -239,8 +260,11 @@ export default function ServicesPage() {
                 className="bg-white border-2 border-white hover:bg-white/90 text-lg px-10 py-6 text-secondary"
                 asChild
               >
-                <Link to="/contact" className="text-primary">تواصل معنا</Link>
+                <Link to="/contact" className="text-primary">
+                  تواصل معنا
+                </Link>
               </Button>
+
               <Button
                 size="lg"
                 className="bg-primaryForeground text-primary hover:bg-primaryForeground/90 text-lg px-10 py-6"
@@ -250,7 +274,8 @@ export default function ServicesPage() {
                   href="https://wa.me/9647700000000"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[transparent] text-secondary">
+                  className="bg-[transparent] text-secondary"
+                >
                   <Phone className="w-5 h-5 ml-2" />
                   واتساب
                 </a>
@@ -259,6 +284,7 @@ export default function ServicesPage() {
           </motion.div>
         </div>
       </section>
+
       <Footer />
     </div>
   );
