@@ -26,7 +26,8 @@ type Service = {
 };
 
 export default function ServicesPage() {
-  // NOTE: I intentionally removed default-1.jpg and default-2.jpg (the “shoes” one is typically one of these).
+  // Removed the image you pointed to:
+  // https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-08_31_28-PM.png
   const galleryPool = useMemo(
     () => [
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_50_54-PM.png',
@@ -38,7 +39,7 @@ export default function ServicesPage() {
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_29_15-PM.png',
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_26_38-PM.png',
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_21_03-PM.png',
-      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-08_31_28-PM.png',
+      // keep this if it's valid on your host; otherwise remove it
       'https://yiyistar.com/wp-content/uploads/2025/06/cgi-bin_mmwebwx-bin_webwxgetmsgimg__MsgID7800494634690358579skey@crypt_15e6f4b7_e6e1a3457cd925ef77f528d6dec1c4e0mmweb_appidwx_webfilehelper.jpg',
     ],
     []
@@ -58,7 +59,7 @@ export default function ServicesPage() {
         'عمر افتراضي طويل يصل إلى 100,000 ساعة',
         'تحكم عن بعد بالمحتوى',
       ],
-      images: [galleryPool[0], galleryPool[1], galleryPool[9], galleryPool[6]],
+      images: [galleryPool[0], galleryPool[1], galleryPool[6], galleryPool[7]],
     },
     {
       icon: Monitor,
@@ -103,7 +104,7 @@ export default function ServicesPage() {
         'ضمان على التركيب',
         'متابعة ما بعد التركيب',
       ],
-      images: [galleryPool[10], galleryPool[4], galleryPool[5], galleryPool[3]],
+      images: [galleryPool[9] ?? galleryPool[4], galleryPool[4], galleryPool[5], galleryPool[3]],
     },
     {
       icon: Settings,
@@ -118,7 +119,7 @@ export default function ServicesPage() {
         'عقود صيانة سنوية',
         'أولوية في الاستجابة',
       ],
-      images: [galleryPool[9], galleryPool[3], galleryPool[2], galleryPool[5]],
+      images: [galleryPool[8], galleryPool[3], galleryPool[2], galleryPool[5]],
     },
     {
       icon: Zap,
@@ -133,7 +134,7 @@ export default function ServicesPage() {
         'فريق فني مدرب ومؤهل',
         'خط ساخن مخصص للعملاء',
       ],
-      images: [galleryPool[4], galleryPool[1], galleryPool[8], galleryPool[10]],
+      images: [galleryPool[4], galleryPool[1], galleryPool[8], galleryPool[9] ?? galleryPool[0]],
     },
   ];
 
@@ -202,7 +203,7 @@ export default function ServicesPage() {
                   transition={{ duration: 0.5 }}
                   className="bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm"
                 >
-                  {/* Image (PRESSABLE) */}
+                  {/* Image (pressable) */}
                   <button
                     type="button"
                     onClick={() => openModal(index, 0)}
@@ -222,7 +223,7 @@ export default function ServicesPage() {
                       <Icon className="w-6 h-6 text-primaryForeground" />
                     </div>
 
-                    <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 bg-white/90 rounded-xl px-3 py-2 shadow-sm">
+                    <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 bg-white/90 rounded-xl px-3 py-2 shadow-sm text-primary">
                       <Images className="w-4 h-4" />
                       <span className="text-sm font-medium">عرض الصور</span>
                     </div>
@@ -250,6 +251,7 @@ export default function ServicesPage() {
                     </ul>
 
                     <div className="flex flex-wrap gap-3">
+                      {/* Dark button => bright text (theme token) */}
                       <Button
                         className="bg-primary text-primaryForeground hover:bg-primary/90"
                         onClick={() => openModal(index, 0)}
@@ -258,10 +260,13 @@ export default function ServicesPage() {
                         عرض الصور
                       </Button>
 
-                      <Button variant="outline" className="border-black/10" asChild>
-                        <Link to="/contact" className="text-primary">
-                          اطلب عرض سعر
-                        </Link>
+                      {/* Light button => dark text */}
+                      <Button
+                        variant="outline"
+                        className="bg-white text-primary border-black/10 hover:bg-black/5"
+                        asChild
+                      >
+                        <Link to="/contact">اطلب عرض سعر</Link>
                       </Button>
                     </div>
                   </div>
@@ -292,14 +297,13 @@ export default function ServicesPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-white border-2 border-white hover:bg-white/90 text-lg px-10 py-6 text-secondary"
+                className="bg-white border-2 border-white hover:bg-white/90 text-lg px-10 py-6 text-primary"
                 asChild
               >
-                <Link to="/contact" className="text-primary">
-                  تواصل معنا
-                </Link>
+                <Link to="/contact">تواصل معنا</Link>
               </Button>
 
+              {/* Dark/light contrast preserved */}
               <Button
                 size="lg"
                 className="bg-primaryForeground text-primary hover:bg-primaryForeground/90 text-lg px-10 py-6"
@@ -309,7 +313,7 @@ export default function ServicesPage() {
                   href="https://wa.me/9647700000000"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[transparent] text-secondary"
+                  className="bg-[transparent] text-primary"
                 >
                   <Phone className="w-5 h-5 ml-2" />
                   واتساب
@@ -350,7 +354,7 @@ export default function ServicesPage() {
                   className="inline-flex items-center justify-center w-10 h-10 rounded-xl hover:bg-black/5"
                   aria-label="Close"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 text-primary" />
                 </button>
               </div>
 
@@ -370,7 +374,7 @@ export default function ServicesPage() {
                     className="absolute top-1/2 -translate-y-1/2 left-3 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/90 hover:bg-white shadow-sm"
                     aria-label="Previous"
                   >
-                    <ChevronLeft className="w-6 h-6" />
+                    <ChevronLeft className="w-6 h-6 text-primary" />
                   </button>
 
                   <button
@@ -378,11 +382,11 @@ export default function ServicesPage() {
                     className="absolute top-1/2 -translate-y-1/2 right-3 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/90 hover:bg-white shadow-sm"
                     aria-label="Next"
                   >
-                    <ChevronRight className="w-6 h-6" />
+                    <ChevronRight className="w-6 h-6 text-primary" />
                   </button>
                 </div>
 
-                {/* Thumbnails (also pressable) */}
+                {/* Thumbnails */}
                 <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
                   {currentImages.map((src, idx) => (
                     <button
