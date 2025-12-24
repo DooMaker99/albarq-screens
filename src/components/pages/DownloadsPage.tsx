@@ -77,32 +77,15 @@ export default function DownloadsPage() {
         {/* Hero Section */}
         <section className="relative w-full py-24 lg:py-32 bg-gradient-to-b from-gradientlightblue to-white">
           <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
-            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-              {/* Left Content */}
-              <div className="flex-1">
-                <AnimatedElement direction="down">
-                  <h1 className="font-heading text-5xl lg:text-7xl font-bold text-primary mb-6">
-                    تحميل البرامج
-                  </h1>
-                  <p className="text-secondary-foreground/70 text-lg max-w-2xl">
-                    احصل على أحدث إصدارات برامجنا المتخصصة في إدارة وتحكم الشاشات الرقمية
-                  </p>
-                </AnimatedElement>
-              </div>
-              
-              {/* Right Image */}
-              <div className="flex-1 flex justify-center lg:justify-end">
-                <AnimatedElement direction="left" delay={0.2}>
-                  <div className="w-full max-w-sm">
-                    <Image 
-                      src="https://static.wixstatic.com/media/fe743e_a3920f604da74c088e545bfa6935c244~mv2.png" 
-                      alt="HD Software Logo" 
-                      className="w-full h-auto"
-                      width={400}
-                    />
-                  </div>
-                </AnimatedElement>
-              </div>
+            <div className="text-center mb-20">
+              <AnimatedElement direction="down">
+                <h1 className="font-heading text-5xl lg:text-7xl font-bold text-primary mb-6">
+                  تحميل البرامج
+                </h1>
+                <p className="text-secondary-foreground/70 text-lg max-w-2xl mx-auto">
+                  احصل على أحدث إصدارات برامجنا المتخصصة في إدارة وتحكم الشاشات الرقمية
+                </p>
+              </AnimatedElement>
             </div>
           </div>
         </section>
