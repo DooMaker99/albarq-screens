@@ -58,6 +58,14 @@ const FIXED_CARD_IMAGES = [
   "https://static.wixstatic.com/media/fe743e_95ff50ab33384f2ca63ec8ea87d00983~mv2.png",
 ] as const;
 
+const FIXED_CARD_TITLES = [
+  "HDSET",
+  "Nova LCT",
+  "ViPlex Express",
+  "HD Player",
+] as const;
+
+
 const FIXED_CARD_DESCRIPTIONS = [
   "برنامج إعداد شاشات LED من Huidu، يُستخدم لتهيئة الشاشة وضبط إعداداتها الأساسية قبل التشغيل، ويُعتمد عليه أثناء التركيب أو عند إعادة ضبط النظام.",
   "برنامج تشغيل وإدارة محتوى شاشات LED من NovaStar، يتيح التحكم في المحتوى المعروض، تنظيمه، وجدولته بما يتناسب مع متطلبات العرض المختلفة.",
