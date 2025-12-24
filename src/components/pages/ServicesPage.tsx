@@ -96,7 +96,6 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
-
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-gradientlightblue to-white py-20 lg:py-32">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -115,7 +114,6 @@ export default function ServicesPage() {
           </motion.div>
         </div>
       </section>
-
       {/* Services List */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -163,7 +161,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
       {/* Why Choose Us */}
       <section className="w-full bg-gradientlightblue py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -220,7 +217,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
       <section className="w-full bg-primary py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12 text-center">
@@ -230,17 +226,17 @@ export default function ServicesPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-heading text-3xl lg:text-5xl font-bold text-primaryForeground mb-6">
+            <h2 className="font-heading text-3xl lg:text-5xl font-bold mb-6 text-primary-foreground">
               هل تحتاج إلى استشارة؟
             </h2>
-            <p className="font-paragraph text-lg text-primaryForeground/90 mb-10 max-w-2xl mx-auto">
+            <p className="font-paragraph text-lg mb-10 max-w-2xl mx-auto text-secondary">
               تواصل معنا الآن للحصول على استشارة مجانية وعرض سعر مخصص لاحتياجاتك
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-white text-primary border-2 border-white hover:bg-white/90 text-lg px-10 py-6"
+                className="bg-white border-2 border-white hover:bg-white/90 text-lg px-10 py-6 text-secondary"
                 asChild
               >
                 <Link to="/contact">تواصل معنا</Link>
@@ -250,7 +246,11 @@ export default function ServicesPage() {
                 className="bg-primaryForeground text-primary hover:bg-primaryForeground/90 text-lg px-10 py-6"
                 asChild
               >
-                <a href="https://wa.me/9647700000000" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://wa.me/9647700000000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[transparent] text-secondary">
                   <Phone className="w-5 h-5 ml-2" />
                   واتساب
                 </a>
@@ -259,7 +259,6 @@ export default function ServicesPage() {
           </motion.div>
         </div>
       </section>
-
       <Footer />
     </div>
   );
