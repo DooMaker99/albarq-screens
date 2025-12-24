@@ -84,6 +84,8 @@ const FIXED_CARD_DOWNLOAD_LINKS = [
 export default function DownloadsPage() {
   const [downloads, setDownloads] = useState<SoftwareDownloads[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
+
 
   useEffect(() => {
     const fetchDownloads = async () => {
@@ -177,13 +179,27 @@ export default function DownloadsPage() {
     idx < FIXED_CARD_DESCRIPTIONS.length ? FIXED_CARD_DESCRIPTIONS[idx] : null;
 
   const desc = overrideDesc ?? software.description;
+  if (!desc) return null;
 
-  return desc ? (
-    <p className="text-secondary-foreground/60 text-sm mb-4 line-clamp-2 flex-1">
-      {desc}
-    </p>
-  ) : null;
+  const isExpanded = expandedIdx === idx;
+
+  return (
+    <div className="mb-4 flex-1">
+      <p className={`text-secondary-foreground/60 text-sm ${isExpanded ? "" : "line-clamp-2"}`}>
+        {desc}
+      </p>
+
+      <button
+        type="button"
+        onClick={() => setExpandedIdx(isExpanded ? null : idx)}
+        className="mt-2 text-xs text-primary/80 hover:text-primary underline underline-offset-2"
+      >
+        {isExpanded ? "عرض أقل" : "عرض المزيد"}
+      </button>
+    </div>
+  );
 })()}
+
 
                         {/* Version and Size Info */}
                         <div className="flex items-center gap-4 text-xs text-secondary-foreground/50 mb-6 py-3 border-t border-primary/10">
