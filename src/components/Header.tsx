@@ -11,6 +11,7 @@ export default function Header() {
     { name: 'من نحن', href: '/about' },
     { name: 'خدماتنا', href: '/services' },
     { name: 'أعمالنا', href: '/projects' },
+    { name: 'التحميلات', href: '/downloads' },
     { name: 'تواصل معنا', href: '/contact' },
   ];
 
