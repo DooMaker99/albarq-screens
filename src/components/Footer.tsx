@@ -64,7 +64,7 @@ export default function Footer() {
             <h3 className="font-heading text-lg font-semibold mb-6 text-primary-foreground">تابعنا</h3>
             <div className="flex flex-col gap-3">
               <a
-                href="https://www.facebook.com"
+                href="https://www.facebook.com/albarqforledscreens/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground"
