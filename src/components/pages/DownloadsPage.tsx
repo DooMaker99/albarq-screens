@@ -73,6 +73,13 @@ const FIXED_CARD_DESCRIPTIONS = [
   "برنامج إعداد برنامج مخصص لتشغيل وإدارة المحتوى على شاشات LED، يتيح عرض الفيديوهات والصور والنصوص وتنظيمها حسب الحاجة، مع دعم التشغيل التلقائي وجدولة المحتوى.",
 ] as const;
 
+const FIXED_CARD_DOWNLOAD_LINKS = [
+  "https://www.hdwell.com/Download/index_100000010768868.html#download",
+  "https://en-website001.oss-us-east-1.aliyuncs.com/ViPlex%20Express%20V3.0.0.3401%20Setup(X64).zip",
+  "https://en-website001.oss-us-east-1.aliyuncs.com/NovaLCT%20V5.7.1.zip",
+  "https://www.hdwell.com/Download/index_100000010795715.html#download",
+] as const;
+
 
 export default function DownloadsPage() {
   const [downloads, setDownloads] = useState<SoftwareDownloads[]>([]);
