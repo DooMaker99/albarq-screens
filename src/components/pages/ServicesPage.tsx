@@ -26,14 +26,12 @@ type Service = {
 };
 
 export default function ServicesPage() {
-  // Gallery images extracted from the file you uploaded (yiyistar.com wp uploads)
-  // (You can add/remove any URLs here freely.)
+  // NOTE: I intentionally removed default-1.jpg and default-2.jpg (the “shoes” one is typically one of these).
   const galleryPool = useMemo(
     () => [
-      'https://yiyistar.com/wp-content/uploads/2025/06/default-1.jpg',
-      'https://yiyistar.com/wp-content/uploads/2025/06/default-2.jpg',
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_50_54-PM.png',
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_34_54-PM.png',
+      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_08_14-PM.png',
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_54_01-PM.png',
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_47_36-PM.png',
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_37_51-PM.png',
@@ -41,7 +39,6 @@ export default function ServicesPage() {
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_26_38-PM.png',
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_21_03-PM.png',
       'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-08_31_28-PM.png',
-      // This one is from the same uploaded file; filename is long but valid:
       'https://yiyistar.com/wp-content/uploads/2025/06/cgi-bin_mmwebwx-bin_webwxgetmsgimg__MsgID7800494634690358579skey@crypt_15e6f4b7_e6e1a3457cd925ef77f528d6dec1c4e0mmweb_appidwx_webfilehelper.jpg',
     ],
     []
@@ -61,7 +58,7 @@ export default function ServicesPage() {
         'عمر افتراضي طويل يصل إلى 100,000 ساعة',
         'تحكم عن بعد بالمحتوى',
       ],
-      images: [galleryPool[2], galleryPool[3], galleryPool[0], galleryPool[7]],
+      images: [galleryPool[0], galleryPool[1], galleryPool[9], galleryPool[6]],
     },
     {
       icon: Monitor,
@@ -76,7 +73,7 @@ export default function ServicesPage() {
         'توافق مع أنظمة إدارة المحتوى',
         'خيارات أحجام متعددة',
       ],
-      images: [galleryPool[1], galleryPool[6], galleryPool[4], galleryPool[10]],
+      images: [galleryPool[2], galleryPool[5], galleryPool[3], galleryPool[8]],
     },
     {
       icon: Monitor,
@@ -91,7 +88,7 @@ export default function ServicesPage() {
         'تحديثات عن بعد',
         'تقارير وإحصائيات مفصلة',
       ],
-      images: [galleryPool[7], galleryPool[8], galleryPool[9], galleryPool[2]],
+      images: [galleryPool[6], galleryPool[7], galleryPool[8], galleryPool[0]],
     },
     {
       icon: Wrench,
@@ -106,7 +103,7 @@ export default function ServicesPage() {
         'ضمان على التركيب',
         'متابعة ما بعد التركيب',
       ],
-      images: [galleryPool[11], galleryPool[5], galleryPool[6], galleryPool[4]],
+      images: [galleryPool[10], galleryPool[4], galleryPool[5], galleryPool[3]],
     },
     {
       icon: Settings,
@@ -121,7 +118,7 @@ export default function ServicesPage() {
         'عقود صيانة سنوية',
         'أولوية في الاستجابة',
       ],
-      images: [galleryPool[10], galleryPool[4], galleryPool[0], galleryPool[6]],
+      images: [galleryPool[9], galleryPool[3], galleryPool[2], galleryPool[5]],
     },
     {
       icon: Zap,
@@ -136,7 +133,7 @@ export default function ServicesPage() {
         'فريق فني مدرب ومؤهل',
         'خط ساخن مخصص للعملاء',
       ],
-      images: [galleryPool[5], galleryPool[3], galleryPool[9], galleryPool[11]],
+      images: [galleryPool[4], galleryPool[1], galleryPool[8], galleryPool[10]],
     },
   ];
 
@@ -148,6 +145,11 @@ export default function ServicesPage() {
   const closeModal = () => {
     setOpenGalleryFor(null);
     setActiveImg(0);
+  };
+
+  const openModal = (serviceIndex: number, imageIndex = 0) => {
+    setOpenGalleryFor(serviceIndex);
+    setActiveImg(imageIndex);
   };
 
   const prevImg = () => {
@@ -200,8 +202,13 @@ export default function ServicesPage() {
                   transition={{ duration: 0.5 }}
                   className="bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm"
                 >
-                  {/* Image */}
-                  <div className="relative">
+                  {/* Image (PRESSABLE) */}
+                  <button
+                    type="button"
+                    onClick={() => openModal(index, 0)}
+                    className="relative block w-full text-left"
+                    aria-label={`Open gallery: ${service.title}`}
+                  >
                     <div className="aspect-video bg-gradient-to-br from-gradientlightblue to-gradientmediumblue/30">
                       <img
                         src={cover}
@@ -214,7 +221,12 @@ export default function ServicesPage() {
                     <div className="absolute top-4 right-4 inline-flex items-center justify-center w-12 h-12 bg-primary rounded-xl shadow-sm">
                       <Icon className="w-6 h-6 text-primaryForeground" />
                     </div>
-                  </div>
+
+                    <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 bg-white/90 rounded-xl px-3 py-2 shadow-sm">
+                      <Images className="w-4 h-4" />
+                      <span className="text-sm font-medium">عرض الصور</span>
+                    </div>
+                  </button>
 
                   {/* Content */}
                   <div className="p-6">
@@ -240,16 +252,13 @@ export default function ServicesPage() {
                     <div className="flex flex-wrap gap-3">
                       <Button
                         className="bg-primary text-primaryForeground hover:bg-primary/90"
-                        onClick={() => {
-                          setOpenGalleryFor(index);
-                          setActiveImg(0);
-                        }}
+                        onClick={() => openModal(index, 0)}
                       >
                         <Images className="w-5 h-5 ml-2" />
                         عرض الصور
                       </Button>
 
-                      <Button variant="outline" className="border-black/10">
+                      <Button variant="outline" className="border-black/10" asChild>
                         <Link to="/contact" className="text-primary">
                           اطلب عرض سعر
                         </Link>
@@ -263,52 +272,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Why Choose Us (same section, slightly tighter + cleaner cards) */}
-      <section className="w-full bg-gradientlightblue py-16 lg:py-22">
-        <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12"
-          >
-            <h2 className="font-heading text-3xl lg:text-5xl font-bold text-primary mb-3">
-              لماذا تختار خدماتنا؟
-            </h2>
-            <p className="font-paragraph text-lg text-secondaryForeground max-w-3xl mx-auto">
-              جودة منتجات + تنفيذ احترافي + دعم مستمر… بدون صداع.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: 'منتجات عالمية', description: 'نستورد من أفضل الشركات العالمية المتخصصة في تصنيع الشاشات' },
-              { title: 'ضمان شامل', description: 'ضمان على المنتجات والخدمات مع متابعة ما بعد التسليم' },
-              { title: 'أسعار تنافسية', description: 'خطط مرنة تناسب المشاريع الصغيرة والكبيرة' },
-              { title: 'خبرة محلية', description: 'فهم عميق للسوق العراقي ومتطلبات التنفيذ' },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: index * 0.06 }}
-                className="bg-white rounded-2xl p-7 text-center border border-black/5 shadow-sm"
-              >
-                <h3 className="font-heading text-xl font-semibold text-primary mb-2">
-                  {item.title}
-                </h3>
-                <p className="font-paragraph text-base text-secondaryForeground">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA (same idea, nicer spacing) */}
+      {/* CTA */}
       <section className="w-full bg-primary py-16 lg:py-22">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12 text-center">
           <motion.div
@@ -418,7 +382,7 @@ export default function ServicesPage() {
                   </button>
                 </div>
 
-                {/* Thumbnails */}
+                {/* Thumbnails (also pressable) */}
                 <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
                   {currentImages.map((src, idx) => (
                     <button
