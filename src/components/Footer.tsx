@@ -80,7 +80,7 @@ export default function Footer() {
                 TikTok
               </a>
               <a
-                href="https://wa.me/9647700000000"
+                href="https://wa.me/9647901326390"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground"
