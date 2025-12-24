@@ -154,11 +154,18 @@ export default function DownloadsPage() {
                           {software.productName}
                         </h3>
                         
-                        {software.description && (
-                          <p className="text-secondary-foreground/60 text-sm mb-4 line-clamp-2 flex-1">
-                            {software.description}
-                          </p>
-                        )}
+                        {(() => {
+  const overrideDesc =
+    idx < FIXED_CARD_DESCRIPTIONS.length ? FIXED_CARD_DESCRIPTIONS[idx] : null;
+
+  const desc = overrideDesc ?? software.description;
+
+  return desc ? (
+    <p className="text-secondary-foreground/60 text-sm mb-4 line-clamp-2 flex-1">
+      {desc}
+    </p>
+  ) : null;
+})()}
 
                         {/* Version and Size Info */}
                         <div className="flex items-center gap-4 text-xs text-secondary-foreground/50 mb-6 py-3 border-t border-primary/10">
