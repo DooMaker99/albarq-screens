@@ -79,15 +79,15 @@ const FIXED_CONFIG_FILES = [
   {
     title: "P10 Outdoor - L655 - Huidu - 4 Scan",
     description: "ملف إعداد للموديول (تصحيح ألوان/Scan/توصيل).",
-    downloadLink: "PUT_YOUR_LINK_HERE",
+    downloadLink: "https://drive.google.com/uc?export=download&id=XXXXX",
   },
   {
     title: "P5 Outdoor - Y55 - Novastar",
     description: "ملف إعداد للموديول (تصحيح ألوان/Scan/توصيل).",
-    downloadLink: "PUT_YOUR_LINK_HERE",
+    downloadLink: "https://drive.google.com/uc?export=download&id=YYYYY",
   },
-  // add the rest...
 ] as const;
+
 
 
 
