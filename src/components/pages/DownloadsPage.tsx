@@ -60,8 +60,8 @@ const FIXED_CARD_IMAGES = [
 
 const FIXED_CARD_TITLES = [
   "HDSET",
-  "Nova LCT",
   "ViPlex Express",
+  "Nova LCT",
   "HD Player",
 ] as const;
 
