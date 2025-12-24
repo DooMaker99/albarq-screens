@@ -421,7 +421,6 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
-
       <Lightbox
         open={lightboxOpen}
         onClose={closeLightbox}
@@ -429,15 +428,14 @@ export default function ServicesPage() {
         initialIndex={lightboxIndex}
         title={lightboxTitle}
       />
-
       {/* Hero Section */}
-      <section className="w-full bg-gradient-to-br from-gradientlightblue to-white py-20 lg:py-32">
+      <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#c0c5f2ff]">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto"
+            className="text-center max-w-4xl mx-auto bg-primary-foreground opacity-[0.35] border border-none"
           >
             <h1 className="font-heading text-4xl lg:text-6xl font-bold text-primary mb-6">
               خدماتنا
@@ -448,7 +446,6 @@ export default function ServicesPage() {
           </motion.div>
         </div>
       </section>
-
       {/* Services List */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -564,7 +561,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
       {/* Why Choose Us */}
       <section className="w-full bg-gradientlightblue py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -605,7 +601,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
       {/* CTA Section (contrast OK) */}
       <section className="w-full bg-primary py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12 text-center">
@@ -654,7 +649,6 @@ export default function ServicesPage() {
           </motion.div>
         </div>
       </section>
-
       <Footer />
     </div>
   );
