@@ -42,11 +42,11 @@ export default function Footer() {
             <div className="flex flex-col gap-4">
             <a href="tel:+9647706896134" className="flex items-center gap-3 font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
               <Phone className="w-5 h-5 fill-primary-foreground" />
-              <span dir="ltr" className="text-primary-foreground">+964 770 000 0000</span>
+              <span dir="ltr" className="text-primary-foreground">+964 770 689 6134</span>
             </a>
-            <a href="tel:+9647800000000" className="flex items-center gap-3 font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
+            <a href="tel:+9647901326390" className="flex items-center gap-3 font-paragraph text-sm text-primaryForeground/90 hover:text-primaryForeground transition-colors">
               <Phone className="w-5 h-5 fill-primary-foreground" />
-              <span dir="ltr" className="text-primary-foreground">+964 780 000 0000</span>
+              <span dir="ltr" className="text-primary-foreground">+964 790 132 6390</span>
             </a>
             <a href="mailto:info@albarqscreens.com" className="flex items-center gap-3 font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground">
               <Mail className="w-5 h-5" />
