@@ -196,31 +196,39 @@ export default function DownloadsPage() {
                         </div>
 
                         {/* Download Button */}
-                        {software.downloadLink ? (
-                          <Button
-                            size="lg"
-                            className="w-full h-12 rounded-xl bg-primary text-white hover:bg-primary/90 transition-all duration-300 font-bold text-base"
-                            asChild
-                          >
-                            <a 
-                              href={software.downloadLink} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2"
-                            >
-                              <Download className="w-5 h-5" />
-                              تحميل
-                            </a>
-                          </Button>
-                        ) : (
-                          <Button
-                            size="lg"
-                            disabled
-                            className="w-full h-12 rounded-xl bg-gray-200 text-gray-400 cursor-not-allowed text-base"
-                          >
-                            غير متاح
-                          </Button>
-                        )}
+                        {(() => {
+  const overrideLink =
+    idx < FIXED_CARD_DOWNLOAD_LINKS.length ? FIXED_CARD_DOWNLOAD_LINKS[idx] : null;
+
+  const link = overrideLink ?? software.downloadLink;
+
+  return link ? (
+    <Button
+      size="lg"
+      className="w-full h-12 rounded-xl bg-primary text-white hover:bg-primary/90 transition-all duration-300 font-bold text-base"
+      asChild
+    >
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-2"
+      >
+        <Download className="w-5 h-5" />
+        تحميل
+      </a>
+    </Button>
+  ) : (
+    <Button
+      size="lg"
+      disabled
+      className="w-full h-12 rounded-xl bg-gray-200 text-gray-400 cursor-not-allowed text-base"
+    >
+      غير متاح
+    </Button>
+  );
+})()}
+
                       </div>
                     </div>
                   </AnimatedElement>
