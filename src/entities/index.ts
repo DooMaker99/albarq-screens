@@ -30,9 +30,9 @@ export interface Projects {
 
 /**
  * Collection ID: services
- * Interface for Services
+ * Interface for 
  */
-export interface Services {
+export interface  {
   _id: string;
   _createdDate?: Date;
   _updatedDate?: Date;
