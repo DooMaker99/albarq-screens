@@ -22,7 +22,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { Projects } from '@/entities';
-
+ 
 // --- Utility Components for Motion & Layout ---
 
 type AnimatedElementProps = {

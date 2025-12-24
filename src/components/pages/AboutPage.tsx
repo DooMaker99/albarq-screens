@@ -8,7 +8,7 @@ export default function AboutPage() {
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
       {/* Hero Section */}
-      <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#F0F4FF26]">
+      <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#e8e7ffff]">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
