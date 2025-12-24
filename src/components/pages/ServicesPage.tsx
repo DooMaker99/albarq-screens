@@ -1,12 +1,53 @@
-import { motion } from 'framer-motion';
-import { Monitor, Wrench, Zap, Settings, CheckCircle, Phone } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Monitor,
+  Wrench,
+  Zap,
+  Settings,
+  CheckCircle,
+  Phone,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Images,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+type Service = {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  features: string[];
+  images: string[];
+};
+
 export default function ServicesPage() {
-  const services = [
+  // Gallery images extracted from the file you uploaded (yiyistar.com wp uploads)
+  // (You can add/remove any URLs here freely.)
+  const galleryPool = useMemo(
+    () => [
+      'https://yiyistar.com/wp-content/uploads/2025/06/default-1.jpg',
+      'https://yiyistar.com/wp-content/uploads/2025/06/default-2.jpg',
+      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_50_54-PM.png',
+      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_34_54-PM.png',
+      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_54_01-PM.png',
+      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_47_36-PM.png',
+      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_37_51-PM.png',
+      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_29_15-PM.png',
+      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_26_38-PM.png',
+      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_21_03-PM.png',
+      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-08_31_28-PM.png',
+      // This one is from the same uploaded file; filename is long but valid:
+      'https://yiyistar.com/wp-content/uploads/2025/06/cgi-bin_mmwebwx-bin_webwxgetmsgimg__MsgID7800494634690358579skey@crypt_15e6f4b7_e6e1a3457cd925ef77f528d6dec1c4e0mmweb_appidwx_webfilehelper.jpg',
+    ],
+    []
+  );
+
+  const services: Service[] = [
     {
       icon: Monitor,
       title: 'شاشات LED العملاقة الخارجية',
@@ -20,7 +61,7 @@ export default function ServicesPage() {
         'عمر افتراضي طويل يصل إلى 100,000 ساعة',
         'تحكم عن بعد بالمحتوى',
       ],
-      image: 'https://yiyistar.com/wp-content/uploads/2025/06/default-1.jpg',
+      images: [galleryPool[2], galleryPool[3], galleryPool[0], galleryPool[7]],
     },
     {
       icon: Monitor,
@@ -35,7 +76,7 @@ export default function ServicesPage() {
         'توافق مع أنظمة إدارة المحتوى',
         'خيارات أحجام متعددة',
       ],
-      image: 'https://yiyistar.com/wp-content/uploads/2025/06/default-2.jpg',
+      images: [galleryPool[1], galleryPool[6], galleryPool[4], galleryPool[10]],
     },
     {
       icon: Monitor,
@@ -50,7 +91,7 @@ export default function ServicesPage() {
         'تحديثات عن بعد',
         'تقارير وإحصائيات مفصلة',
       ],
-      image: 'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_50_54-PM.png',
+      images: [galleryPool[7], galleryPool[8], galleryPool[9], galleryPool[2]],
     },
     {
       icon: Wrench,
@@ -65,7 +106,7 @@ export default function ServicesPage() {
         'ضمان على التركيب',
         'متابعة ما بعد التركيب',
       ],
-      image: 'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_37_51-PM.png',
+      images: [galleryPool[11], galleryPool[5], galleryPool[6], galleryPool[4]],
     },
     {
       icon: Settings,
@@ -80,8 +121,7 @@ export default function ServicesPage() {
         'عقود صيانة سنوية',
         'أولوية في الاستجابة',
       ],
-      image:
-        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_08_14-PM.png',
+      images: [galleryPool[10], galleryPool[4], galleryPool[0], galleryPool[6]],
     },
     {
       icon: Zap,
@@ -96,136 +136,167 @@ export default function ServicesPage() {
         'فريق فني مدرب ومؤهل',
         'خط ساخن مخصص للعملاء',
       ],
-      image:
-        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_47_36-PM.png',
+      images: [galleryPool[5], galleryPool[3], galleryPool[9], galleryPool[11]],
     },
   ];
+
+  const [openGalleryFor, setOpenGalleryFor] = useState<number | null>(null);
+  const [activeImg, setActiveImg] = useState(0);
+
+  const currentImages = openGalleryFor === null ? [] : services[openGalleryFor].images;
+
+  const closeModal = () => {
+    setOpenGalleryFor(null);
+    setActiveImg(0);
+  };
+
+  const prevImg = () => {
+    if (!currentImages.length) return;
+    setActiveImg((i) => (i - 1 + currentImages.length) % currentImages.length);
+  };
+
+  const nextImg = () => {
+    if (!currentImages.length) return;
+    setActiveImg((i) => (i + 1) % currentImages.length);
+  };
 
   return (
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
-      {/* Hero Section */}
-      <section className="w-full bg-gradient-to-br from-gradientlightblue to-white py-20 lg:py-32">
+
+      {/* Hero */}
+      <section className="w-full bg-gradient-to-br from-gradientlightblue to-white py-16 lg:py-24">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
             className="text-center max-w-4xl mx-auto"
           >
-            <h1 className="font-heading text-4xl lg:text-6xl font-bold text-primary mb-6">
+            <h1 className="font-heading text-4xl lg:text-6xl font-bold text-primary mb-5">
               خدماتنا
             </h1>
             <p className="font-paragraph text-lg lg:text-xl text-secondaryForeground leading-relaxed">
-              نقدم مجموعة شاملة من الخدمات والحلول التقنية المتطورة في مجال الشاشات الإعلانية الرقمية
+              نقدم حلول شاشات LED وشاشات العرض الرقمية مع التركيب والصيانة والدعم الفني — بجودة عالية وتنفيذ احترافي.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Services List */}
-      <section className="w-full bg-white py-20 lg:py-28">
+      {/* Services Grid */}
+      <section className="w-full bg-white py-14 lg:py-20">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
-          <div className="space-y-20">
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className={`grid lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
-              >
-                <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-xl mb-6">
-                    <service.icon className="w-8 h-8 text-primaryForeground" />
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              const cover = service.images[0];
+
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-10% 0px' }}
+                  transition={{ duration: 0.5 }}
+                  className="bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm"
+                >
+                  {/* Image */}
+                  <div className="relative">
+                    <div className="aspect-video bg-gradient-to-br from-gradientlightblue to-gradientmediumblue/30">
+                      <img
+                        src={cover}
+                        alt={service.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+
+                    <div className="absolute top-4 right-4 inline-flex items-center justify-center w-12 h-12 bg-primary rounded-xl shadow-sm">
+                      <Icon className="w-6 h-6 text-primaryForeground" />
+                    </div>
                   </div>
 
-                  <h2 className="font-heading text-3xl lg:text-4xl font-bold text-primary mb-4">
-                    {service.title}
-                  </h2>
+                  {/* Content */}
+                  <div className="p-6">
+                    <h2 className="font-heading text-2xl font-bold text-primary mb-2">
+                      {service.title}
+                    </h2>
+                    <p className="font-paragraph text-base text-secondaryForeground leading-relaxed mb-4">
+                      {service.description}
+                    </p>
 
-                  <p className="font-paragraph text-base lg:text-lg text-secondaryForeground mb-6 leading-relaxed">
-                    {service.description}
-                  </p>
+                    <ul className="space-y-2 mb-5">
+                      {service.features.slice(0, 4).map((feature, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-start gap-3 font-paragraph text-base text-secondaryForeground"
+                        >
+                          <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                  <ul className="space-y-3">
-                    {service.features.map((feature, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-start gap-3 font-paragraph text-base text-secondaryForeground"
+                    <div className="flex flex-wrap gap-3">
+                      <Button
+                        className="bg-primary text-primaryForeground hover:bg-primary/90"
+                        onClick={() => {
+                          setOpenGalleryFor(index);
+                          setActiveImg(0);
+                        }}
                       >
-                        <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                        <Images className="w-5 h-5 ml-2" />
+                        عرض الصور
+                      </Button>
 
-                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <div className="aspect-video bg-gradient-to-br from-gradientlightblue to-gradientmediumblue/30 rounded-2xl overflow-hidden">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover"
-                    />
+                      <Button variant="outline" className="border-black/10">
+                        <Link to="/contact" className="text-primary">
+                          اطلب عرض سعر
+                        </Link>
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="w-full bg-gradientlightblue py-20 lg:py-28">
+      {/* Why Choose Us (same section, slightly tighter + cleaner cards) */}
+      <section className="w-full bg-gradientlightblue py-16 lg:py-22">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
           >
-            <h2 className="font-heading text-3xl lg:text-5xl font-bold text-primary mb-4">
+            <h2 className="font-heading text-3xl lg:text-5xl font-bold text-primary mb-3">
               لماذا تختار خدماتنا؟
             </h2>
             <p className="font-paragraph text-lg text-secondaryForeground max-w-3xl mx-auto">
-              نتميز بمجموعة من المزايا التي تجعلنا الخيار الأمثل لمشاريعكم
+              جودة منتجات + تنفيذ احترافي + دعم مستمر… بدون صداع.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              {
-                title: 'منتجات عالمية',
-                description: 'نستورد من أفضل الشركات العالمية المتخصصة في تصنيع الشاشات',
-              },
-              {
-                title: 'ضمان شامل',
-                description: 'نوفر ضمان شامل على جميع المنتجات والخدمات التي نقدمها',
-              },
-              {
-                title: 'أسعار تنافسية',
-                description: 'أسعار مناسبة مع إمكانية التقسيط وخطط دفع مرنة',
-              },
-              {
-                title: 'خبرة محلية',
-                description: 'فهم عميق للسوق العراقي واحتياجات العملاء المحليين',
-              },
+              { title: 'منتجات عالمية', description: 'نستورد من أفضل الشركات العالمية المتخصصة في تصنيع الشاشات' },
+              { title: 'ضمان شامل', description: 'ضمان على المنتجات والخدمات مع متابعة ما بعد التسليم' },
+              { title: 'أسعار تنافسية', description: 'خطط مرنة تناسب المشاريع الصغيرة والكبيرة' },
+              { title: 'خبرة محلية', description: 'فهم عميق للسوق العراقي ومتطلبات التنفيذ' },
             ].map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 text-center"
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                className="bg-white rounded-2xl p-7 text-center border border-black/5 shadow-sm"
               >
-                <h3 className="font-heading text-xl font-semibold text-primary mb-3">
+                <h3 className="font-heading text-xl font-semibold text-primary mb-2">
                   {item.title}
                 </h3>
                 <p className="font-paragraph text-base text-secondaryForeground">
@@ -237,20 +308,20 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="w-full bg-primary py-20 lg:py-28">
+      {/* CTA (same idea, nicer spacing) */}
+      <section className="w-full bg-primary py-16 lg:py-22">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
           >
-            <h2 className="font-heading text-3xl lg:text-5xl font-bold mb-6 text-primary-foreground">
+            <h2 className="font-heading text-3xl lg:text-5xl font-bold mb-5 text-primary-foreground">
               هل تحتاج إلى استشارة؟
             </h2>
-            <p className="font-paragraph text-lg mb-10 max-w-2xl mx-auto text-secondary">
-              تواصل معنا الآن للحصول على استشارة مجانية وعرض سعر مخصص لاحتياجاتك
+            <p className="font-paragraph text-lg mb-8 max-w-2xl mx-auto text-secondary">
+              تواصل معنا للحصول على استشارة مجانية وعرض سعر مخصص.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -286,6 +357,93 @@ export default function ServicesPage() {
       </section>
 
       <Footer />
+
+      {/* Gallery Modal */}
+      <AnimatePresence>
+        {openGalleryFor !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={closeModal}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 18, scale: 0.98 }}
+              transition={{ duration: 0.25 }}
+              className="w-full max-w-5xl bg-white rounded-2xl overflow-hidden border border-black/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between p-4 border-b border-black/5">
+                <div className="font-heading text-lg font-semibold text-primary">
+                  {services[openGalleryFor].title}
+                </div>
+
+                <button
+                  onClick={closeModal}
+                  className="inline-flex items-center justify-center w-10 h-10 rounded-xl hover:bg-black/5"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-4">
+                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-gradientlightblue to-gradientmediumblue/30">
+                  <div className="aspect-video">
+                    <img
+                      src={currentImages[activeImg]}
+                      alt="gallery"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <button
+                    onClick={prevImg}
+                    className="absolute top-1/2 -translate-y-1/2 left-3 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/90 hover:bg-white shadow-sm"
+                    aria-label="Previous"
+                  >
+                    <ChevronLeft className="w-6 h-6" />
+                  </button>
+
+                  <button
+                    onClick={nextImg}
+                    className="absolute top-1/2 -translate-y-1/2 right-3 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/90 hover:bg-white shadow-sm"
+                    aria-label="Next"
+                  >
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
+                </div>
+
+                {/* Thumbnails */}
+                <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
+                  {currentImages.map((src, idx) => (
+                    <button
+                      key={src + idx}
+                      onClick={() => setActiveImg(idx)}
+                      className={`shrink-0 rounded-xl overflow-hidden border ${
+                        idx === activeImg ? 'border-primary' : 'border-black/10'
+                      }`}
+                      aria-label={`Image ${idx + 1}`}
+                    >
+                      <div className="w-28 h-20 bg-black/5">
+                        <img src={src} alt="" className="w-full h-full object-cover" loading="lazy" />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-4 text-sm text-secondaryForeground">
+                  {activeImg + 1} / {currentImages.length}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
