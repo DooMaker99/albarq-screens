@@ -416,7 +416,7 @@ export default function DownloadsPage() {
       <Header />
       <main className="w-full overflow-clip">
         {/* Hero */}
-        <section className="relative w-full py-24 lg:py-32 bg-gradient-to-b from-gradientlightblue to-white">
+        <section className="relative w-full py-24 lg:py-32 from-gradientlightblue to-white bg-[#e8e7ffff]">
           <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
             <div className="text-center mb-20">
               <AnimatedElement direction="down">

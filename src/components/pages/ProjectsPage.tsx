@@ -22,9 +22,8 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
-
       {/* Hero Section */}
-      <section className="w-full bg-gradient-to-br from-gradientlightblue to-white py-20 lg:py-32">
+      <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#e8e7ffff]">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -41,7 +40,6 @@ export default function ProjectsPage() {
           </motion.div>
         </div>
       </section>
-
       {/* Projects Grid */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -115,7 +113,6 @@ export default function ProjectsPage() {
           )}
         </div>
       </section>
-
       {/* Project Detail Modal */}
       {selectedProject && (
         <div
@@ -217,7 +214,6 @@ export default function ProjectsPage() {
           </motion.div>
         </div>
       )}
-
       <Footer />
     </div>
   );

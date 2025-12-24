@@ -429,13 +429,13 @@ export default function ServicesPage() {
         title={lightboxTitle}
       />
       {/* Hero Section */}
-      <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#c0c5f2ff]">
+      <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#e8e7ffff]">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto bg-primary-foreground opacity-[0.35] border border-none"
+            className="text-center max-w-4xl mx-auto rounded-[10px] border-black border border-none opacity-[1] bg-transparent"
           >
             <h1 className="font-heading text-4xl lg:text-6xl font-bold text-primary mb-6">
               خدماتنا
