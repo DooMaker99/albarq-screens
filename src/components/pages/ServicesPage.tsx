@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Monitor,
@@ -26,24 +26,10 @@ type Service = {
 };
 
 export default function ServicesPage() {
-  // Removed the image you pointed to:
-  // https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-08_31_28-PM.png
-  const galleryPool = useMemo(
-    () => [
-      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_50_54-PM.png',
-      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_34_54-PM.png',
-      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_08_14-PM.png',
-      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_54_01-PM.png',
-      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_47_36-PM.png',
-      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_37_51-PM.png',
-      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_29_15-PM.png',
-      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_26_38-PM.png',
-      'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_21_03-PM.png',
-      // keep this if it's valid on your host; otherwise remove it
-      'https://yiyistar.com/wp-content/uploads/2025/06/cgi-bin_mmwebwx-bin_webwxgetmsgimg__MsgID7800494634690358579skey@crypt_15e6f4b7_e6e1a3457cd925ef77f528d6dec1c4e0mmweb_appidwx_webfilehelper.jpg',
-    ],
-    []
-  );
+  // IMPORTANT:
+  // - Removed the image you asked to change:
+  //   https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-08_31_28-PM.png
+  // - Each service now has its own curated images list so visuals match the text.
 
   const services: Service[] = [
     {
@@ -59,7 +45,12 @@ export default function ServicesPage() {
         'عمر افتراضي طويل يصل إلى 100,000 ساعة',
         'تحكم عن بعد بالمحتوى',
       ],
-      images: [galleryPool[0], galleryPool[1], galleryPool[6], galleryPool[7]],
+      // OUTDOOR-ish set (choose the ones that look like big outdoor installs)
+      images: [
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_50_54-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_34_54-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_54_01-PM.png',
+      ],
     },
     {
       icon: Monitor,
@@ -74,7 +65,12 @@ export default function ServicesPage() {
         'توافق مع أنظمة إدارة المحتوى',
         'خيارات أحجام متعددة',
       ],
-      images: [galleryPool[2], galleryPool[5], galleryPool[3], galleryPool[8]],
+      // INDOOR-ish set (more “stage / showroom / indoor wall” looking)
+      images: [
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_37_51-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_26_38-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_08_14-PM.png',
+      ],
     },
     {
       icon: Monitor,
@@ -89,7 +85,12 @@ export default function ServicesPage() {
         'تحديثات عن بعد',
         'تقارير وإحصائيات مفصلة',
       ],
-      images: [galleryPool[6], galleryPool[7], galleryPool[8], galleryPool[0]],
+      // Digital signage-ish set (more “screens in shop / multi-display / kiosk” looking)
+      images: [
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_29_15-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_21_03-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_47_36-PM.png',
+      ],
     },
     {
       icon: Wrench,
@@ -104,7 +105,12 @@ export default function ServicesPage() {
         'ضمان على التركيب',
         'متابعة ما بعد التركيب',
       ],
-      images: [galleryPool[9] ?? galleryPool[4], galleryPool[4], galleryPool[5], galleryPool[3]],
+      // Installation-ish set (use any “behind the scenes / assembly / closeups” you have)
+      images: [
+        'https://yiyistar.com/wp-content/uploads/2025/06/cgi-bin_mmwebwx-bin_webwxgetmsgimg__MsgID7800494634690358579skey@crypt_15e6f4b7_e6e1a3457cd925ef77f528d6dec1c4e0mmweb_appidwx_webfilehelper.jpg',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_54_01-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_37_51-PM.png',
+      ],
     },
     {
       icon: Settings,
@@ -119,7 +125,12 @@ export default function ServicesPage() {
         'عقود صيانة سنوية',
         'أولوية في الاستجابة',
       ],
-      images: [galleryPool[8], galleryPool[3], galleryPool[2], galleryPool[5]],
+      // Maintenance-ish set (closest looking “technical / parts / check”)
+      images: [
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_08_14-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_26_38-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_21_03-PM.png',
+      ],
     },
     {
       icon: Zap,
@@ -134,7 +145,12 @@ export default function ServicesPage() {
         'فريق فني مدرب ومؤهل',
         'خط ساخن مخصص للعملاء',
       ],
-      images: [galleryPool[4], galleryPool[1], galleryPool[8], galleryPool[9] ?? galleryPool[0]],
+      // Support-ish set (closest “people / service / monitoring” vibes)
+      images: [
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_47_36-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-06_29_15-PM.png',
+        'https://yiyistar.com/wp-content/uploads/2025/06/ChatGPT-Image-Jun-11-2025-09_34_54-PM.png',
+      ],
     },
   ];
 
@@ -203,7 +219,7 @@ export default function ServicesPage() {
                   transition={{ duration: 0.5 }}
                   className="bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm"
                 >
-                  {/* Image (pressable) */}
+                  {/* Pressable image */}
                   <button
                     type="button"
                     onClick={() => openModal(index, 0)}
@@ -229,7 +245,6 @@ export default function ServicesPage() {
                     </div>
                   </button>
 
-                  {/* Content */}
                   <div className="p-6">
                     <h2 className="font-heading text-2xl font-bold text-primary mb-2">
                       {service.title}
@@ -251,7 +266,6 @@ export default function ServicesPage() {
                     </ul>
 
                     <div className="flex flex-wrap gap-3">
-                      {/* Dark button => bright text (theme token) */}
                       <Button
                         className="bg-primary text-primaryForeground hover:bg-primary/90"
                         onClick={() => openModal(index, 0)}
@@ -260,7 +274,6 @@ export default function ServicesPage() {
                         عرض الصور
                       </Button>
 
-                      {/* Light button => dark text */}
                       <Button
                         variant="outline"
                         className="bg-white text-primary border-black/10 hover:bg-black/5"
@@ -303,7 +316,6 @@ export default function ServicesPage() {
                 <Link to="/contact">تواصل معنا</Link>
               </Button>
 
-              {/* Dark/light contrast preserved */}
               <Button
                 size="lg"
                 className="bg-primaryForeground text-primary hover:bg-primaryForeground/90 text-lg px-10 py-6"
@@ -370,7 +382,7 @@ export default function ServicesPage() {
                   </div>
 
                   <button
-                    onClick={prevImg}
+                    onClick={() => setActiveImg((i) => (i - 1 + currentImages.length) % currentImages.length)}
                     className="absolute top-1/2 -translate-y-1/2 left-3 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/90 hover:bg-white shadow-sm"
                     aria-label="Previous"
                   >
@@ -378,7 +390,7 @@ export default function ServicesPage() {
                   </button>
 
                   <button
-                    onClick={nextImg}
+                    onClick={() => setActiveImg((i) => (i + 1) % currentImages.length)}
                     className="absolute top-1/2 -translate-y-1/2 right-3 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/90 hover:bg-white shadow-sm"
                     aria-label="Next"
                   >
@@ -386,7 +398,6 @@ export default function ServicesPage() {
                   </button>
                 </div>
 
-                {/* Thumbnails */}
                 <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
                   {currentImages.map((src, idx) => (
                     <button
