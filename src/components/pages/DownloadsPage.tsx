@@ -77,16 +77,112 @@ const FIXED_CARD_DOWNLOAD_LINKS = [
 
 const FIXED_CONFIG_FILES = [
   {
-    title: "P10 Outdoor - L655 - Huidu - 4 Scan",
-    description: "ملف إعداد للموديول (تصحيح ألوان/Scan/توصيل).",
-    downloadLink: "https://drive.google.com/uc?export=download&id=XXXXX",
+    title: "P10 Outdoor File - L655 - Huidu 4-SCAN",
+    description: "ملف إعداد لـ L655 ضمن P10 Outdoor File (Huidu 4-SCAN).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=19vtgA3VB9GHcC3T95VgYob5ytV2pV4HO",
   },
   {
-    title: "P5 Outdoor - Y55 - Novastar",
-    description: "ملف إعداد للموديول (تصحيح ألوان/Scan/توصيل).",
-    downloadLink: "https://drive.google.com/uc?export=download&id=YYYYY",
+    title: "P10 Outdoor File - Y48 - Huidu",
+    description: "ملف إعداد لـ Y48 ضمن P10 Outdoor File (Huidu).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1khXXyGBoUwwfStfueiIObSlXb4ExJeKq",
+  },
+  {
+    title: "P10 Outdoor File - Y48 - R712 Update",
+    description: "ملف إعداد لـ Y48 ضمن P10 Outdoor File (R712 Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+  {
+    title: "P10 Outdoor File - Y48 - DH-7512S Update",
+    description: "ملف إعداد لـ Y48 ضمن P10 Outdoor File (DH-7512S Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+  },
+  {
+    title: "P10 Outdoor File - Y50 - Huidu",
+    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor File (Huidu).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1Dsb5HEnu0hxjrhxg5Dau84J0bDaZ7y5f",
+  },
+  {
+    title: "P10 Outdoor File - Y50 - Novastar",
+    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor File (Novastar).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1bR7Pqj2n9uZ3yZ7s1gYxZ3zq8xj1Jt3h",
+  },
+  {
+    title: "P10 Outdoor File - Y50 - R712 Update",
+    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor File (R712 Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+  {
+    title: "P10 Outdoor File - Y50 - DH-7512S Update",
+    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor File (DH-7512S Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+  },
+  {
+    title: "P10 Outdoor File - Y51 - Huidu",
+    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor File (Huidu).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1l8v7GmG7B1m1Q6VhZ7m6aQf0o7dQ0w2H",
+  },
+  {
+    title: "P10 Outdoor File - Y51 - Novastar",
+    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor File (Novastar).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1wGk1c7c2g4a4s2o6H2u0m0o1b1o1p1Q",
+  },
+  {
+    title: "P10 Outdoor File - Y51 - R712 Update",
+    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor File (R712 Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+  {
+    title: "P10 Outdoor File - Y51 - DH-7512S Update",
+    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor File (DH-7512S Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+  },
+  {
+    title: "P5 Outdoor File - Y55 - Huidu",
+    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor File (Huidu).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1wB4Qw8j6kHh7nJm0pRk7lQx8vYw0mQvS",
+  },
+  {
+    title: "P5 Outdoor File - Y55 - Novastar",
+    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor File (Novastar).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1eT2y8cR0qG0H5zZ8xQ7nK6vB5mN8pQwE",
+  },
+  {
+    title: "P5 Outdoor File - Y55 - R712 Update",
+    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor File (R712 Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+  {
+    title: "P5 Outdoor File - Y55 - DH-7512S Update",
+    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor File (DH-7512S Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+  },
+  {
+    title: "P5 Outdoor File - Y52 - Huidu",
+    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor File (Huidu).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1q9c5VJpRkP0p0T0Wm9Wm4xk6f7y8z0A",
+  },
+  {
+    title: "P5 Outdoor File - Y52 - Novastar",
+    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor File (Novastar).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1Hn9v2x0kG4m9b0Q2m0a6c7d8e9f0g1H",
+  },
+  {
+    title: "P5 Outdoor File - Y52 - R712 Update",
+    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor File (R712 Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+  {
+    title: "P5 Outdoor File - Y52 - DH-7512S Update",
+    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor File (DH-7512S Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+  },
+  {
+    title: "P1.25 Indoor File - Y50 - NV3210 Update",
+    description: "ملف إعداد لـ Y50 ضمن P1.25 Indoor File (NV3210 Update).",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1IaPsJXBRn1kTkeFSCplOty6Bdco5_t5i",
   },
 ] as const;
+
 
 
 
@@ -308,8 +404,9 @@ export default function DownloadsPage() {
         version: "",
         fileSize: "",
         appImage: "",
-        category: "configuration",
+        category: "configuration" as const,
       }));
+
 
   return (
     <div
