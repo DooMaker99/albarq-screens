@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Send } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -10,6 +10,15 @@ import Footer from '@/components/Footer';
 
 export default function ContactPage() {
   const { toast } = useToast();
+
+  // ✅ Your Google Maps location (Sheikh Dhari Street, Baghdad, Iraq)
+  const MAPS_URL =
+    'https://www.google.com/maps/search/%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B6%D8%A7%D8%B1%D9%8A%2C%20%D8%A8%D8%BA%D8%AF%D8%A7%D8%AF%2C%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A7%D9%82/@33.3049,44.3391,17z?hl=en';
+
+  // ✅ Embed map (same coordinates)
+  const MAPS_EMBED_URL =
+    'https://www.google.com/maps?q=33.3049,44.3391&z=17&output=embed';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -52,6 +61,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
+
       {/* Hero Section */}
       <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#e8e7ffff]">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -70,6 +80,7 @@ export default function ContactPage() {
           </motion.div>
         </div>
       </section>
+
       {/* Contact Section */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -84,6 +95,7 @@ export default function ContactPage() {
               <h2 className="font-heading text-3xl font-bold text-primary mb-6">
                 أرسل لنا رسالة
               </h2>
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label
@@ -260,6 +272,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
+                {/* ✅ UPDATED ADDRESS + clickable Google Maps link */}
                 <div className="flex items-start gap-4 p-6 bg-gradientlightblue rounded-2xl">
                   <div className="flex-shrink-0 w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-primaryForeground" />
@@ -268,9 +281,20 @@ export default function ContactPage() {
                     <h3 className="font-heading text-lg font-semibold text-primary mb-2">
                       العنوان
                     </h3>
-                    <p className="font-paragraph text-base text-secondaryForeground">
-                      بغداد، العراق
+                    <p className="font-paragraph text-base text-secondaryForeground mb-3">
+                      شارع الشيخ ضاري، بغداد، العراق
                     </p>
+
+                    <Button
+                      variant="outline"
+                      className="border-buttonoutline text-buttonoutline hover:bg-primary hover:text-primaryForeground"
+                      asChild
+                    >
+                      <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                        فتح الموقع على خرائط Google
+                      </a>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -294,6 +318,7 @@ export default function ContactPage() {
                       Facebook
                     </a>
                   </Button>
+
                   <Button
                     variant="outline"
                     className="border-buttonoutline text-buttonoutline hover:bg-primary hover:text-primaryForeground"
@@ -307,10 +332,8 @@ export default function ContactPage() {
                       TikTok
                     </a>
                   </Button>
-                  <Button
-                    className="bg-primary text-primaryForeground hover:bg-primary/90"
-                    asChild
-                  >
+
+                  <Button className="bg-primary text-primaryForeground hover:bg-primary/90" asChild>
                     <a
                       href="https://wa.me/9647706896134"
                       target="_blank"
@@ -326,7 +349,8 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-      {/* Map Section (Placeholder) */}
+
+      {/* ✅ Map Section (Google Maps embed) */}
       <section className="w-full bg-gradientlightblue py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <motion.div
@@ -340,22 +364,32 @@ export default function ContactPage() {
               موقعنا
             </h2>
             <p className="font-paragraph text-lg text-secondaryForeground">
-              نحن في خدمتكم في بغداد، العراق
+              شارع الشيخ ضاري، بغداد، العراق
             </p>
           </motion.div>
 
           <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-lg">
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gradientlightblue to-gradientmediumblue/30">
-              <div className="text-center">
-                <MapPin className="w-16 h-16 text-primary mx-auto mb-4" />
-                <p className="font-paragraph text-lg text-secondaryForeground">
-                  خريطة الموقع
-                </p>
-              </div>
-            </div>
+            <iframe
+              title="موقعنا على الخريطة"
+              src={MAPS_EMBED_URL}
+              className="w-full h-full"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+
+          <div className="mt-6 flex justify-center">
+            <Button className="bg-primary text-primaryForeground hover:bg-primary/90" asChild>
+              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-4 h-4 ml-2" />
+                فتح الموقع في Google Maps
+              </a>
+            </Button>
           </div>
         </div>
       </section>
+
       <Footer />
     </div>
   );
