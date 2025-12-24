@@ -424,7 +424,7 @@ export default function DownloadsPage() {
                   مركز التحميل
                 </h1>
                 <p className="text-secondary-foreground/70 text-lg max-w-2xl mx-auto">
-                  برامج التشغيل + ملفات الإعدادات الخاصة بالشاشات (Configuration Files)
+                  احصل على أحدث إصدارات برامجنا المتخصصة في إدارة وتحكم الشاشات الرقمية
                 </p>
               </AnimatedElement>
             </div>
