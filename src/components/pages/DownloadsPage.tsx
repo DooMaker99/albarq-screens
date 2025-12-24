@@ -159,8 +159,11 @@ export default function DownloadsPage() {
                       {/* Content Container */}
                       <div className="flex-1 p-6 flex flex-col">
                         <h3 className="text-xl font-bold text-primary mb-2 font-heading line-clamp-2">
-                          {software.productName}
-                        </h3>
+  {idx < FIXED_CARD_TITLES.length
+    ? FIXED_CARD_TITLES[idx]
+    : software.productName}
+</h3>
+
                         
                         {(() => {
   const overrideDesc =
