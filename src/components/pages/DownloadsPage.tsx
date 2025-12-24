@@ -62,7 +62,7 @@ const FIXED_CARD_DESCRIPTIONS = [
   "اكتب وصف Albarq Screen Firmware الصحيح هنا…",
   "اكتب وصف Albarq LED Doctor الصحيح هنا…",
   "اكتب وصف Albarq Content Studio الصحيح هنا…",
-  "اكتب وصف Albarq Screen Manager Pro الصحيح هنا…",
+  "برنامج إعداد شاشات LED من Huidu، يُستخدم لتهيئة الشاشة وضبط إعداداتها الأساسية قبل التشغيل، ويُعتمد عليه أثناء التركيب أو عند إعادة ضبط النظام.",
 ] as const;
 
 
