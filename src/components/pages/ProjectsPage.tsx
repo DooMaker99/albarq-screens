@@ -7,6 +7,13 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { Projects } from '@/entities';
 
+const OLD_WIX_MEDIA_ID = 'fe743e_5daa179ea58d46bfb59db9728ad91222~mv2';
+const NEW_IMAGE_URL =
+  'https://static.wixstatic.com/media/fe743e_a5f5a57bc9bc453c85634fb056757ae6~mv2.png';
+
+const fixWixImage = (url?: string | null) =>
+  url && url.includes(OLD_WIX_MEDIA_ID) ? NEW_IMAGE_URL : url || '';
+
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Projects[]>([]);
   const [selectedProject, setSelectedProject] = useState<Projects | null>(null);
@@ -22,6 +29,7 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
+
       {/* Hero Section */}
       <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#e8e7ffff]">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -40,6 +48,7 @@ export default function ProjectsPage() {
           </motion.div>
         </div>
       </section>
+
       {/* Projects Grid */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -64,7 +73,7 @@ export default function ProjectsPage() {
                   <div className="aspect-video relative overflow-hidden bg-gradientlightblue">
                     {project.mainImage ? (
                       <Image
-                        src={project.mainImage}
+                        src={fixWixImage(project.mainImage)}
                         alt={project.projectName || 'مشروع'}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         width={600}
@@ -77,6 +86,7 @@ export default function ProjectsPage() {
                       </div>
                     )}
                   </div>
+
                   <div className="p-6">
                     <h3 className="font-heading text-xl font-semibold text-primary mb-3">
                       {project.projectName || 'مشروع بدون عنوان'}
@@ -84,6 +94,7 @@ export default function ProjectsPage() {
                     <p className="font-paragraph text-sm text-secondaryForeground mb-4 line-clamp-3 leading-relaxed">
                       {project.description || 'لا يوجد وصف متاح'}
                     </p>
+
                     <div className="flex flex-col gap-2">
                       {project.location && (
                         <div className="flex items-center gap-2 font-paragraph text-sm text-secondaryForeground/70">
@@ -113,6 +124,7 @@ export default function ProjectsPage() {
           )}
         </div>
       </section>
+
       {/* Project Detail Modal */}
       {selectedProject && (
         <div
@@ -137,23 +149,16 @@ export default function ProjectsPage() {
               </button>
 
               {/* Main Image */}
-{selectedProject.mainImage && (
-  <div className="aspect-video relative overflow-hidden bg-gradientlightblue rounded-t-2xl">
-    <Image
-      src={
-        selectedProject.mainImage.includes(
-          'fe743e_5daa179ea58d46bfb59db9728ad91222~mv2'
-        )
-          ? 'https://static.wixstatic.com/media/fe743e_a5f5a57bc9bc453c85634fb056757ae6~mv2.png'
-          : selectedProject.mainImage
-      }
-      alt={selectedProject.projectName || 'مشروع'}
-      className="w-full h-full object-cover"
-      width={1200}
-    />
-  </div>
-)}
-
+              {selectedProject.mainImage && (
+                <div className="aspect-video relative overflow-hidden bg-gradientlightblue rounded-t-2xl">
+                  <Image
+                    src={fixWixImage(selectedProject.mainImage)}
+                    alt={selectedProject.projectName || 'مشروع'}
+                    className="w-full h-full object-cover"
+                    width={1200}
+                  />
+                </div>
+              )}
 
               {/* Content */}
               <div className="p-8 lg:p-12">
@@ -208,12 +213,7 @@ export default function ProjectsPage() {
                     </h3>
                     <div className="aspect-video relative overflow-hidden bg-gradientlightblue rounded-2xl">
                       <Image
-                       src={
-  project.mainImage.includes('fe743e_5daa179ea58d46bfb59db9728ad91222~mv2')
-    ? 'https://static.wixstatic.com/media/fe743e_a5f5a57bc9bc453c85634fb056757ae6~mv2.png'
-    : project.mainImage
-}
-
+                        src={fixWixImage(selectedProject.secondaryImage)}
                         alt={`${selectedProject.projectName} - صورة إضافية`}
                         className="w-full h-full object-cover"
                         width={1200}
@@ -226,6 +226,7 @@ export default function ProjectsPage() {
           </motion.div>
         </div>
       )}
+
       <Footer />
     </div>
   );
