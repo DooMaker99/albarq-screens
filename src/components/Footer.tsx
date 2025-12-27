@@ -79,14 +79,6 @@ export default function Footer() {
               >
                 TikTok
               </a>
-              <a
-                href="https://wa.me/9647901326390"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground"
-              >
-                WhatsApp
-              </a>
                <a
                 href="https://www.instagram.com/albarq_for_screens"
                 target="_blank"
@@ -94,6 +86,14 @@ export default function Footer() {
                 className="font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground"
               >
                 Instagram
+              </a>
+              <a
+                href="https://wa.me/9647901326390"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground"
+              >
+                WhatsApp
               </a>
             </div>
           </div>
