@@ -7,14 +7,6 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { Projects } from '@/entities';
 
-const OLD_URL =
-  'https://static.wixstatic.com/media/fe743e_5daa179ea58d46bfb59db9728ad91222~mv2.png/v1/fill/w_640,h_360,al_c,q_85,enc_auto/fe743e_5daa179ea58d46bfb59db9728ad91222~mv2.png';
-
-const NEW_URL =
-  'https://static.wixstatic.com/media/fe743e_a5f5a57bc9bc453c85634fb056757ae6~mv2.png';
-
-const swapUrl = (url?: string | null) => (url === OLD_URL ? NEW_URL : url || '');
-
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Projects[]>([]);
   const [selectedProject, setSelectedProject] = useState<Projects | null>(null);
@@ -22,14 +14,7 @@ export default function ProjectsPage() {
   useEffect(() => {
     const fetchProjects = async () => {
       const { items } = await BaseCrudService.getAll<Projects>('projects');
-
-      const patched = items.map((p) => ({
-        ...p,
-        mainImage: p.mainImage ? swapUrl(p.mainImage) : p.mainImage,
-        secondaryImage: p.secondaryImage ? swapUrl(p.secondaryImage) : p.secondaryImage,
-      }));
-
-      setProjects(patched);
+      setProjects(items);
     };
     fetchProjects();
   }, []);
@@ -55,7 +40,6 @@ export default function ProjectsPage() {
           </motion.div>
         </div>
       </section>
-
       {/* Projects Grid */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -93,7 +77,6 @@ export default function ProjectsPage() {
                       </div>
                     )}
                   </div>
-
                   <div className="p-6">
                     <h3 className="font-heading text-xl font-semibold text-primary mb-3">
                       {project.projectName || 'مشروع بدون عنوان'}
@@ -101,7 +84,6 @@ export default function ProjectsPage() {
                     <p className="font-paragraph text-sm text-secondaryForeground mb-4 line-clamp-3 leading-relaxed">
                       {project.description || 'لا يوجد وصف متاح'}
                     </p>
-
                     <div className="flex flex-col gap-2">
                       {project.location && (
                         <div className="flex items-center gap-2 font-paragraph text-sm text-secondaryForeground/70">
@@ -131,7 +113,6 @@ export default function ProjectsPage() {
           )}
         </div>
       </section>
-
       {/* Project Detail Modal */}
       {selectedProject && (
         <div
@@ -146,6 +127,7 @@ export default function ProjectsPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative">
+              {/* Close Button */}
               <button
                 onClick={() => setSelectedProject(null)}
                 className="absolute top-4 left-4 z-10 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors"
@@ -154,10 +136,11 @@ export default function ProjectsPage() {
                 <span className="text-2xl text-primary">×</span>
               </button>
 
+              {/* Main Image */}
               {selectedProject.mainImage && (
                 <div className="aspect-video relative overflow-hidden bg-gradientlightblue rounded-t-2xl">
                   <Image
-                    src={swapUrl(selectedProject.mainImage)}
+                    src={selectedProject.mainImage}
                     alt={selectedProject.projectName || 'مشروع'}
                     className="w-full h-full object-cover"
                     width={1200}
@@ -165,6 +148,7 @@ export default function ProjectsPage() {
                 </div>
               )}
 
+              {/* Content */}
               <div className="p-8 lg:p-12">
                 <h2 className="font-heading text-3xl lg:text-4xl font-bold text-primary mb-4">
                   {selectedProject.projectName || 'مشروع بدون عنوان'}
@@ -209,6 +193,7 @@ export default function ProjectsPage() {
                   </p>
                 </div>
 
+                {/* Secondary Image */}
                 {selectedProject.secondaryImage && (
                   <div className="mb-8">
                     <h3 className="font-heading text-xl font-semibold text-primary mb-4">
@@ -216,7 +201,7 @@ export default function ProjectsPage() {
                     </h3>
                     <div className="aspect-video relative overflow-hidden bg-gradientlightblue rounded-2xl">
                       <Image
-                        src={swapUrl(selectedProject.secondaryImage)}
+                        src={selectedProject.secondaryImage}
                         alt={`${selectedProject.projectName} - صورة إضافية`}
                         className="w-full h-full object-cover"
                         width={1200}
@@ -229,7 +214,6 @@ export default function ProjectsPage() {
           </motion.div>
         </div>
       )}
-
       <Footer />
     </div>
   );
