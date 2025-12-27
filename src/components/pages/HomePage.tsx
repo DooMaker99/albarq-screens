@@ -1,21 +1,8 @@
-// HPI 1.6-V (fixed hero visual overlay on mobile/tablet)
+// HPI 1.6-V (Hero fixed: mobile/tablet image sits BEHIND the text, not below)
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
-import {
-  Phone,
-  Zap,
-  Award,
-  Users,
-  Wrench,
-  Monitor,
-  Headphones,
-  ArrowRight,
-  ArrowUpRight,
-  Play,
-  ChevronDown,
-  CheckCircle,
-} from 'lucide-react';
+import { motion, useScroll, useSpring, useInView } from 'framer-motion';
+import { Phone, Zap, Award, Wrench, Monitor, Headphones, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
@@ -23,12 +10,10 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { Projects } from '@/entities';
 
-// ---- Hero image (single source of truth) ----
 const HERO_WAVE_IMG =
   'https://static.wixstatic.com/media/fe743e_b99d2f91ffff464ca8faab305036a458~mv2.png?originWidth=1600&originHeight=896';
 
 // --- Utility Components for Motion & Layout ---
-
 type AnimatedElementProps = {
   children: React.ReactNode;
   className?: string;
@@ -72,73 +57,11 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
   );
 };
 
-const ParallaxImage = ({
-  src,
-  alt,
-  className,
-  speed = 0.5,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  speed?: number;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
-
-  return (
-    <div ref={ref} className={`overflow-hidden ${className || ''}`}>
-      <motion.div style={{ y }} className="w-full h-[120%] -mt-[10%]">
-        <Image src={src} alt={alt} className="w-full h-full object-cover" width={1200} />
-      </motion.div>
-    </div>
-  );
-};
-
-// --- Reusable Hero Visual (same look, different placement per breakpoint) ---
-function HeroVisual({
-  className = '',
-  imageClassName = '',
-}: {
-  className?: string;
-  imageClassName?: string;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.97, borderRadius: '100%' }}
-      animate={{ opacity: 1, scale: 1, borderRadius: '2rem' }}
-      transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-      className={`bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF] overflow-hidden shadow-2xl ${className}`}
-    >
-      <div className="absolute inset-0 w-full h-full">
-        <Image
-          src={HERO_WAVE_IMG}
-          alt="Abstract digital wave representing screen technology"
-          className={`w-full h-full object-cover ${imageClassName}`}
-          width={1600}
-        />
-      </div>
-
-      {/* Overlay Gradient for depth */}
-      <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent" />
-
-      {/* Floating Elements Parallax (kept for desktop only by caller) */}
-    </motion.div>
-  );
-}
-
 // --- Main Component ---
-
 export default function HomePage() {
   const [projects, setProjects] = useState<Projects[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Data Fidelity: Fetching from Canonical Source
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -153,7 +76,6 @@ export default function HomePage() {
     fetchProjects();
   }, []);
 
-  // Scroll Progress for global effects
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -169,92 +91,117 @@ export default function HomePage() {
       {/* Global Scroll Progress Bar */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-primary z-50 origin-right" style={{ scaleX }} />
       <Header />
+
       <main className="w-full overflow-clip">
         {/* --- HERO SECTION --- */}
         <section className="relative w-full min-h-[95vh] flex items-center justify-center pt-20 lg:pt-0 overflow-hidden">
-          {/* Background */}
           <div className="absolute inset-0 bg-white z-0" />
 
-          {/* ✅ Mobile/Tablet: Visual sits BEHIND the text (not below it) */}
-          <div className="absolute inset-0 z-10 pointer-events-none lg:hidden">
-            <div className="absolute left-1/2 top-[62%] -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-[980px]">
-              <HeroVisual
-                className="relative w-full h-[38vh] min-h-[260px] max-h-[520px]"
-                imageClassName="opacity-60 mix-blend-multiply"
-              />
-            </div>
-          </div>
-
-          {/* Foreground content container */}
-          <div className="relative w-full max-w-[115rem] mx-auto px-4 sm:px-6 lg:px-8 z-20 h-full flex flex-col lg:flex-row items-stretch">
-            {/* Left Content Column */}
-            <div className="w-full lg:w-1/2 flex flex-col justify-center py-12 lg:py-24 relative z-30">
-              <AnimatedElement direction="right" className="mb-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradientlightblue border border-primary/10 text-primary text-sm font-medium">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                  </span>
-                  الخيار الأول في العراق
-                </div>
-              </AnimatedElement>
-
-              <AnimatedElement delay={0.1}>
-                <h1 className="font-heading text-5xl lg:text-7xl xl:text-8xl font-bold text-primary leading-[1.1] tracking-tight mb-8">
-                  مستقبل <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-gradientmediumblue">
-                    الشاشات الرقمية
-                  </span>
-                </h1>
-              </AnimatedElement>
-
-              <AnimatedElement delay={0.2}>
-                <p className="font-paragraph text-lg lg:text-xl text-secondary-foreground/80 max-w-xl leading-relaxed mb-10">
-                  نحول المساحات الصامتة إلى تجارب بصرية مذهلة. شركة البرق تقدم أحدث حلول الشاشات العملاقة مع ضمان الجودة
-                  والدعم الفني المتكامل.
-                </p>
-              </AnimatedElement>
-
-              <AnimatedElement delay={0.3} className="flex flex-wrap gap-4">
-                <Button
-                  size="lg"
-                  className="h-14 px-8 rounded-full bg-primary text-white hover:bg-primary/90 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/25 hover:-translate-y-1"
-                  asChild
-                >
-                  <Link to="/contact">
-                    اطلب عرض سعر
-                    <ArrowRight className="mr-2 w-5 h-5" />
-                  </Link>
-                </Button>
-
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300 opacity-50"
-                  asChild
-                >
-                  <a
-                    href="https://wa.me/9647706896134"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-primary-foreground shadow-sm"
+          <div className="relative w-full max-w-[115rem] mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex flex-col lg:flex-row items-stretch">
+            {/* ✅ LEFT CONTENT COLUMN (now contains the mobile/tablet background image) */}
+            <div className="w-full lg:w-1/2 relative z-20">
+              {/* Mobile/Tablet background image BEHIND text (inside this container) */}
+              <div className="absolute inset-x-0 top-24 sm:top-28 lg:hidden z-0 pointer-events-none">
+                <div className="mx-auto w-[92%] max-w-[560px]">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.97, borderRadius: '100%' }}
+                    animate={{ opacity: 1, scale: 1, borderRadius: '2rem' }}
+                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                    className="relative h-[320px] sm:h-[380px] rounded-[2rem] overflow-hidden shadow-2xl bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF]"
                   >
-                    <Phone className="ml-2 w-5 h-5" />
-                    تواصل واتساب
-                  </a>
-                </Button>
-              </AnimatedElement>
+                    <Image
+                      src={HERO_WAVE_IMG}
+                      alt="Abstract digital wave representing screen technology"
+                      className="w-full h-full object-cover opacity-65 mix-blend-multiply"
+                      width={1600}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/15 to-transparent" />
+                  </motion.div>
+                </div>
+              </div>
 
-              {/* Scroll Indicator placeholder */}
-              <div className="absolute bottom-0 right-0 hidden lg:flex items-center gap-4 translate-y-12"></div>
+              {/* Foreground content */}
+              <div className="relative z-10 flex flex-col justify-center py-12 lg:py-24">
+                <AnimatedElement direction="right" className="mb-6">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradientlightblue border border-primary/10 text-primary text-sm font-medium">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    الخيار الأول في العراق
+                  </div>
+                </AnimatedElement>
+
+                <AnimatedElement delay={0.1}>
+                  <h1 className="font-heading text-5xl lg:text-7xl xl:text-8xl font-bold text-primary leading-[1.1] tracking-tight mb-8">
+                    مستقبل <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-gradientmediumblue">
+                      الشاشات الرقمية
+                    </span>
+                  </h1>
+                </AnimatedElement>
+
+                <AnimatedElement delay={0.2}>
+                  <p className="font-paragraph text-lg lg:text-xl text-secondary-foreground/80 max-w-xl leading-relaxed mb-10">
+                    نحول المساحات الصامتة إلى تجارب بصرية مذهلة. شركة البرق تقدم أحدث حلول الشاشات العملاقة مع ضمان
+                    الجودة والدعم الفني المتكامل.
+                  </p>
+                </AnimatedElement>
+
+                <AnimatedElement delay={0.3} className="flex flex-wrap gap-4">
+                  <Button
+                    size="lg"
+                    className="h-14 px-8 rounded-full bg-primary text-white hover:bg-primary/90 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/25 hover:-translate-y-1"
+                    asChild
+                  >
+                    <Link to="/contact">
+                      اطلب عرض سعر
+                      <ArrowRight className="mr-2 w-5 h-5" />
+                    </Link>
+                  </Button>
+
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300 opacity-50"
+                    asChild
+                  >
+                    <a
+                      href="https://wa.me/9647706896134"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-primary-foreground shadow-sm"
+                    >
+                      <Phone className="ml-2 w-5 h-5" />
+                      تواصل واتساب
+                    </a>
+                  </Button>
+                </AnimatedElement>
+
+                {/* Scroll Indicator placeholder */}
+                <div className="absolute bottom-0 right-0 hidden lg:flex items-center gap-4 translate-y-12"></div>
+              </div>
             </div>
 
-            {/* ✅ Desktop only: Right Visual Column (keeps laptop layout exactly) */}
+            {/* ✅ RIGHT VISUAL COLUMN (desktop only, keeps laptop layout) */}
             <div className="hidden lg:block w-full lg:w-1/2 relative min-h-[50vh] lg:min-h-auto">
-              <div className="absolute inset-4 lg:inset-y-8 lg:left-0 lg:right-[-50vw]">
-                <HeroVisual className="absolute inset-0" imageClassName="opacity-80 mix-blend-multiply" />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, borderRadius: '100%' }}
+                animate={{ opacity: 1, scale: 1, borderRadius: '2rem' }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-4 lg:inset-y-8 lg:left-0 lg:right-[-50vw] bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF] overflow-hidden shadow-2xl"
+              >
+                <div className="absolute inset-0 w-full h-full">
+                  <Image
+                    src={HERO_WAVE_IMG}
+                    alt="Abstract digital wave representing screen technology"
+                    className="w-full h-full object-cover opacity-80 mix-blend-multiply"
+                    width={1600}
+                  />
+                </div>
 
-                {/* Floating Elements Parallax (desktop only) */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent" />
+
                 <motion.div
                   className="absolute top-1/4 right-1/4 w-32 h-32 bg-white/30 backdrop-blur-md rounded-2xl border border-white/50 shadow-xl z-10 hidden lg:block"
                   animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
@@ -265,9 +212,8 @@ export default function HomePage() {
                   animate={{ y: [0, 30, 0] }}
                   transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                 />
-              </div>
+              </motion.div>
 
-              {/* Vertical Brand Text */}
               <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-30 hidden xl:block pointer-events-none mix-blend-difference">
                 <h2 className="text-[120px] font-heading font-bold text-white/20 rotate-90 whitespace-nowrap tracking-widest">
                   ALBARQ
@@ -300,7 +246,6 @@ export default function HomePage() {
         <section className="relative w-full py-24 lg:py-32 bg-white">
           <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
             <div className="flex flex-col lg:flex-row gap-16">
-              {/* Sticky Header (Right Side in RTL) */}
               <div className="lg:w-1/3">
                 <div className="sticky top-32">
                   <AnimatedElement>
@@ -324,7 +269,6 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Scrolling Cards (Left Side in RTL) */}
               <div className="lg:w-2/3 grid gap-8">
                 {[
                   {
@@ -382,7 +326,9 @@ export default function HomePage() {
           <div className="max-w-[120rem] mx-auto px-6 lg:px-12 mb-16 flex flex-col md:flex-row justify-between items-end">
             <AnimatedElement>
               <h2 className="font-heading text-4xl lg:text-5xl font-bold text-primary mb-4">خدماتنا المتكاملة</h2>
-              <p className="text-secondary-foreground/70 text-lg max-w-xl">حلول تقنية مصممة خصيصاً لتلبية احتياجات السوق العراقي</p>
+              <p className="text-secondary-foreground/70 text-lg max-w-xl">
+                حلول تقنية مصممة خصيصاً لتلبية احتياجات السوق العراقي
+              </p>
             </AnimatedElement>
             <AnimatedElement delay={0.2}>
               <Button variant="outline" className="hidden md:flex border-primary text-primary hover:bg-primary hover:text-white" asChild>
@@ -445,7 +391,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* --- FEATURED PROJECTS: PARALLAX GRID --- */}
+        {/* --- FEATURED PROJECTS: GRID --- */}
         <section className="w-full py-24 lg:py-32 bg-white">
           <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
             <div className="text-center mb-20">
@@ -458,13 +404,9 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-              {projects.length > 0 ? (
+              {!isLoading && projects.length > 0 ? (
                 projects.slice(0, 3).map((project, idx) => (
-                  <AnimatedElement
-                    key={project._id}
-                    delay={idx * 0.2}
-                    className={idx === 1 ? 'md:translate-y-16' : ''}
-                  >
+                  <AnimatedElement key={project._id} delay={idx * 0.2} className={idx === 1 ? 'md:translate-y-16' : ''}>
                     <Link to={`/projects`} className="block group">
                       <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-6 bg-gray-100">
                         {project.mainImage ? (
@@ -552,6 +494,7 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+
       <Footer />
     </div>
   );
