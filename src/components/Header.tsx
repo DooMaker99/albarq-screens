@@ -22,7 +22,7 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <div className="font-heading text-2xl lg:text-3xl font-bold text-primary">
-              ALBARQ FOR LED SCREENs
+              ALBARQ FOR LED SCREENS
             </div>
           </Link>
 
