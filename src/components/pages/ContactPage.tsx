@@ -228,7 +228,7 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <div className="flex items-start gap-4 p-6 bg-gradientlightblue rounded-2xl">
                   <div className="flex-shrink-0 w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
-                    <Phone className="w-6 h-6 text-primaryForeground" />
+                    <Phone className="w-6 h-6 text-primaryForeground fill-secondary" />
                   </div>
                   <div>
                     <h3 className="font-heading text-lg font-semibold text-primary mb-2">
