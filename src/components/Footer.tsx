@@ -87,6 +87,14 @@ export default function Footer() {
               >
                 WhatsApp
               </a>
+               <a
+                href="https://www.instagram.com/albarq_for_screens"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground"
+              >
+                Instagram
+              </a>
             </div>
           </div>
         </div>
