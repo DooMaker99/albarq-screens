@@ -61,7 +61,6 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
-
       {/* Hero Section */}
       <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#e8e7ffff]">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -80,7 +79,6 @@ export default function ContactPage() {
           </motion.div>
         </div>
       </section>
-
       {/* Contact Section */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -195,7 +193,7 @@ export default function ContactPage() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full bg-primary text-primaryForeground hover:bg-primary/90"
+                  className="w-full bg-primary hover:bg-primary/90 text-secondary"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -257,7 +255,7 @@ export default function ContactPage() {
 
                 <div className="flex items-start gap-4 p-6 bg-gradientlightblue rounded-2xl">
                   <div className="flex-shrink-0 w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-primaryForeground" />
+                    <Mail className="w-6 h-6 text-primaryForeground fill-secondary" />
                   </div>
                   <div>
                     <h3 className="font-heading text-lg font-semibold text-primary mb-2">
@@ -275,7 +273,7 @@ export default function ContactPage() {
                 {/* ✅ UPDATED ADDRESS + clickable Google Maps link */}
                 <div className="flex items-start gap-4 p-6 bg-gradientlightblue rounded-2xl">
                   <div className="flex-shrink-0 w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-primaryForeground" />
+                    <MapPin className="w-6 h-6 text-primaryForeground fill-secondary" />
                   </div>
                   <div>
                     <h3 className="font-heading text-lg font-semibold text-primary mb-2">
@@ -338,7 +336,7 @@ export default function ContactPage() {
                       href="https://wa.me/9647706896134"
                       target="_blank"
                       rel="noopener noreferrer"
-                    >
+                      className="text-secondary">
                       <Phone className="w-4 h-4 ml-2" />
                       WhatsApp
                     </a>
@@ -349,7 +347,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-
       {/* ✅ Map Section (Google Maps embed) */}
       <section className="w-full bg-gradientlightblue py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -381,7 +378,11 @@ export default function ContactPage() {
 
           <div className="mt-6 flex justify-center">
             <Button className="bg-primary text-primaryForeground hover:bg-primary/90" asChild>
-              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+              <a
+                href={MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary">
                 <ExternalLink className="w-4 h-4 ml-2" />
                 فتح الموقع في Google Maps
               </a>
@@ -389,7 +390,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-
       <Footer />
     </div>
   );
