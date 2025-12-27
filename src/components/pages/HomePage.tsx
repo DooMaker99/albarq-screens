@@ -1,4 +1,5 @@
 // HPI 1.6-V (Hero fixed: mobile/tablet image sits BEHIND the text, not below)
+// + Project image hotfix: replace OLD Wix image with NEW one (left card screenshot)
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useSpring, useInView } from 'framer-motion';
@@ -12,6 +13,15 @@ import { Projects } from '@/entities';
 
 const HERO_WAVE_IMG =
   'https://static.wixstatic.com/media/fe743e_b99d2f91ffff464ca8faab305036a458~mv2.png?originWidth=1600&originHeight=896';
+
+// 🔁 Replace this old image (billboard) with the new one
+const OLD_WIX_MEDIA_ID = 'fe743e_5daa179ea58d46bfb59db9728ad91222~mv2';
+const NEW_WIX_IMAGE_URL = 'https://static.wixstatic.com/media/fe743e_a5f5a57bc9bc453c85634fb056757ae6~mv2.png';
+
+function fixWixImageUrl(url?: string | null) {
+  if (!url) return '';
+  return url.includes(OLD_WIX_MEDIA_ID) ? NEW_WIX_IMAGE_URL : url;
+}
 
 // --- Utility Components for Motion & Layout ---
 type AnimatedElementProps = {
@@ -98,7 +108,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-white z-0" />
 
           <div className="relative w-full max-w-[115rem] mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex flex-col lg:flex-row items-stretch">
-            {/* ✅ LEFT CONTENT COLUMN (now contains the mobile/tablet background image) */}
+            {/* ✅ LEFT CONTENT COLUMN */}
             <div className="w-full lg:w-1/2 relative z-20">
               {/* Mobile/Tablet background image BEHIND text (inside this container) */}
               <div className="absolute inset-x-0 top-24 sm:top-28 lg:hidden z-0 pointer-events-none">
@@ -183,7 +193,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* ✅ RIGHT VISUAL COLUMN (desktop only, keeps laptop layout) */}
+            {/* ✅ RIGHT VISUAL COLUMN (desktop only) */}
             <div className="hidden lg:block w-full lg:w-1/2 relative min-h-[50vh] lg:min-h-auto">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, borderRadius: '100%' }}
@@ -331,7 +341,11 @@ export default function HomePage() {
               </p>
             </AnimatedElement>
             <AnimatedElement delay={0.2}>
-              <Button variant="outline" className="hidden md:flex border-primary text-primary hover:bg-primary hover:text-white" asChild>
+              <Button
+                variant="outline"
+                className="hidden md:flex border-primary text-primary hover:bg-primary hover:text-white"
+                asChild
+              >
                 <Link to="/services">جميع الخدمات</Link>
               </Button>
             </AnimatedElement>
@@ -405,36 +419,39 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
               {!isLoading && projects.length > 0 ? (
-                projects.slice(0, 3).map((project, idx) => (
-                  <AnimatedElement key={project._id} delay={idx * 0.2} className={idx === 1 ? 'md:translate-y-16' : ''}>
-                    <Link to={`/projects`} className="block group">
-                      <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-6 bg-gray-100">
-                        {project.mainImage ? (
-                          <Image
-                            src={project.mainImage}
-                            alt={project.projectName || 'Project'}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            width={600}
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-gradientlightblue text-primary/20">
-                            <Monitor className="w-20 h-20" />
+                projects.slice(0, 3).map((project, idx) => {
+                  const fixedImg = fixWixImageUrl(project.mainImage);
+                  return (
+                    <AnimatedElement key={project._id} delay={idx * 0.2} className={idx === 1 ? 'md:translate-y-16' : ''}>
+                      <Link to={`/projects`} className="block group">
+                        <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-6 bg-gray-100">
+                          {fixedImg ? (
+                            <Image
+                              src={fixedImg}
+                              alt={project.projectName || 'Project'}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              width={600}
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gradientlightblue text-primary/20">
+                              <Monitor className="w-20 h-20" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
+
+                          <div className="absolute top-6 right-6 bg-white/90 backdrop-blur px-4 py-2 rounded-full text-xs font-bold text-primary uppercase tracking-wider">
+                            {project.location || 'العراق'}
                           </div>
-                        )}
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
-
-                        <div className="absolute top-6 right-6 bg-white/90 backdrop-blur px-4 py-2 rounded-full text-xs font-bold text-primary uppercase tracking-wider">
-                          {project.location || 'العراق'}
                         </div>
-                      </div>
 
-                      <h3 className="text-2xl font-bold text-primary mb-2 group-hover:text-gradientmediumblue transition-colors font-heading">
-                        {project.projectName}
-                      </h3>
-                      <p className="text-secondary-foreground/60 line-clamp-2 text-sm">{project.description}</p>
-                    </Link>
-                  </AnimatedElement>
-                ))
+                        <h3 className="text-2xl font-bold text-primary mb-2 group-hover:text-gradientmediumblue transition-colors font-heading">
+                          {project.projectName}
+                        </h3>
+                        <p className="text-secondary-foreground/60 line-clamp-2 text-sm">{project.description}</p>
+                      </Link>
+                    </AnimatedElement>
+                  );
+                })
               ) : (
                 [1, 2, 3].map((_, idx) => (
                   <div key={idx} className={`animate-pulse ${idx === 1 ? 'md:translate-y-16' : ''}`}>
