@@ -47,7 +47,7 @@ export default function Header() {
               className="border-buttonoutline text-buttonoutline hover:bg-primary hover:text-primaryForeground"
               asChild
             >
-              <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.tiktok.com/@albarqforledscreens" target="_blank" rel="noopener noreferrer">
                 TikTok
               </a>
             </Button>
@@ -57,7 +57,7 @@ export default function Header() {
               className="border-buttonoutline text-buttonoutline hover:bg-primary hover:text-primaryForeground"
               asChild
             >
-              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.facebook.com/albarqforledscreens/" target="_blank" rel="noopener noreferrer">
                 Facebook
               </a>
             </Button>
@@ -66,7 +66,7 @@ export default function Header() {
               asChild
             >
               <a
-                href="https://wa.me/9647700000000"
+                href="https://wa.me/9647706896134"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary-foreground">
