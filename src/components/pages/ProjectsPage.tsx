@@ -137,16 +137,23 @@ export default function ProjectsPage() {
               </button>
 
               {/* Main Image */}
-              {selectedProject.mainImage && (
-                <div className="aspect-video relative overflow-hidden bg-gradientlightblue rounded-t-2xl">
-                  <Image
-                    src={selectedProject.mainImage}
-                    alt={selectedProject.projectName || 'مشروع'}
-                    className="w-full h-full object-cover"
-                    width={1200}
-                  />
-                </div>
-              )}
+{selectedProject.mainImage && (
+  <div className="aspect-video relative overflow-hidden bg-gradientlightblue rounded-t-2xl">
+    <Image
+      src={
+        selectedProject.mainImage.includes(
+          'fe743e_5daa179ea58d46bfb59db9728ad91222~mv2'
+        )
+          ? 'https://static.wixstatic.com/media/fe743e_a5f5a57bc9bc453c85634fb056757ae6~mv2.png'
+          : selectedProject.mainImage
+      }
+      alt={selectedProject.projectName || 'مشروع'}
+      className="w-full h-full object-cover"
+      width={1200}
+    />
+  </div>
+)}
+
 
               {/* Content */}
               <div className="p-8 lg:p-12">
@@ -201,7 +208,12 @@ export default function ProjectsPage() {
                     </h3>
                     <div className="aspect-video relative overflow-hidden bg-gradientlightblue rounded-2xl">
                       <Image
-                        src={selectedProject.secondaryImage}
+                       src={
+  project.mainImage.includes('fe743e_5daa179ea58d46bfb59db9728ad91222~mv2')
+    ? 'https://static.wixstatic.com/media/fe743e_a5f5a57bc9bc453c85634fb056757ae6~mv2.png'
+    : project.mainImage
+}
+
                         alt={`${selectedProject.projectName} - صورة إضافية`}
                         className="w-full h-full object-cover"
                         width={1200}
