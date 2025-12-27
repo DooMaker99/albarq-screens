@@ -7,12 +7,28 @@ import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
 import { Projects } from '@/entities';
 
-const OLD_WIX_MEDIA_ID = 'fe743e_5daa179ea58d46bfb59db9728ad91222~mv2';
-const NEW_IMAGE_URL =
+// (1) + (2) Replace the billboard placeholder image (any Wix-transformed variant)
+const OLD_WIX_MEDIA_ID_1 = 'fe743e_5daa179ea58d46bfb59db9728ad91222~mv2';
+const NEW_IMAGE_URL_1 =
   'https://static.wixstatic.com/media/fe743e_a5f5a57bc9bc453c85634fb056757ae6~mv2.png';
 
-const fixWixImage = (url?: string | null) =>
-  url && url.includes(OLD_WIX_MEDIA_ID) ? NEW_IMAGE_URL : url || '';
+// (3) Replace the "extra picture" in صور إضافية
+// (If your DB has a different OLD id for that image, swap it here.)
+const OLD_WIX_MEDIA_ID_2 = 'fe743e_5e1cc00215f24c02bdfd9033ec243ade~mv2';
+const NEW_IMAGE_URL_2 =
+  'https://static.wixstatic.com/media/fe743e_5e1cc00215f24c02bdfd9033ec243ade~mv2.png';
+
+const fixWixImage = (url?: string | null) => {
+  if (!url) return '';
+
+  // replacement #1 (billboard placeholder)
+  if (url.includes(OLD_WIX_MEDIA_ID_1)) return NEW_IMAGE_URL_1;
+
+  // replacement #2 (extra picture)
+  if (url.includes(OLD_WIX_MEDIA_ID_2)) return NEW_IMAGE_URL_2;
+
+  return url;
+};
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Projects[]>([]);
@@ -148,7 +164,7 @@ export default function ProjectsPage() {
                 <span className="text-2xl text-primary">×</span>
               </button>
 
-              {/* Main Image */}
+              {/* Main Image (2) */}
               {selectedProject.mainImage && (
                 <div className="aspect-video relative overflow-hidden bg-gradientlightblue rounded-t-2xl">
                   <Image
@@ -205,7 +221,7 @@ export default function ProjectsPage() {
                   </p>
                 </div>
 
-                {/* Secondary Image */}
+                {/* Secondary Image (3) */}
                 {selectedProject.secondaryImage && (
                   <div className="mb-8">
                     <h3 className="font-heading text-xl font-semibold text-primary mb-4">
