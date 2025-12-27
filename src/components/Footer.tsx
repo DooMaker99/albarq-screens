@@ -10,7 +10,7 @@ export default function Footer() {
           <div>
             <h3 className="font-heading text-xl font-bold mb-6 text-primary-foreground">ALBARQ FOR LED SCREENs</h3>
             <p className="font-paragraph text-sm leading-relaxed text-primary-foreground">
-              شركة رائدة في تجهيز ونصب الشاشات الإعلانية العملاقة في العراق، نقدم حلولاً متكاملة بأعلى معايير الجودة.
+              شركة رائدة في تجهيز وتركيب الشاشات الإعلانية العملاقة في العراق، نقدم حلولاً متكاملة بأعلى معايير الجودة.
             </p>
           </div>
 
