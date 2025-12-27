@@ -108,92 +108,91 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-white z-0" />
 
           <div className="relative w-full max-w-[115rem] mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex flex-col lg:flex-row items-stretch">
-            {/* ✅ LEFT CONTENT COLUMN */}
+            {/* ✅ LEFT CONTENT COLUMN (mobile/tablet: content is clipped INSIDE the rounded card) */}
             <div className="w-full lg:w-1/2 relative z-20">
-              {/* Mobile/Tablet background image BEHIND text (inside this container) */}
-              <div className="absolute inset-x-0 top-24 sm:top-28 lg:hidden z-0 pointer-events-none">
-                <div className="mx-auto w-[92%] max-w-[560px]">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.97, borderRadius: '100%' }}
-                    animate={{ opacity: 1, scale: 1, borderRadius: '2rem' }}
-                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative h-[320px] sm:h-[380px] rounded-[2rem] overflow-hidden shadow-2xl bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF]"
-                  >
-                    <Image
-                      src={HERO_WAVE_IMG}
-                      alt="Abstract digital wave representing screen technology"
-                      className="w-full h-full object-cover opacity-65 mix-blend-multiply"
-                      width={1600}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/15 to-transparent" />
-                  </motion.div>
-                </div>
-              </div>
+              {/* This wrapper constrains BOTH the background card and the text on mobile/tablet */}
+              <div className="relative mx-auto w-[92%] max-w-[560px] lg:mx-0 lg:w-full lg:max-w-none">
+                {/* Mobile/Tablet background card that auto-sizes to content height */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.97, borderRadius: '100%' }}
+                  animate={{ opacity: 1, scale: 1, borderRadius: '2rem' }}
+                  transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute inset-0 lg:hidden rounded-[2rem] overflow-hidden shadow-2xl bg-gradient-to-br from-[#F5F7FF] to-[#E0E7FF]"
+                >
+                  <Image
+                    src={HERO_WAVE_IMG}
+                    alt="Abstract digital wave representing screen technology"
+                    className="w-full h-full object-cover opacity-65 mix-blend-multiply"
+                    width={1600}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/15 to-transparent" />
+                </motion.div>
 
-              {/* Foreground content */}
-              <div className="relative z-10 flex flex-col justify-center py-12 lg:py-24">
-                <AnimatedElement direction="right" className="mb-6">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradientlightblue border border-primary/10 text-primary text-sm font-medium">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                    </span>
-                    الخيار الأول في العراق
-                  </div>
-                </AnimatedElement>
+                {/* Foreground content (now padded + constrained on mobile so it never spills خارج الإطار) */}
+                <div className="relative z-10 flex flex-col justify-center py-12 lg:py-24 px-6 sm:px-10 lg:px-0">
+                  <AnimatedElement direction="right" className="mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradientlightblue border border-primary/10 text-primary text-sm font-medium">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                      </span>
+                      الخيار الأول في العراق
+                    </div>
+                  </AnimatedElement>
 
-                <AnimatedElement delay={0.1}>
-                  <h1 className="font-heading text-5xl lg:text-7xl xl:text-8xl font-bold text-primary leading-[1.1] tracking-tight mb-8">
-                    مستقبل <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-gradientmediumblue">
-                      الشاشات الرقمية
-                    </span>
-                  </h1>
-                </AnimatedElement>
+                  <AnimatedElement delay={0.1}>
+                    <h1 className="font-heading text-5xl lg:text-7xl xl:text-8xl font-bold text-primary leading-[1.1] tracking-tight mb-8">
+                      مستقبل <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-gradientmediumblue">
+                        الشاشات الرقمية
+                      </span>
+                    </h1>
+                  </AnimatedElement>
 
-                <AnimatedElement delay={0.2}>
-                  <p className="font-paragraph text-lg lg:text-xl text-secondary-foreground/80 max-w-xl leading-relaxed mb-10">
-                    نحول المساحات الصامتة إلى تجارب بصرية مذهلة. شركة البرق تقدم أحدث حلول الشاشات العملاقة مع ضمان
-                    الجودة والدعم الفني المتكامل.
-                  </p>
-                </AnimatedElement>
+                  <AnimatedElement delay={0.2}>
+                    <p className="font-paragraph text-lg lg:text-xl text-secondary-foreground/80 max-w-xl leading-relaxed mb-10">
+                      نحول المساحات الصامتة إلى تجارب بصرية مذهلة. شركة البرق تقدم أحدث حلول الشاشات العملاقة مع ضمان
+                      الجودة والدعم الفني المتكامل.
+                    </p>
+                  </AnimatedElement>
 
-                <AnimatedElement delay={0.3} className="flex flex-wrap gap-4">
-                  <Button
-                    size="lg"
-                    className="h-14 px-8 rounded-full bg-primary text-white hover:bg-primary/90 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/25 hover:-translate-y-1"
-                    asChild
-                  >
-                    <Link to="/contact">
-                      اطلب عرض سعر
-                      <ArrowRight className="mr-2 w-5 h-5" />
-                    </Link>
-                  </Button>
-
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300 opacity-50"
-                    asChild
-                  >
-                    <a
-                      href="https://wa.me/9647706896134"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-primary-foreground shadow-sm"
+                  <AnimatedElement delay={0.3} className="flex flex-wrap gap-4">
+                    <Button
+                      size="lg"
+                      className="h-14 px-8 rounded-full bg-primary text-white hover:bg-primary/90 text-lg transition-all duration-300 shadow-lg hover:shadow-primary/25 hover:-translate-y-1"
+                      asChild
                     >
-                      <Phone className="ml-2 w-5 h-5" />
-                      تواصل واتساب
-                    </a>
-                  </Button>
-                </AnimatedElement>
+                      <Link to="/contact">
+                        اطلب عرض سعر
+                        <ArrowRight className="mr-2 w-5 h-5" />
+                      </Link>
+                    </Button>
 
-                {/* Scroll Indicator placeholder */}
-                <div className="absolute bottom-0 right-0 hidden lg:flex items-center gap-4 translate-y-12"></div>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="h-14 px-8 rounded-full border-2 border-primary/10 text-primary hover:bg-gradientlightblue hover:border-primary/20 text-lg transition-all duration-300 opacity-50"
+                      asChild
+                    >
+                      <a
+                        href="https://wa.me/9647706896134"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-primary-foreground shadow-sm"
+                      >
+                        <Phone className="ml-2 w-5 h-5" />
+                        تواصل واتساب
+                      </a>
+                    </Button>
+                  </AnimatedElement>
+
+                  {/* Scroll Indicator placeholder */}
+                  <div className="absolute bottom-0 right-0 hidden lg:flex items-center gap-4 translate-y-12"></div>
+                </div>
               </div>
             </div>
 
-            {/* ✅ RIGHT VISUAL COLUMN (desktop only) */}
+            {/* ✅ RIGHT VISUAL COLUMN (desktop only, keeps laptop layout) */}
             <div className="hidden lg:block w-full lg:w-1/2 relative min-h-[50vh] lg:min-h-auto">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, borderRadius: '100%' }}
@@ -259,9 +258,7 @@ export default function HomePage() {
               <div className="lg:w-1/3">
                 <div className="sticky top-32">
                   <AnimatedElement>
-                    <span className="text-primary/60 font-medium tracking-wider text-sm uppercase mb-4 block">
-                      لماذا تختارنا
-                    </span>
+                    <span className="text-primary/60 font-medium tracking-wider text-sm uppercase mb-4 block">لماذا تختارنا</span>
                     <h2 className="font-heading text-4xl lg:text-6xl font-bold text-primary mb-8 leading-tight">
                       التميز في كل <br />
                       <span className="text-gradientmediumblue">بكسل</span>
@@ -281,35 +278,13 @@ export default function HomePage() {
 
               <div className="lg:w-2/3 grid gap-8">
                 {[
-                  {
-                    icon: Award,
-                    title: 'خبرة لا تضاهى',
-                    desc: 'فريقنا يمتلك سنوات من الخبرة الميدانية في أصعب الظروف وأعقد المشاريع.',
-                    color: 'bg-[#F0F4FF]',
-                  },
-                  {
-                    icon: Zap,
-                    title: 'تكنولوجيا متطورة',
-                    desc: 'نستخدم أحدث شرائح LED وأنظمة التحكم لضمان صورة نقية واستهلاك طاقة مثالي.',
-                    color: 'bg-[#F5F7FF]',
-                  },
-                  {
-                    icon: Wrench,
-                    title: 'تركيب احترافي',
-                    desc: 'هياكل حديدية مصممة هندسياً لتحمل الظروف الجوية القاسية في العراق.',
-                    color: 'bg-[#F0F4FF]',
-                  },
-                  {
-                    icon: Headphones,
-                    title: 'دعم فني حقيقي',
-                    desc: 'لسنا مجرد موردين. نحن شركاؤك في النجاح مع خدمة صيانة واستجابة سريعة.',
-                    color: 'bg-[#F5F7FF]',
-                  },
+                  { icon: Award, title: 'خبرة لا تضاهى', desc: 'فريقنا يمتلك سنوات من الخبرة الميدانية في أصعب الظروف وأعقد المشاريع.', color: 'bg-[#F0F4FF]' },
+                  { icon: Zap, title: 'تكنولوجيا متطورة', desc: 'نستخدم أحدث شرائح LED وأنظمة التحكم لضمان صورة نقية واستهلاك طاقة مثالي.', color: 'bg-[#F5F7FF]' },
+                  { icon: Wrench, title: 'تركيب احترافي', desc: 'هياكل حديدية مصممة هندسياً لتحمل الظروف الجوية القاسية في العراق.', color: 'bg-[#F0F4FF]' },
+                  { icon: Headphones, title: 'دعم فني حقيقي', desc: 'لسنا مجرد موردين. نحن شركاؤك في النجاح مع خدمة صيانة واستجابة سريعة.', color: 'bg-[#F5F7FF]' },
                 ].map((item, idx) => (
                   <AnimatedElement key={idx} delay={idx * 0.1} direction="left">
-                    <div
-                      className={`group p-10 rounded-[2rem] ${item.color} hover:bg-primary transition-colors duration-500 cursor-default`}
-                    >
+                    <div className={`group p-10 rounded-[2rem] ${item.color} hover:bg-primary transition-colors duration-500 cursor-default`}>
                       <div className="flex items-start gap-6">
                         <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-sm group-hover:bg-white/10 transition-colors duration-500">
                           <item.icon className="w-8 h-8 text-primary group-hover:text-white transition-colors duration-500" />
@@ -336,16 +311,10 @@ export default function HomePage() {
           <div className="max-w-[120rem] mx-auto px-6 lg:px-12 mb-16 flex flex-col md:flex-row justify-between items-end">
             <AnimatedElement>
               <h2 className="font-heading text-4xl lg:text-5xl font-bold text-primary mb-4">خدماتنا المتكاملة</h2>
-              <p className="text-secondary-foreground/70 text-lg max-w-xl">
-                حلول تقنية مصممة خصيصاً لتلبية احتياجات السوق العراقي
-              </p>
+              <p className="text-secondary-foreground/70 text-lg max-w-xl">حلول تقنية مصممة خصيصاً لتلبية احتياجات السوق العراقي</p>
             </AnimatedElement>
             <AnimatedElement delay={0.2}>
-              <Button
-                variant="outline"
-                className="hidden md:flex border-primary text-primary hover:bg-primary hover:text-white"
-                asChild
-              >
+              <Button variant="outline" className="hidden md:flex border-primary text-primary hover:bg-primary hover:text-white" asChild>
                 <Link to="/services">جميع الخدمات</Link>
               </Button>
             </AnimatedElement>
