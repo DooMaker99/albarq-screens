@@ -72,7 +72,7 @@ export default function Footer() {
                 Facebook
               </a>
               <a
-                href="https://www.tiktok.com"
+                href="https://www.tiktok.com/@albarqforledscreens"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground"
