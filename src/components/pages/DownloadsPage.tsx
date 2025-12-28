@@ -710,7 +710,7 @@ export default function DownloadsPage() {
       <Header />
       <main className="w-full overflow-clip">
         {/* Hero */}
-        <section className="relative w-full py-24 lg:py-32 bg-gradient-to-b from-gradientlightblue/60 to-white">
+        <section className="relative w-full py-24 lg:py-32 from-gradientlightblue/60 to-white bg-[#e8e7ffff]">
           <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
             <div className="text-center mb-16">
               <AnimatedElement direction="down">
@@ -751,7 +751,7 @@ export default function DownloadsPage() {
             <SectionHeader
               labelEn="CONFIGURATIONS"
               titleAr="ملفات الإعدادات"
-              subtitleAr="مرتبة حسب نوع الشاشة ثم حسب ملف P… (كما هو مكتوب بالاسم)"
+              subtitleAr="حسب نوع الشاشة"
               icon={<Settings2 className="w-6 h-6" />}
             />
 
