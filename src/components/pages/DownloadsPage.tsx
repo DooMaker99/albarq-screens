@@ -1,6 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Download, ArrowRight, Settings2, ChevronDown, MessageCircle } from "lucide-react";
+import {
+  Download,
+  ArrowRight,
+  Settings2,
+  ChevronDown,
+  MessageCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 import Header from "@/components/Header";
@@ -79,133 +85,136 @@ const FIXED_CARD_DOWNLOAD_LINKS = [
 
 // =========================
 // Customer-only configuration files (ONLY THESE WILL SHOW)
+// Organized in UI by:
+// Sector (Outdoor/Indoor/Flexible) -> P... -> Y... -> (Huidu/R712 Update)
 // =========================
 const FIXED_CONFIG_FILES = [
   {
-    title: "P10 Outdoor File - L655 - Huidu 4-SCAN",
-    description: "ملف إعداد لـ L655 ضمن P10 Outdoor (Huidu 4-SCAN).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=19vtgA3VB9GHcC3T95VgYob5ytV2pV4HO",
+    title: "outdoor LED model / P5 outdoor file / Y55 / Huidu",
+    description: "ملف إعداد ضمن P5 outdoor file (Y55) — Huidu.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1mRyZqLeFawqEZz574x9ytdp4xX_2YRjW",
   },
   {
-    title: "P10 Outdoor File - Y48 - Huidu",
-    description: "ملف إعداد لـ Y48 ضمن P10 Outdoor (Huidu).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1khXXyGBoUwwfStfueiIObSlXb4ExJeKq",
+    title: "outdoor LED model / P5 outdoor file / Y55 / R712 Update",
+    description: "ملف إعداد ضمن P5 outdoor file (Y55) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
   },
   {
-    title: "P10 Outdoor File - Y48 - R712 Update",
-    description: "ملف إعداد لـ Y48 ضمن P10 Outdoor (R712 Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+    title: "outdoor LED model / P4 outdoor file / Y55 / Huidu",
+    description: "ملف إعداد ضمن P4 outdoor file (Y55) — Huidu.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1vDtMlnmZ20uSCOvYdqkfmW8EPiMn2xWF",
   },
   {
-    title: "P10 Outdoor File - Y48 - DH-7512S Update",
-    description: "ملف إعداد لـ Y48 ضمن P10 Outdoor (DH-7512S Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+    title: "outdoor LED model / P4 outdoor file / Y55 / R712 Update",
+    description: "ملف إعداد ضمن P4 outdoor file (Y55) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
   },
   {
-    title: "P10 Outdoor File - Y50 - Huidu",
-    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor (Huidu).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1Dsb5HEnu0hxjrhxg5Dau84J0bDaZ7y5f",
+    title: "outdoor LED model / P3.91 outdoor file / Y51 / Huidu",
+    description: "ملف إعداد ضمن P3.91 outdoor file (Y51) — Huidu.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1WqJvzqHdeWWuX3exD9fVq_9eEgS4gZ4C",
   },
   {
-    title: "P10 Outdoor File - Y50 - Novastar",
-    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor (Novastar).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1bR7Pqj2n9uZ3yZ7s1gYxZ3zq8xj1Jt3h",
+    title: "outdoor LED model / P3.91 outdoor file / Y51 / R712 Update",
+    description: "ملف إعداد ضمن P3.91 outdoor file (Y51) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
   },
   {
-    title: "P10 Outdoor File - Y50 - R712 Update",
-    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor (R712 Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+    title: "outdoor LED model / P2.976 outdoor file / Y51 / Huidu",
+    description: "ملف إعداد ضمن P2.976 outdoor file (Y51) — Huidu.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1R7uyYQw2yR5mS5H3wqwyGxT3eTjZPB2b",
   },
   {
-    title: "P10 Outdoor File - Y50 - DH-7512S Update",
-    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor (DH-7512S Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+    title: "outdoor LED model / P2.976 outdoor file / Y51 / R712 Update",
+    description: "ملف إعداد ضمن P2.976 outdoor file (Y51) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
   },
   {
-    title: "P10 Outdoor File - Y51 - Huidu",
-    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor (Huidu).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1l8v7GmG7B1m1Q6VhZ7m6aQf0o7dQ0w2H",
+    title: "outdoor LED model / P3.076 outdoor file / Y55 / Huidu",
+    description: "ملف إعداد ضمن P3.076 outdoor file (Y55) — Huidu.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1tIPQwI6_6bOPt3OllmW3WQ5eXgjE_m6O",
   },
   {
-    title: "P10 Outdoor File - Y51 - Novastar",
-    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor (Novastar).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1wGk1c7c2g4a4s2o6H2u0m0o1b1o1p1Q",
+    title: "outdoor LED model / P3.076 outdoor file / Y55 / R712 Update",
+    description: "ملف إعداد ضمن P3.076 outdoor file (Y55) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+
+  {
+    title: "indoor LED model / P3.076 indoor file / Y51 / Huidu",
+    description: "ملف إعداد ضمن P3.076 indoor file (Y51) — Huidu.",
+    downloadLink: "",
   },
   {
-    title: "P10 Outdoor File - Y51 - R712 Update",
-    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor (R712 Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+    title: "indoor LED model / P3.076 indoor file / Y51 / R712 Update",
+    description: "ملف إعداد ضمن P3.076 indoor file (Y51) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+
+  {
+    title: "flexible indoor LED model / P2.5 flexible indoor file / Y52 / Huidu",
+    description: "ملف إعداد ضمن P2.5 flexible indoor file (Y52) — Huidu.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1Nu0vZtzzX6bT6OZemT9b9dB1qI4x1WmZ",
   },
   {
-    title: "P10 Outdoor File - Y51 - DH-7512S Update",
-    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor (DH-7512S Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+    title: "flexible indoor LED model / P2.5 flexible indoor file / Y52 / R712 Update",
+    description: "ملف إعداد ضمن P2.5 flexible indoor file (Y52) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+
+  {
+    title: "indoor LED model / P2.5 indoor file / Y55 / Huidu",
+    description: "ملف إعداد ضمن P2.5 indoor file (Y55) — Huidu.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1bT4xB09hFcgxm4zW0Y2VhO1uQd6h8zYB",
   },
   {
-    title: "P5 Outdoor File - Y55 - Huidu",
-    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor (Huidu).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1wB4Qw8j6kHh7nJm0pRk7lQx8vYw0mQvS",
+    title: "indoor LED model / P2.5 indoor file / Y55 / R712 Update",
+    description: "ملف إعداد ضمن P2.5 indoor file (Y55) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+
+  {
+    title: "flexible indoor LED model / P1.86 flexible indoor file / Y55 / Huidu",
+    description: "ملف إعداد ضمن P1.86 flexible indoor file (Y55) — Huidu.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1Gm-9YwHn7h8MW4mJm2m0HhGzM3Kc2o2G",
   },
   {
-    title: "P5 Outdoor File - Y55 - Novastar",
-    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor (Novastar).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1eT2y8cR0qG0H5zZ8xQ7nK6vB5mN8pQwE",
+    title: "flexible indoor LED model / P1.86 flexible indoor file / Y55 / R712 Update",
+    description: "ملف إعداد ضمن P1.86 flexible indoor file (Y55) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+
+  {
+    title: "indoor LED model / P1.86 indoor file / Y55 / Huidu",
+    description: "ملف إعداد ضمن P1.86 indoor file (Y55) — Huidu.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1m1xG3kDJGx5cJzFUTJ8nQeWQZ2atqHhV",
   },
   {
-    title: "P5 Outdoor File - Y55 - R712 Update",
-    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor (R712 Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+    title: "indoor LED model / P1.86 indoor file / Y55 / R712 Update",
+    description: "ملف إعداد ضمن P1.86 indoor file (Y55) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+
+  {
+    title: "indoor LED model / P1.53 indoor file / Y55 / Huidu",
+    description: "ملف إعداد ضمن P1.53 indoor file (Y55) — Huidu.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1Gf9QmYq7t4a5mVt0Ujv-1pYl9hFZlOe7",
   },
   {
-    title: "P5 Outdoor File - Y55 - DH-7512S Update",
-    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor (DH-7512S Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+    title: "indoor LED model / P1.53 indoor file / Y55 / R712 Update",
+    description: "ملف إعداد ضمن P1.53 indoor file (Y55) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+
+  {
+    title: "indoor LED model / P1.25 indoor file / Y51 / Huidu",
+    description: "ملف إعداد ضمن P1.25 indoor file (Y51) — Huidu.",
+    downloadLink: "",
   },
   {
-    title: "P5 Outdoor File - Y52 - Huidu",
-    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor (Huidu).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1q9c5VJpRkP0p0T0Wm9Wm4xk6f7y8z0A",
-  },
-  {
-    title: "P5 Outdoor File - Y52 - Novastar",
-    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor (Novastar).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1Hn9v2x0kG4m9b0Q2m0a6c7d8e9f0g1H",
-  },
-  {
-    title: "P5 Outdoor File - Y52 - R712 Update",
-    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor (R712 Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-  },
-  {
-    title: "P5 Outdoor File - Y52 - DH-7512S Update",
-    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor (DH-7512S Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
-  },
-  {
-    title: "P1.25 Indoor File - Y50 - NV3210 Update",
-    description: "ملف إعداد لـ Y50 ضمن P1.25 Indoor (NV3210 Update).",
-    downloadLink:
-      "https://drive.google.com/uc?export=download&id=1IaPsJXBRn1kTkeFSCplOty6Bdco5_t5i",
+    title: "indoor LED model / P1.25 indoor file / Y51 / R712 Update",
+    description: "ملف إعداد ضمن P1.25 indoor file (Y51) — R712 Update.",
+    downloadLink: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
   },
 ] as const;
 
@@ -259,7 +268,7 @@ function SectionHeader({
   );
 }
 
-// Small dropdown container (not bright)
+// Small dropdown container (subtle)
 function DropSection({
   title,
   subtitle,
@@ -297,7 +306,9 @@ function DropSection({
         </div>
 
         <ChevronDown
-          className={`w-5 h-5 text-primary/60 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`w-5 h-5 text-primary/60 transition-transform ${
+            open ? "rotate-180" : ""
+          }`}
         />
       </button>
 
@@ -336,7 +347,9 @@ function DownloadsGrid({
   if (!items.length) {
     return (
       <div className="text-center py-8">
-        <p className="text-secondary-foreground/60 text-base">لا توجد ملفات ضمن هذا القسم</p>
+        <p className="text-secondary-foreground/60 text-base">
+          لا توجد ملفات ضمن هذا القسم
+        </p>
       </div>
     );
   }
@@ -459,17 +472,131 @@ function DownloadsGrid({
   );
 }
 
-// ========= parsing helpers for grouping =========
-function getPitchKey(title: string) {
-  // Finds P10 / P5 / P1.25 etc
-  const m = title.match(/P\s*([0-9]+(?:\.[0-9]+)?)/i);
-  return m ? `P${m[1]}` : "Other";
+// =========================
+// Config parsing + UI (ONLY CHANGED AREA)
+// =========================
+type FixedConfig = {
+  title: string;
+  description: string;
+  downloadLink: string;
+};
+
+type ConfigMeta = {
+  rawTitle: string;
+  sector: string;
+  fileGroup: string; // "P5 outdoor file", "P1.25 indoor file", ...
+  y: string; // "Y55" ...
+  variant: string; // "Huidu" / "R712 Update"
+  description: string;
+  downloadLink: string;
+};
+
+function parseConfigTitle(raw: string) {
+  const parts = raw.split("/").map((s) => s.trim());
+  const sector = parts[0] ?? "other";
+  const fileGroup = parts[1] ?? "Other";
+  const y = parts[2] ?? "";
+  const variant = parts[3] ?? raw;
+  return { sector, fileGroup, y, variant };
 }
 
-function getEnvKey(title: string) {
-  if (/Outdoor/i.test(title)) return "Outdoor";
-  if (/Indoor/i.test(title)) return "Indoor";
-  return "Other";
+function pitchNumberFromFileGroup(fileGroup: string) {
+  const m = fileGroup.match(/P\s*([0-9]+(?:\.[0-9]+)?)/i);
+  if (!m) return -1;
+  const n = parseFloat(m[1]);
+  return Number.isFinite(n) ? n : -1;
+}
+
+function sectorTitleAr(sector: string) {
+  const s = sector.toLowerCase();
+  if (s.includes("outdoor")) return "موديلات الشاشات الخارجية (Outdoor)";
+  if (s.includes("flexible")) return "شاشات داخلية مرنة (Flexible Indoor)";
+  if (s.includes("indoor")) return "موديلات الشاشات الداخلية (Indoor)";
+  return "ملفات أخرى";
+}
+
+function ConfigRows({ items }: { items: ConfigMeta[] }) {
+  const groupedByY = useMemo(() => {
+    const byY: Record<string, ConfigMeta[]> = {};
+    for (const it of items) {
+      const key = it.y || "Other";
+      byY[key] ||= [];
+      byY[key].push(it);
+    }
+
+    const yKeys = Object.keys(byY).sort((a, b) => {
+      const na = parseFloat(a.replace(/^Y/i, "")) || 9999;
+      const nb = parseFloat(b.replace(/^Y/i, "")) || 9999;
+      return na - nb;
+    });
+
+    return yKeys.map((y) => ({
+      y,
+      items: byY[y].sort((a, b) => a.variant.localeCompare(b.variant)),
+    }));
+  }, [items]);
+
+  return (
+    <div className="space-y-6">
+      {groupedByY.map((g) => (
+        <div key={g.y} className="rounded-2xl border border-primary/10 bg-white overflow-hidden">
+          <div className="px-5 py-4 border-b border-primary/10 flex items-center justify-between">
+            <div className="font-bold text-primary">{g.y}</div>
+            <div className="text-xs text-secondary-foreground/60">{g.items.length} ملفات</div>
+          </div>
+
+          <div className="divide-y divide-primary/10">
+            {g.items.map((it) => (
+              <div
+                key={it.rawTitle}
+                className="px-5 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3"
+              >
+                <div className="min-w-0">
+                  <div className="font-semibold text-primary">{it.variant}</div>
+                  <div className="text-xs text-secondary-foreground/60 break-words mt-1">
+                    {it.rawTitle}
+                  </div>
+                </div>
+
+                {it.downloadLink ? (
+                  <Button
+                    size="lg"
+                    className="h-11 px-6 rounded-xl bg-primary text-white hover:bg-primary/90 font-bold"
+                    asChild
+                  >
+                    <a href={it.downloadLink} target="_blank" rel="noopener noreferrer">
+                      <span className="flex items-center gap-2">
+                        <Download className="w-5 h-5" />
+                        تحميل
+                      </span>
+                    </a>
+                  </Button>
+                ) : (
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="h-11 px-6 rounded-xl border-primary/20 text-primary hover:bg-primary/5 font-bold"
+                    asChild
+                  >
+                    <a
+                      href={makeWhatsAppLink(it.rawTitle)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className="flex items-center gap-2">
+                        <MessageCircle className="w-5 h-5" />
+                        اطلب الملف
+                      </span>
+                    </a>
+                  </Button>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 // =========================
@@ -480,7 +607,6 @@ export default function DownloadsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [expandedSoftwareKey, setExpandedSoftwareKey] = useState<string | null>(null);
-  const [expandedConfigKey, setExpandedConfigKey] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDownloads = async () => {
@@ -513,60 +639,68 @@ export default function DownloadsPage() {
         })) as DownloadItem[]);
 
   // Configurations: ALWAYS show only customer list
-  const configItemsFinal: DownloadItem[] = FIXED_CONFIG_FILES.map((c, i) => ({
-    _id: `fixed-config-${i}`,
-    productName: c.title,
-    description: c.description,
-    downloadLink: c.downloadLink,
-    version: "",
-    fileSize: "",
-    appImage: "",
-    category: "configuration",
-  })) as DownloadItem[];
+  const configItems = useMemo<ConfigMeta[]>(() => {
+    return (FIXED_CONFIG_FILES as readonly FixedConfig[]).map((c) => {
+      const meta = parseConfigTitle(c.title);
+      return {
+        rawTitle: c.title,
+        sector: meta.sector,
+        fileGroup: meta.fileGroup,
+        y: meta.y,
+        variant: meta.variant,
+        description: c.description,
+        downloadLink: c.downloadLink || "",
+      };
+    });
+  }, []);
 
-  // Group config items -> Outdoor/Indoor -> Pxx
-  const configGroups = useMemo(() => {
-    const byEnv: Record<string, Record<string, DownloadItem[]>> = {};
-    for (const item of configItemsFinal) {
-      const t = String(item.productName ?? "");
-      const env = getEnvKey(t);
-      const p = getPitchKey(t);
-      byEnv[env] ||= {};
-      byEnv[env][p] ||= [];
-      byEnv[env][p].push(item);
+  // Tree: sector -> fileGroup (P...) -> items
+  const configTree = useMemo(() => {
+    const bySector: Record<string, Record<string, ConfigMeta[]>> = {};
+
+    for (const it of configItems) {
+      const sectorKey = it.sector || "other";
+      const groupKey = it.fileGroup || "Other";
+      bySector[sectorKey] ||= {};
+      bySector[sectorKey][groupKey] ||= [];
+      bySector[sectorKey][groupKey].push(it);
     }
 
-    // sort groups: Outdoor, Indoor, Other
-    const envOrder = ["Outdoor", "Indoor", "Other"];
-    const result: Array<{ env: string; pitches: Array<{ pitch: string; items: DownloadItem[] }> }> =
-      [];
+    const sectorOrder = [
+      "outdoor LED model",
+      "indoor LED model",
+      "flexible indoor LED model",
+      "other",
+    ];
 
-    for (const env of envOrder) {
-      if (!byEnv[env]) continue;
+    const sectors = Object.keys(bySector).sort((a, b) => {
+      const ia = sectorOrder.indexOf(a);
+      const ib = sectorOrder.indexOf(b);
+      if (ia === -1 && ib === -1) return a.localeCompare(b);
+      if (ia === -1) return 1;
+      if (ib === -1) return -1;
+      return ia - ib;
+    });
 
-      const pitchKeys = Object.keys(byEnv[env]).sort((a, b) => {
-        const na = parseFloat(a.replace(/^P/i, "")) || 9999;
-        const nb = parseFloat(b.replace(/^P/i, "")) || 9999;
-        return na - nb;
+    return sectors.map((sector) => {
+      const groupsObj = bySector[sector];
+      const groups = Object.keys(groupsObj).sort((ga, gb) => {
+        const na = pitchNumberFromFileGroup(ga);
+        const nb = pitchNumberFromFileGroup(gb);
+        // DESC (P5 then P4 then P3.91 ...)
+        if (na !== nb) return nb - na;
+        return ga.localeCompare(gb);
       });
 
-      result.push({
-        env,
-        pitches: pitchKeys.map((pitch) => ({
-          pitch,
-          items: byEnv[env][pitch],
+      return {
+        sector,
+        groups: groups.map((fileGroup) => ({
+          fileGroup,
+          items: groupsObj[fileGroup],
         })),
-      });
-    }
-
-    return result;
-  }, [configItemsFinal]);
-
-  const envTitleAr = (env: string) => {
-    if (env === "Outdoor") return "ملفات إعداد الشاشات الخارجية (Outdoor)";
-    if (env === "Indoor") return "ملفات إعداد الشاشات الداخلية (Indoor)";
-    return "ملفات أخرى";
-  };
+      };
+    });
+  }, [configItems]);
 
   return (
     <div
@@ -611,40 +745,35 @@ export default function DownloadsPage() {
           </div>
         </section>
 
-        {/* Configurations */}
+        {/* Configurations (CHANGED ONLY HERE) */}
         <section className="w-full py-16 lg:py-20 bg-white">
           <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
             <SectionHeader
               labelEn="CONFIGURATIONS"
               titleAr="ملفات الإعدادات"
-              subtitleAr="مرتبة حسب نوع الشاشة (Outdoor/Indoor) ثم حسب الموديل (P10 / P5 / ...)"
+              subtitleAr="مرتبة حسب نوع الشاشة ثم حسب ملف P… (كما هو مكتوب بالاسم)"
               icon={<Settings2 className="w-6 h-6" />}
             />
 
             <div className="space-y-6">
-              {configGroups.map((g) => (
+              {configTree.map((sec) => (
                 <DropSection
-                  key={g.env}
-                  title={envTitleAr(g.env)}
+                  key={sec.sector}
+                  title={sectorTitleAr(sec.sector)}
                   subtitle="اضغط لعرض الملفات"
-                  count={g.pitches.reduce((acc, p) => acc + p.items.length, 0)}
-                  defaultOpen={g.env !== "Other"}
+                  count={sec.groups.reduce((acc, g) => acc + g.items.length, 0)}
+                  defaultOpen={sec.sector !== "other"}
                 >
                   <div className="space-y-6">
-                    {g.pitches.map((p) => (
+                    {sec.groups.map((g) => (
                       <DropSection
-                        key={`${g.env}-${p.pitch}`}
-                        title={`${p.pitch}`}
+                        key={`${sec.sector}-${g.fileGroup}`}
+                        title={g.fileGroup}
                         subtitle="اضغط لعرض الملفات"
-                        count={p.items.length}
+                        count={g.items.length}
                         defaultOpen={true}
                       >
-                        <DownloadsGrid
-                          items={p.items}
-                          isLoading={isLoading}
-                          expandedKey={expandedConfigKey}
-                          setExpandedKey={setExpandedConfigKey}
-                        />
+                        <ConfigRows items={g.items} />
                       </DropSection>
                     ))}
                   </div>
@@ -675,7 +804,11 @@ export default function DownloadsPage() {
                 className="h-16 px-10 rounded-full bg-white text-primary hover:bg-white/90 text-xl font-bold shadow-2xl shadow-white/10"
                 asChild
               >
-                <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   تواصل معنا عبر واتساب
                   <ArrowRight className="mr-2 w-5 h-5" />
                 </a>
