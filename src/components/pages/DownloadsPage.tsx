@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Download, ArrowRight, Settings2 } from "lucide-react";
+import { Download, ArrowRight, Settings2, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
 import Header from "@/components/Header";
@@ -51,7 +51,9 @@ const AnimatedElement: React.FC<AnimatedElementProps> = ({
   );
 };
 
-// Your fixed overrides (software cards)
+// =========================
+// Fixed overrides (software cards)
+// =========================
 const FIXED_CARD_IMAGES = [
   "https://static.wixstatic.com/media/fe743e_7ff7371ffa724d958c645679b1e5870b~mv2.png",
   "https://static.wixstatic.com/media/fe743e_08a9b5784c9a4a38809df6429af09685~mv2.png",
@@ -75,6 +77,9 @@ const FIXED_CARD_DOWNLOAD_LINKS = [
   "https://www.hdwell.com/Download/index_100000010795715.html#download",
 ] as const;
 
+// =========================
+// Customer-only configuration files (REPLACE THIS LIST as needed)
+// =========================
 const FIXED_CONFIG_FILES = [
   {
     title: "P10 Outdoor File - L655 - Huidu 4-SCAN",
@@ -183,15 +188,30 @@ const FIXED_CONFIG_FILES = [
   },
 ] as const;
 
-
-
-
-
+// =========================
+// Types
+// =========================
 type DownloadCategory = "software" | "configuration";
 
 // If your entity typing doesn’t include category yet, this keeps TS happy.
 type DownloadItem = SoftwareDownloads & { category?: DownloadCategory };
 
+// =========================
+// WhatsApp helper (used if any item has no link)
+// =========================
+const WHATSAPP_NUMBER = "9647706896134";
+
+function makeWhatsAppLink(requestName: string) {
+  const msg =
+    `أحتاج ملف الإعداد التالي:\n` +
+    `${requestName}\n\n` +
+    `الرجاء تزويدي برابط التحميل.`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+// =========================
+// UI bits
+// =========================
 function SectionHeader({
   labelEn,
   titleAr,
@@ -321,6 +341,7 @@ function DownloadsGrid({
                     >
                       {desc}
                     </p>
+
                     <button
                       type="button"
                       onClick={() => setExpandedKey(isExpanded ? null : key)}
@@ -336,6 +357,7 @@ function DownloadsGrid({
                   {item.fileSize ? <span>{item.fileSize} MB</span> : null}
                 </div>
 
+                {/* Button */}
                 {link ? (
                   <Button
                     size="lg"
@@ -355,10 +377,19 @@ function DownloadsGrid({
                 ) : (
                   <Button
                     size="lg"
-                    disabled
-                    className="w-full h-12 rounded-xl bg-gray-200 text-gray-400 cursor-not-allowed text-base"
+                    variant="outline"
+                    className="w-full h-12 rounded-xl border-primary/20 text-primary hover:bg-primary/5 font-bold"
+                    asChild
                   >
-                    غير متاح
+                    <a
+                      href={makeWhatsAppLink(title || "ملف إعداد")}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      اطلب الملف
+                    </a>
                   </Button>
                 )}
               </div>
@@ -370,6 +401,9 @@ function DownloadsGrid({
   );
 }
 
+// =========================
+// Page
+// =========================
 export default function DownloadsPage() {
   const [downloads, setDownloads] = useState<DownloadItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -391,22 +425,33 @@ export default function DownloadsPage() {
     fetchDownloads();
   }, []);
 
+  // Software: use backend if present, otherwise show 4 placeholders (so fixed overrides still render)
   const softwareItems = downloads.filter((d) => (d.category ?? "software") === "software");
-  const configItems = downloads.filter((d) => d.category === "configuration");
-  const configItemsFinal =
-  configItems.length > 0
-    ? configItems
-    : FIXED_CONFIG_FILES.map((c, i) => ({
-        _id: `fixed-config-${i}`,
-        productName: c.title,
-        description: c.description,
-        downloadLink: c.downloadLink,
-        version: "",
-        fileSize: "",
-        appImage: "",
-        category: "configuration" as const,
-      }));
+  const softwareItemsFinal: DownloadItem[] =
+    softwareItems.length > 0
+      ? softwareItems
+      : Array.from({ length: 4 }).map((_, i) => ({
+          _id: `fixed-software-${i}`,
+          productName: FIXED_CARD_TITLES[i] ?? `Software ${i + 1}`,
+          description: FIXED_CARD_DESCRIPTIONS[i] ?? "",
+          downloadLink: FIXED_CARD_DOWNLOAD_LINKS[i] ?? "",
+          version: "",
+          fileSize: "",
+          appImage: FIXED_CARD_IMAGES[i] ?? "",
+          category: "software",
+        })) as DownloadItem[];
 
+  // Configurations: ALWAYS show only the customer list (ignore backend)
+  const configItemsFinal: DownloadItem[] = FIXED_CONFIG_FILES.map((c, i) => ({
+    _id: `fixed-config-${i}`,
+    productName: c.title,
+    description: c.description,
+    downloadLink: c.downloadLink,
+    version: "",
+    fileSize: "",
+    appImage: "",
+    category: "configuration",
+  })) as DownloadItem[];
 
   return (
     <div
@@ -442,7 +487,7 @@ export default function DownloadsPage() {
             />
 
             <DownloadsGrid
-              items={softwareItems}
+              items={softwareItemsFinal}
               isLoading={isLoading}
               expandedKey={expandedSoftwareKey}
               setExpandedKey={setExpandedSoftwareKey}
@@ -462,12 +507,11 @@ export default function DownloadsPage() {
             />
 
             <DownloadsGrid
-  items={configItemsFinal}
-  isLoading={isLoading}
-  expandedKey={expandedConfigKey}
-  setExpandedKey={setExpandedConfigKey}
-/>
-
+              items={configItemsFinal}
+              isLoading={isLoading}
+              expandedKey={expandedConfigKey}
+              setExpandedKey={setExpandedConfigKey}
+            />
           </div>
         </section>
 
