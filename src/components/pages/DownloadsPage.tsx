@@ -78,7 +78,7 @@ const FIXED_CARD_DOWNLOAD_LINKS = [
 ] as const;
 
 // =========================
-// Customer-only configuration files (REPLACE THIS LIST as needed)
+// Customer-only configuration files (ONLY THESE WILL SHOW)
 // =========================
 const FIXED_CONFIG_FILES = [
   {
@@ -192,8 +192,6 @@ const FIXED_CONFIG_FILES = [
 // Types
 // =========================
 type DownloadCategory = "software" | "configuration";
-
-// If your entity typing doesn’t include category yet, this keeps TS happy.
 type DownloadItem = SoftwareDownloads & { category?: DownloadCategory };
 
 // =========================
@@ -246,6 +244,25 @@ function SectionHeader({
   );
 }
 
+function SubGroupHeader({
+  title,
+  count,
+}: {
+  title: string;
+  count: number;
+}) {
+  return (
+    <div className="mb-6 flex items-center justify-between">
+      <h3 className="font-heading text-2xl lg:text-3xl font-bold text-primary">
+        {title}
+      </h3>
+      <div className="text-xs font-bold text-primary/70 bg-primary/5 border border-primary/10 rounded-full px-3 py-1">
+        {count} ملفات
+      </div>
+    </div>
+  );
+}
+
 function DownloadsGrid({
   items,
   isLoading,
@@ -257,7 +274,7 @@ function DownloadsGrid({
   isLoading: boolean;
   expandedKey: string | null;
   setExpandedKey: (v: string | null) => void;
-  useFixedOverrides?: boolean; // only for your 4 software cards
+  useFixedOverrides?: boolean;
 }) {
   if (isLoading) {
     return (
@@ -430,7 +447,7 @@ export default function DownloadsPage() {
   const softwareItemsFinal: DownloadItem[] =
     softwareItems.length > 0
       ? softwareItems
-      : Array.from({ length: 4 }).map((_, i) => ({
+      : (Array.from({ length: 4 }).map((_, i) => ({
           _id: `fixed-software-${i}`,
           productName: FIXED_CARD_TITLES[i] ?? `Software ${i + 1}`,
           description: FIXED_CARD_DESCRIPTIONS[i] ?? "",
@@ -439,7 +456,7 @@ export default function DownloadsPage() {
           fileSize: "",
           appImage: FIXED_CARD_IMAGES[i] ?? "",
           category: "software",
-        })) as DownloadItem[];
+        })) as DownloadItem[]);
 
   // Configurations: ALWAYS show only the customer list (ignore backend)
   const configItemsFinal: DownloadItem[] = FIXED_CONFIG_FILES.map((c, i) => ({
@@ -452,6 +469,14 @@ export default function DownloadsPage() {
     appImage: "",
     category: "configuration",
   })) as DownloadItem[];
+
+  // Split configurations into Outdoor / Indoor
+  const outdoorConfigItems = configItemsFinal.filter((x) =>
+    /Outdoor/i.test(String(x.productName ?? ""))
+  );
+  const indoorConfigItems = configItemsFinal.filter((x) =>
+    /Indoor/i.test(String(x.productName ?? ""))
+  );
 
   return (
     <div
@@ -496,22 +521,39 @@ export default function DownloadsPage() {
           </div>
         </section>
 
-        {/* Configurations */}
+        {/* Configurations (split Outdoor / Indoor) */}
         <section className="w-full py-16 lg:py-20 bg-white">
           <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
             <SectionHeader
               labelEn="CONFIGURATIONS"
               titleAr="ملفات الإعدادات"
-              subtitleAr="ملفات إعداد وتوصيف الموديولات (Module Config Files) لتصحيح الألوان/الـScan/التوصيل"
+              subtitleAr="ملفات إعداد وتوصيف الموديولات (Module Config Files)"
               icon={<Settings2 className="w-6 h-6" />}
             />
 
-            <DownloadsGrid
-              items={configItemsFinal}
-              isLoading={isLoading}
-              expandedKey={expandedConfigKey}
-              setExpandedKey={setExpandedConfigKey}
-            />
+            <div className="space-y-16">
+              {/* Outdoor */}
+              <div>
+                <SubGroupHeader title="ملفات خارجية (Outdoor)" count={outdoorConfigItems.length} />
+                <DownloadsGrid
+                  items={outdoorConfigItems}
+                  isLoading={isLoading}
+                  expandedKey={expandedConfigKey}
+                  setExpandedKey={setExpandedConfigKey}
+                />
+              </div>
+
+              {/* Indoor */}
+              <div>
+                <SubGroupHeader title="ملفات داخلية (Indoor)" count={indoorConfigItems.length} />
+                <DownloadsGrid
+                  items={indoorConfigItems}
+                  isLoading={isLoading}
+                  expandedKey={expandedConfigKey}
+                  setExpandedKey={setExpandedConfigKey}
+                />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -536,7 +578,7 @@ export default function DownloadsPage() {
                 className="h-16 px-10 rounded-full bg-white text-primary hover:bg-white/90 text-xl font-bold shadow-2xl shadow-white/10"
                 asChild
               >
-                <a href="https://wa.me/9647706896134" target="_blank" rel="noopener noreferrer">
+                <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
                   تواصل معنا عبر واتساب
                   <ArrowRight className="mr-2 w-5 h-5" />
                 </a>
