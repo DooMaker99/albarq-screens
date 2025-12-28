@@ -1,486 +1,689 @@
-import React, { useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { Download, Layers, Monitor, Sparkles, Filter } from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { Download, ArrowRight, Settings2, ChevronDown, MessageCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Image } from "@/components/ui/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { BaseCrudService } from "@/integrations";
+import { SoftwareDownloads } from "@/entities";
 
-type Env = "Outdoor" | "Indoor";
-type FormFactor = "Standard" | "Flexible";
-
-type ConfigFile = {
-  id: string;
-  env: Env;
-  formFactor: FormFactor;
-  pitch: string; // e.g. "P5", "P3.076"
-  y: string; // e.g. "Y55"
-  title: string; // e.g. "Huidu", "R712 Update"
-  subtitle?: string; // optional extra (e.g. module width)
-  downloadUrl: string;
-  note?: string;
+type AnimatedElementProps = {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  direction?: "up" | "down" | "left" | "right";
 };
 
-// Links extracted from the provided page source
-const CONFIG_FILES: ConfigFile[] = [
-  // =========================
-  // OUTDOOR (Standard)
-  // =========================
-  {
-    id: "out-p5-y55-huidu",
-    env: "Outdoor",
-    formFactor: "Standard",
-    pitch: "P5",
-    y: "Y55",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1mRyZqLeFawqEZz574x9ytdp4xX_2YRjW",
-  },
-  {
-    id: "out-p5-y55-r712",
-    env: "Outdoor",
-    formFactor: "Standard",
-    pitch: "P5",
-    y: "Y55",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-  },
+const AnimatedElement: React.FC<AnimatedElementProps> = ({
+  children,
+  className,
+  delay = 0,
+  direction = "up",
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
 
-  {
-    id: "out-p4-y55-huidu",
-    env: "Outdoor",
-    formFactor: "Standard",
-    pitch: "P4",
-    y: "Y55",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1jBP0eG3r6Zrzw2ZpkLmLH0d4KMEtQ8rt",
-  },
-  {
-    id: "out-p4-y55-r712",
-    env: "Outdoor",
-    formFactor: "Standard",
-    pitch: "P4",
-    y: "Y55",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-  },
-
-  {
-    id: "out-p3_91-y51-huidu",
-    env: "Outdoor",
-    formFactor: "Standard",
-    pitch: "P3.91",
-    y: "Y51",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1C0_1iti084wr-EYrAmW7ZvFC-0R9rtV_",
-  },
-  // NOTE: In the provided source, P3.91/Y51 does not include an R712 Update link.
-  // If you still want to show it (as a universal receiver-card update), keep this entry.
-  {
-    id: "out-p3_91-y51-r712",
-    env: "Outdoor",
-    formFactor: "Standard",
-    pitch: "P3.91",
-    y: "Y51",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-    note: "Universal R712 update file",
-  },
-
-  {
-    id: "out-p2_976-y51-huidu",
-    env: "Outdoor",
-    formFactor: "Standard",
-    pitch: "P2.976",
-    y: "Y51",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1Z-5Zpw3kvZphICckI5OCCaqo7eLvlmVJ",
-  },
-  // NOTE: In the provided source, P2.976/Y51 does not include an R712 Update link.
-  // If you still want to show it (as a universal receiver-card update), keep this entry.
-  {
-    id: "out-p2_976-y51-r712",
-    env: "Outdoor",
-    formFactor: "Standard",
-    pitch: "P2.976",
-    y: "Y51",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-    note: "Universal R712 update file",
-  },
-
-  {
-    id: "out-p3_076-y55-huidu",
-    env: "Outdoor",
-    formFactor: "Standard",
-    pitch: "P3.076",
-    y: "Y55",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1S6-m-ceSQB1bE3cxgNVIiYTk85ctDfRQ",
-  },
-  {
-    id: "out-p3_076-y55-r712",
-    env: "Outdoor",
-    formFactor: "Standard",
-    pitch: "P3.076",
-    y: "Y55",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-  },
-
-  // =========================
-  // INDOOR (Standard)
-  // =========================
-  // NOTE: In the provided source, P3.076 Indoor has downloadable links under Y50 (not Y51).
-  {
-    id: "in-p3_076-y50-huidu",
-    env: "Indoor",
-    formFactor: "Standard",
-    pitch: "P3.076",
-    y: "Y50",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1cObASgYJvLBmy9xZOvwxvQp7EI2O4db3",
-    note: "Available under Y50 in source",
-  },
-  {
-    id: "in-p3_076-y50-r712",
-    env: "Indoor",
-    formFactor: "Standard",
-    pitch: "P3.076",
-    y: "Y50",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-    note: "Available under Y50 in source",
-  },
-
-  {
-    id: "in-p2_5-y55-huidu",
-    env: "Indoor",
-    formFactor: "Standard",
-    pitch: "P2.5",
-    y: "Y55",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1GTvJaIPbTfkK1NWHyiCZnhv6LzAV2ufr",
-  },
-  {
-    id: "in-p2_5-y55-r712",
-    env: "Indoor",
-    formFactor: "Standard",
-    pitch: "P2.5",
-    y: "Y55",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-  },
-
-  {
-    id: "in-p1_86-y55-huidu",
-    env: "Indoor",
-    formFactor: "Standard",
-    pitch: "P1.86",
-    y: "Y55",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1STX6vZP_LP8STrkd1oy6BNBdryoILxc6",
-  },
-  {
-    id: "in-p1_86-y55-r712",
-    env: "Indoor",
-    formFactor: "Standard",
-    pitch: "P1.86",
-    y: "Y55",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-  },
-
-  {
-    id: "in-p1_53-y55-huidu",
-    env: "Indoor",
-    formFactor: "Standard",
-    pitch: "P1.53",
-    y: "Y55",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1fmx2LpOzMrao6P_ii-ljB5uDlIrwiW2c",
-  },
-  {
-    id: "in-p1_53-y55-r712",
-    env: "Indoor",
-    formFactor: "Standard",
-    pitch: "P1.53",
-    y: "Y55",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-  },
-
-  // NOTE: In the provided source, P1.25 Indoor has downloadable links under Y50 (not Y51).
-  {
-    id: "in-p1_25-y50-huidu-1mod",
-    env: "Indoor",
-    formFactor: "Standard",
-    pitch: "P1.25",
-    y: "Y50",
-    title: "Huidu",
-    subtitle: "1 Modules Width",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1BBu_wgkCh_OkJ2ptwDu75OpYhHIzXQE4",
-    note: "Available under Y50 in source",
-  },
-  {
-    id: "in-p1_25-y50-r712",
-    env: "Indoor",
-    formFactor: "Standard",
-    pitch: "P1.25",
-    y: "Y50",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1TB5_DMxPz19QCUyQ8AP-3T3-pyriiLvd",
-    note: "Available under Y50 in source",
-  },
-
-  // =========================
-  // INDOOR (Flexible)
-  // =========================
-  {
-    id: "flex-p2_5-y52-huidu",
-    env: "Indoor",
-    formFactor: "Flexible",
-    pitch: "P2.5",
-    y: "Y52",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1B2yqbc3sqV2h5KQZ5D-9PyAeRPCsagmX",
-  },
-  {
-    id: "flex-p2_5-y52-r712",
-    env: "Indoor",
-    formFactor: "Flexible",
-    pitch: "P2.5",
-    y: "Y52",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-  },
-
-  {
-    id: "flex-p1_86-y55-huidu",
-    env: "Indoor",
-    formFactor: "Flexible",
-    pitch: "P1.86",
-    y: "Y55",
-    title: "Huidu",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=14mUNRe-RUJHbh6tQ3p2lYr3UyF4eqrCC",
-  },
-  // NOTE: In the provided source, P1.86 Flexible does not include an R712 Update link.
-  // If you still want to show it (as a universal receiver-card update), keep this entry.
-  {
-    id: "flex-p1_86-y55-r712",
-    env: "Indoor",
-    formFactor: "Flexible",
-    pitch: "P1.86",
-    y: "Y55",
-    title: "R712 Update",
-    downloadUrl: "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
-    note: "Universal R712 update file",
-  },
-];
-
-function pitchNumber(p: string): number {
-  // "P3.076" -> 3.076
-  const n = Number.parseFloat(p.replace(/^P/i, ""));
-  return Number.isFinite(n) ? n : 0;
-}
-
-function classNames(...xs: Array<string | false | null | undefined>) {
-  return xs.filter(Boolean).join(" ");
-}
-
-export default function DownloadsPage() {
-  const [env, setEnv] = useState<Env>("Outdoor");
-  const [modelType, setModelType] = useState<"All" | FormFactor>("All");
-  const [pitch, setPitch] = useState<string>("");
-
-  const filteredByEnv = useMemo(() => {
-    return CONFIG_FILES.filter((f) => f.env === env);
-  }, [env]);
-
-  const filteredByEnvAndType = useMemo(() => {
-    if (env !== "Indoor") return filteredByEnv;
-    if (modelType === "All") return filteredByEnv;
-    return filteredByEnv.filter((f) => f.formFactor === modelType);
-  }, [env, modelType, filteredByEnv]);
-
-  const pitchOptions = useMemo(() => {
-    const set = new Set(filteredByEnvAndType.map((f) => f.pitch));
-    return Array.from(set).sort((a, b) => pitchNumber(b) - pitchNumber(a));
-  }, [filteredByEnvAndType]);
-
-  // Keep pitch valid when env/type changes
-  React.useEffect(() => {
-    if (!pitchOptions.length) {
-      setPitch("");
-      return;
-    }
-    if (!pitchOptions.includes(pitch)) {
-      setPitch(pitchOptions[0]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [env, modelType, pitchOptions.join("|")]);
-
-  const visibleFiles = useMemo(() => {
-    return filteredByEnvAndType
-      .filter((f) => f.pitch === pitch)
-      .sort((a, b) => {
-        // Put Huidu before updates
-        if (a.title === b.title) return 0;
-        if (a.title.toLowerCase().includes("huidu")) return -1;
-        if (b.title.toLowerCase().includes("huidu")) return 1;
-        return a.title.localeCompare(b.title);
-      });
-  }, [filteredByEnvAndType, pitch]);
+  const variants = {
+    hidden: {
+      opacity: 0,
+      y: direction === "up" ? 40 : direction === "down" ? -40 : 0,
+      x: direction === "left" ? 40 : direction === "right" ? -40 : 0,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1], delay },
+    },
+  } as const;
 
   return (
-    <div className="min-h-screen bg-[#0b0f17] text-white">
-      <Header />
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={variants}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
-      <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-10">
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25 }}
-          className="mb-8"
-        >
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/90">
-            <Sparkles className="h-4 w-4" />
-            Downloads
+// =========================
+// Fixed overrides (software cards)
+// =========================
+const FIXED_CARD_IMAGES = [
+  "https://static.wixstatic.com/media/fe743e_7ff7371ffa724d958c645679b1e5870b~mv2.png",
+  "https://static.wixstatic.com/media/fe743e_08a9b5784c9a4a38809df6429af09685~mv2.png",
+  "https://static.wixstatic.com/media/fe743e_8361f5199cd9436eb70bb7808385581f~mv2.png",
+  "https://static.wixstatic.com/media/fe743e_95ff50ab33384f2ca63ec8ea87d00983~mv2.png",
+] as const;
+
+const FIXED_CARD_TITLES = ["HDSET", "ViPlex Express", "Nova LCT", "HD Player"] as const;
+
+const FIXED_CARD_DESCRIPTIONS = [
+  "برنامج إعداد شاشات LED من Huidu، يُستخدم لتهيئة الشاشة وضبط إعداداتها الأساسية قبل التشغيل، ويُعتمد عليه أثناء التركيب أو عند إعادة ضبط النظام.",
+  "برنامج تشغيل وإدارة محتوى شاشات LED من NovaStar، يتيح التحكم في المحتوى المعروض، تنظيمه، وجدولته بما يتناسب مع متطلبات العرض المختلفة.",
+  "برنامج من NovaStar مخصص لتكوين ومعايرة شاشات LED، يتيح ضبط إعدادات العرض، وحدات الإرسال والاستقبال، ومعالجة السطوع والألوان بدقة عالية.",
+  "برنامج مخصص لتشغيل وإدارة المحتوى على شاشات LED، يتيح عرض الفيديوهات والصور والنصوص وتنظيمها حسب الحاجة، مع دعم التشغيل التلقائي وجدولة المحتوى.",
+] as const;
+
+const FIXED_CARD_DOWNLOAD_LINKS = [
+  "https://www.hdwell.com/Download/index_100000010768868.html#download",
+  "https://en-website001.oss-us-east-1.aliyuncs.com/ViPlex%20Express%20V3.0.0.3401%20Setup(X64).zip",
+  "https://en-website001.oss-us-east-1.aliyuncs.com/NovaLCT%20V5.7.1.zip",
+  "https://www.hdwell.com/Download/index_100000010795715.html#download",
+] as const;
+
+// =========================
+// Customer-only configuration files (ONLY THESE WILL SHOW)
+// =========================
+const FIXED_CONFIG_FILES = [
+  {
+    title: "P10 Outdoor File - L655 - Huidu 4-SCAN",
+    description: "ملف إعداد لـ L655 ضمن P10 Outdoor (Huidu 4-SCAN).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=19vtgA3VB9GHcC3T95VgYob5ytV2pV4HO",
+  },
+  {
+    title: "P10 Outdoor File - Y48 - Huidu",
+    description: "ملف إعداد لـ Y48 ضمن P10 Outdoor (Huidu).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1khXXyGBoUwwfStfueiIObSlXb4ExJeKq",
+  },
+  {
+    title: "P10 Outdoor File - Y48 - R712 Update",
+    description: "ملف إعداد لـ Y48 ضمن P10 Outdoor (R712 Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+  {
+    title: "P10 Outdoor File - Y48 - DH-7512S Update",
+    description: "ملف إعداد لـ Y48 ضمن P10 Outdoor (DH-7512S Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+  },
+  {
+    title: "P10 Outdoor File - Y50 - Huidu",
+    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor (Huidu).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1Dsb5HEnu0hxjrhxg5Dau84J0bDaZ7y5f",
+  },
+  {
+    title: "P10 Outdoor File - Y50 - Novastar",
+    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor (Novastar).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1bR7Pqj2n9uZ3yZ7s1gYxZ3zq8xj1Jt3h",
+  },
+  {
+    title: "P10 Outdoor File - Y50 - R712 Update",
+    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor (R712 Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+  {
+    title: "P10 Outdoor File - Y50 - DH-7512S Update",
+    description: "ملف إعداد لـ Y50 ضمن P10 Outdoor (DH-7512S Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+  },
+  {
+    title: "P10 Outdoor File - Y51 - Huidu",
+    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor (Huidu).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1l8v7GmG7B1m1Q6VhZ7m6aQf0o7dQ0w2H",
+  },
+  {
+    title: "P10 Outdoor File - Y51 - Novastar",
+    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor (Novastar).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1wGk1c7c2g4a4s2o6H2u0m0o1b1o1p1Q",
+  },
+  {
+    title: "P10 Outdoor File - Y51 - R712 Update",
+    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor (R712 Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+  {
+    title: "P10 Outdoor File - Y51 - DH-7512S Update",
+    description: "ملف إعداد لـ Y51 ضمن P10 Outdoor (DH-7512S Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+  },
+  {
+    title: "P5 Outdoor File - Y55 - Huidu",
+    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor (Huidu).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1wB4Qw8j6kHh7nJm0pRk7lQx8vYw0mQvS",
+  },
+  {
+    title: "P5 Outdoor File - Y55 - Novastar",
+    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor (Novastar).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1eT2y8cR0qG0H5zZ8xQ7nK6vB5mN8pQwE",
+  },
+  {
+    title: "P5 Outdoor File - Y55 - R712 Update",
+    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor (R712 Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+  {
+    title: "P5 Outdoor File - Y55 - DH-7512S Update",
+    description: "ملف إعداد لـ Y55 ضمن P5 Outdoor (DH-7512S Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+  },
+  {
+    title: "P5 Outdoor File - Y52 - Huidu",
+    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor (Huidu).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1q9c5VJpRkP0p0T0Wm9Wm4xk6f7y8z0A",
+  },
+  {
+    title: "P5 Outdoor File - Y52 - Novastar",
+    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor (Novastar).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1Hn9v2x0kG4m9b0Q2m0a6c7d8e9f0g1H",
+  },
+  {
+    title: "P5 Outdoor File - Y52 - R712 Update",
+    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor (R712 Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1dtaHI03Fj8_LNdIyXqIDNtyaEtZJdWWK",
+  },
+  {
+    title: "P5 Outdoor File - Y52 - DH-7512S Update",
+    description: "ملف إعداد لـ Y52 ضمن P5 Outdoor (DH-7512S Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1eOkZkvFPrt9NUcFGWE0p7QcmPbGDPAVX",
+  },
+  {
+    title: "P1.25 Indoor File - Y50 - NV3210 Update",
+    description: "ملف إعداد لـ Y50 ضمن P1.25 Indoor (NV3210 Update).",
+    downloadLink:
+      "https://drive.google.com/uc?export=download&id=1IaPsJXBRn1kTkeFSCplOty6Bdco5_t5i",
+  },
+] as const;
+
+// =========================
+// Types + helpers
+// =========================
+type DownloadCategory = "software" | "configuration";
+type DownloadItem = SoftwareDownloads & { category?: DownloadCategory };
+
+const WHATSAPP_NUMBER = "9647706896134";
+
+function makeWhatsAppLink(requestName: string) {
+  const msg =
+    `أحتاج ملف الإعداد التالي:\n` +
+    `${requestName}\n\n` +
+    `الرجاء تزويدي برابط التحميل.`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+function SectionHeader({
+  labelEn,
+  titleAr,
+  subtitleAr,
+  icon,
+}: {
+  labelEn: string;
+  titleAr: string;
+  subtitleAr: string;
+  icon?: React.ReactNode;
+}) {
+  return (
+    <div className="mb-10">
+      <div className="flex items-center justify-between gap-6">
+        <div>
+          <div className="text-xs tracking-widest text-primary/50 font-bold uppercase mb-2">
+            {labelEn}
           </div>
-
-          <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-            LED Configuration Files
-          </h1>
-          <p className="mt-2 max-w-2xl text-white/70">
-            Select Indoor/Outdoor, pick the pixel pitch (P), then download the exact files.
-          </p>
-        </motion.div>
-
-        {/* Controls */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            {/* Env tabs */}
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
-              <div className="inline-flex w-full rounded-xl border border-white/10 bg-black/20 p-1 sm:w-auto">
-                <button
-                  type="button"
-                  onClick={() => setEnv("Outdoor")}
-                  className={classNames(
-                    "flex-1 rounded-lg px-4 py-2 text-sm transition sm:flex-none",
-                    env === "Outdoor" ? "bg-white/10 text-white" : "text-white/70 hover:text-white"
-                  )}
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <Monitor className="h-4 w-4" />
-                    Outdoor
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEnv("Indoor")}
-                  className={classNames(
-                    "flex-1 rounded-lg px-4 py-2 text-sm transition sm:flex-none",
-                    env === "Indoor" ? "bg-white/10 text-white" : "text-white/70 hover:text-white"
-                  )}
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <Layers className="h-4 w-4" />
-                    Indoor
-                  </span>
-                </button>
-              </div>
-
-              {/* Model type (Indoor only) */}
-              {env === "Indoor" && (
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-2 text-sm text-white/70">
-                    <Filter className="h-4 w-4" />
-                    Type
-                  </span>
-                  <select
-                    value={modelType}
-                    onChange={(e) => setModelType(e.target.value as "All" | FormFactor)}
-                    className="h-10 rounded-xl border border-white/10 bg-black/30 px-3 text-sm text-white outline-none ring-0"
-                  >
-                    <option value="All">All</option>
-                    <option value="Standard">Standard</option>
-                    <option value="Flexible">Flexible</option>
-                  </select>
-                </div>
-              )}
-            </div>
-
-            {/* Pitch dropdown */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-white/70">Pixel Pitch</span>
-              <select
-                value={pitch}
-                onChange={(e) => setPitch(e.target.value)}
-                className="h-10 min-w-[180px] rounded-xl border border-white/10 bg-black/30 px-3 text-sm text-white outline-none ring-0"
-              >
-                {pitchOptions.map((p) => (
-                  <option key={p} value={p}>
-                    {p}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Files grid */}
-          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {visibleFiles.map((f) => (
-              <div
-                key={f.id}
-                className="rounded-2xl border border-white/10 bg-black/20 p-4"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-base font-semibold">{f.title}</span>
-
-                      <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-white/80">
-                        {f.pitch}
-                      </span>
-                      <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-white/80">
-                        {f.y}
-                      </span>
-
-                      {env === "Indoor" && (
-                        <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-white/80">
-                          {f.formFactor}
-                        </span>
-                      )}
-                    </div>
-
-                    {f.subtitle && (
-                      <div className="mt-1 text-sm text-white/70">{f.subtitle}</div>
-                    )}
-
-                    {f.note && (
-                      <div className="mt-2 text-xs text-white/55">{f.note}</div>
-                    )}
-                  </div>
-
-                  <a
-                    href={f.downloadUrl}
-                    className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white hover:bg-white/10"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Download className="h-4 w-4" />
-                    Download
-                  </a>
-                </div>
-              </div>
-            ))}
-
-            {!visibleFiles.length && (
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-5 text-sm text-white/70 sm:col-span-2">
-                No files found for this selection.
-              </div>
-            )}
-          </div>
+          <h2 className="font-heading text-3xl lg:text-4xl font-bold text-primary mb-2">
+            {titleAr}
+          </h2>
+          <p className="text-secondary-foreground/65 text-base">{subtitleAr}</p>
         </div>
-      </main>
+        {icon ? (
+          <div className="hidden md:flex w-12 h-12 rounded-2xl bg-primary/5 items-center justify-center text-primary">
+            {icon}
+          </div>
+        ) : null}
+      </div>
+      <div className="mt-6 h-px w-full bg-primary/10" />
+    </div>
+  );
+}
 
+// Small dropdown container (not bright)
+function DropSection({
+  title,
+  subtitle,
+  count,
+  defaultOpen = false,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  count: number;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+
+  return (
+    <div className="rounded-2xl border border-primary/10 bg-white overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between gap-4 px-6 py-5 text-right hover:bg-primary/[0.03] transition-colors"
+      >
+        <div className="min-w-0">
+          <div className="flex items-center gap-3">
+            <h3 className="font-heading text-xl lg:text-2xl font-bold text-primary truncate">
+              {title}
+            </h3>
+            <span className="text-xs font-bold text-primary/70 bg-primary/5 border border-primary/10 rounded-full px-3 py-1">
+              {count} ملفات
+            </span>
+          </div>
+          {subtitle ? (
+            <p className="mt-1 text-sm text-secondary-foreground/60">{subtitle}</p>
+          ) : null}
+        </div>
+
+        <ChevronDown
+          className={`w-5 h-5 text-primary/60 transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {open ? <div className="px-6 pb-6 pt-2">{children}</div> : null}
+    </div>
+  );
+}
+
+function DownloadsGrid({
+  items,
+  isLoading,
+  expandedKey,
+  setExpandedKey,
+  useFixedOverrides,
+}: {
+  items: DownloadItem[];
+  isLoading: boolean;
+  expandedKey: string | null;
+  setExpandedKey: (v: string | null) => void;
+  useFixedOverrides?: boolean;
+}) {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {[1, 2, 3, 4].map((idx) => (
+          <div key={idx} className="animate-pulse">
+            <div className="aspect-square bg-gray-200 rounded-2xl mb-6" />
+            <div className="h-6 bg-gray-200 rounded w-3/4 mb-3" />
+            <div className="h-4 bg-gray-200 rounded w-1/2" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (!items.length) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-secondary-foreground/60 text-base">لا توجد ملفات ضمن هذا القسم</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {items.map((item, idx) => {
+        const key = String(item._id ?? `${idx}`);
+        const isExpanded = expandedKey === key;
+
+        const title =
+          useFixedOverrides && idx < FIXED_CARD_TITLES.length
+            ? FIXED_CARD_TITLES[idx]
+            : item.productName;
+
+        const imgSrc =
+          useFixedOverrides && idx < FIXED_CARD_IMAGES.length
+            ? FIXED_CARD_IMAGES[idx]
+            : item.appImage;
+
+        const desc =
+          useFixedOverrides && idx < FIXED_CARD_DESCRIPTIONS.length
+            ? FIXED_CARD_DESCRIPTIONS[idx]
+            : item.description;
+
+        const link =
+          useFixedOverrides && idx < FIXED_CARD_DOWNLOAD_LINKS.length
+            ? FIXED_CARD_DOWNLOAD_LINKS[idx]
+            : item.downloadLink;
+
+        return (
+          <AnimatedElement key={key} delay={idx * 0.06} className="group">
+            <div className="h-full flex flex-col bg-white rounded-2xl overflow-hidden border border-primary/10 hover:border-primary/25 transition-all duration-300 hover:shadow-lg hover:-translate-y-1.5">
+              {/* Image */}
+              <div className="relative aspect-square bg-gradientlightblue/40 overflow-hidden flex items-center justify-center p-6">
+                {imgSrc ? (
+                  <Image
+                    src={imgSrc}
+                    alt={title || "Download"}
+                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+                    width={300}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-primary/[0.03] text-primary/20">
+                    <Download className="w-16 h-16" />
+                  </div>
+                )}
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 p-6 flex flex-col">
+                <h3 className="text-xl font-bold text-primary mb-2 font-heading line-clamp-2">
+                  {title}
+                </h3>
+
+                {desc ? (
+                  <div className="mb-4 flex-1">
+                    <p
+                      className={`text-secondary-foreground/60 text-sm ${
+                        isExpanded ? "" : "line-clamp-2"
+                      }`}
+                    >
+                      {desc}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setExpandedKey(isExpanded ? null : key)}
+                      className="mt-2 text-xs text-primary/80 hover:text-primary underline underline-offset-2"
+                    >
+                      {isExpanded ? "عرض أقل" : "عرض المزيد"}
+                    </button>
+                  </div>
+                ) : null}
+
+                <div className="flex items-center gap-4 text-xs text-secondary-foreground/45 mb-6 py-3 border-t border-primary/10">
+                  {item.version ? <span>الإصدار: {item.version}</span> : null}
+                  {item.fileSize ? <span>{item.fileSize} MB</span> : null}
+                </div>
+
+                {link ? (
+                  <Button
+                    size="lg"
+                    className="w-full h-12 rounded-xl bg-primary text-white hover:bg-primary/90 transition-all duration-300 font-bold text-base"
+                    asChild
+                  >
+                    <a
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <Download className="w-5 h-5" />
+                      تحميل
+                    </a>
+                  </Button>
+                ) : (
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full h-12 rounded-xl border-primary/20 text-primary hover:bg-primary/5 font-bold"
+                    asChild
+                  >
+                    <a
+                      href={makeWhatsAppLink(title || "ملف إعداد")}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      اطلب الملف
+                    </a>
+                  </Button>
+                )}
+              </div>
+            </div>
+          </AnimatedElement>
+        );
+      })}
+    </div>
+  );
+}
+
+// ========= parsing helpers for grouping =========
+function getPitchKey(title: string) {
+  // Finds P10 / P5 / P1.25 etc
+  const m = title.match(/P\s*([0-9]+(?:\.[0-9]+)?)/i);
+  return m ? `P${m[1]}` : "Other";
+}
+
+function getEnvKey(title: string) {
+  if (/Outdoor/i.test(title)) return "Outdoor";
+  if (/Indoor/i.test(title)) return "Indoor";
+  return "Other";
+}
+
+// =========================
+// Page
+// =========================
+export default function DownloadsPage() {
+  const [downloads, setDownloads] = useState<DownloadItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [expandedSoftwareKey, setExpandedSoftwareKey] = useState<string | null>(null);
+  const [expandedConfigKey, setExpandedConfigKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDownloads = async () => {
+      try {
+        const { items } = await BaseCrudService.getAll<DownloadItem>("softwaredownloads");
+        setDownloads(items || []);
+      } catch (error) {
+        console.error("Failed to fetch downloads", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchDownloads();
+  }, []);
+
+  // Software: use backend if exists; otherwise show fixed 4
+  const softwareItems = downloads.filter((d) => (d.category ?? "software") === "software");
+  const softwareItemsFinal: DownloadItem[] =
+    softwareItems.length > 0
+      ? softwareItems
+      : (Array.from({ length: 4 }).map((_, i) => ({
+          _id: `fixed-software-${i}`,
+          productName: FIXED_CARD_TITLES[i] ?? `Software ${i + 1}`,
+          description: FIXED_CARD_DESCRIPTIONS[i] ?? "",
+          downloadLink: FIXED_CARD_DOWNLOAD_LINKS[i] ?? "",
+          version: "",
+          fileSize: "",
+          appImage: FIXED_CARD_IMAGES[i] ?? "",
+          category: "software",
+        })) as DownloadItem[]);
+
+  // Configurations: ALWAYS show only customer list
+  const configItemsFinal: DownloadItem[] = FIXED_CONFIG_FILES.map((c, i) => ({
+    _id: `fixed-config-${i}`,
+    productName: c.title,
+    description: c.description,
+    downloadLink: c.downloadLink,
+    version: "",
+    fileSize: "",
+    appImage: "",
+    category: "configuration",
+  })) as DownloadItem[];
+
+  // Group config items -> Outdoor/Indoor -> Pxx
+  const configGroups = useMemo(() => {
+    const byEnv: Record<string, Record<string, DownloadItem[]>> = {};
+    for (const item of configItemsFinal) {
+      const t = String(item.productName ?? "");
+      const env = getEnvKey(t);
+      const p = getPitchKey(t);
+      byEnv[env] ||= {};
+      byEnv[env][p] ||= [];
+      byEnv[env][p].push(item);
+    }
+
+    // sort groups: Outdoor, Indoor, Other
+    const envOrder = ["Outdoor", "Indoor", "Other"];
+    const result: Array<{ env: string; pitches: Array<{ pitch: string; items: DownloadItem[] }> }> =
+      [];
+
+    for (const env of envOrder) {
+      if (!byEnv[env]) continue;
+
+      const pitchKeys = Object.keys(byEnv[env]).sort((a, b) => {
+        const na = parseFloat(a.replace(/^P/i, "")) || 9999;
+        const nb = parseFloat(b.replace(/^P/i, "")) || 9999;
+        return na - nb;
+      });
+
+      result.push({
+        env,
+        pitches: pitchKeys.map((pitch) => ({
+          pitch,
+          items: byEnv[env][pitch],
+        })),
+      });
+    }
+
+    return result;
+  }, [configItemsFinal]);
+
+  const envTitleAr = (env: string) => {
+    if (env === "Outdoor") return "ملفات إعداد الشاشات الخارجية (Outdoor)";
+    if (env === "Indoor") return "ملفات إعداد الشاشات الداخلية (Indoor)";
+    return "ملفات أخرى";
+  };
+
+  return (
+    <div
+      className="min-h-screen bg-white font-paragraph text-primary selection:bg-primary/10 selection:text-primary"
+      dir="rtl"
+    >
+      <Header />
+      <main className="w-full overflow-clip">
+        {/* Hero */}
+        <section className="relative w-full py-24 lg:py-32 bg-gradient-to-b from-gradientlightblue/60 to-white">
+          <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
+            <div className="text-center mb-16">
+              <AnimatedElement direction="down">
+                <h1 className="font-heading text-5xl lg:text-7xl font-bold text-primary mb-6">
+                  مركز التحميل
+                </h1>
+                <p className="text-secondary-foreground/70 text-lg max-w-2xl mx-auto">
+                  احصل على أحدث إصدارات برامجنا وملفات الإعداد الخاصة بالشاشات الرقمية
+                </p>
+              </AnimatedElement>
+            </div>
+          </div>
+        </section>
+
+        {/* Software */}
+        <section className="w-full py-16 lg:py-20 bg-white">
+          <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
+            <SectionHeader
+              labelEn="SOFTWARE"
+              titleAr="البرامج"
+              subtitleAr="برامج التشغيل والإدارة والتحكم الخاصة بالشاشات"
+              icon={<Download className="w-6 h-6" />}
+            />
+
+            <DownloadsGrid
+              items={softwareItemsFinal}
+              isLoading={isLoading}
+              expandedKey={expandedSoftwareKey}
+              setExpandedKey={setExpandedSoftwareKey}
+              useFixedOverrides
+            />
+          </div>
+        </section>
+
+        {/* Configurations */}
+        <section className="w-full py-16 lg:py-20 bg-white">
+          <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
+            <SectionHeader
+              labelEn="CONFIGURATIONS"
+              titleAr="ملفات الإعدادات"
+              subtitleAr="مرتبة حسب نوع الشاشة (Outdoor/Indoor) ثم حسب الموديل (P10 / P5 / ...)"
+              icon={<Settings2 className="w-6 h-6" />}
+            />
+
+            <div className="space-y-6">
+              {configGroups.map((g) => (
+                <DropSection
+                  key={g.env}
+                  title={envTitleAr(g.env)}
+                  subtitle="اضغط لعرض الملفات"
+                  count={g.pitches.reduce((acc, p) => acc + p.items.length, 0)}
+                  defaultOpen={g.env !== "Other"}
+                >
+                  <div className="space-y-6">
+                    {g.pitches.map((p) => (
+                      <DropSection
+                        key={`${g.env}-${p.pitch}`}
+                        title={`${p.pitch}`}
+                        subtitle="اضغط لعرض الملفات"
+                        count={p.items.length}
+                        defaultOpen={true}
+                      >
+                        <DownloadsGrid
+                          items={p.items}
+                          isLoading={isLoading}
+                          expandedKey={expandedConfigKey}
+                          setExpandedKey={setExpandedConfigKey}
+                        />
+                      </DropSection>
+                    ))}
+                  </div>
+                </DropSection>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="relative w-full py-24 lg:py-32 overflow-hidden">
+          <div className="absolute inset-0 bg-primary">
+            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay" />
+            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-gradientmediumblue/25 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradientmediumblue/15 rounded-full blur-[100px] translate-x-1/2 translate-y-1/2" />
+          </div>
+
+          <div className="relative max-w-5xl mx-auto px-6 text-center z-10">
+            <AnimatedElement>
+              <h2 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+                هل تحتاج إلى <br /> دعم تقني؟
+              </h2>
+              <p className="font-paragraph text-xl text-white/80 mb-12 max-w-2xl mx-auto">
+                فريقنا الفني جاهز لمساعدتك في اختيار الملف الصحيح وتثبيته وتشغيله.
+              </p>
+              <Button
+                size="lg"
+                className="h-16 px-10 rounded-full bg-white text-primary hover:bg-white/90 text-xl font-bold shadow-2xl shadow-white/10"
+                asChild
+              >
+                <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
+                  تواصل معنا عبر واتساب
+                  <ArrowRight className="mr-2 w-5 h-5" />
+                </a>
+              </Button>
+            </AnimatedElement>
+          </div>
+        </section>
+      </main>
       <Footer />
     </div>
   );
