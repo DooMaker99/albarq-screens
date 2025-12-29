@@ -11,13 +11,16 @@ import Footer from '@/components/Footer';
 export default function ContactPage() {
   const { toast } = useToast();
 
-  // ✅ Your Google Maps location (Sheikh Dhari Street, Baghdad, Iraq)
-  const MAPS_URL =
-    'https://www.google.com/maps/search/%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B6%D8%A7%D8%B1%D9%8A%2C%20%D8%A8%D8%BA%D8%AF%D8%A7%D8%AF%2C%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A7%D9%82/@33.3049,44.3391,17z?hl=en';
+  // ✅ NEW Google Maps location
+  const MAPS_URL = 'https://maps.app.goo.gl/RtadXM5vRa7MJB63A?g_st=ic';
 
-  // ✅ Embed map (same coordinates)
-  const MAPS_EMBED_URL =
-    'https://www.google.com/maps?q=33.3049,44.3391&z=17&output=embed';
+  // ✅ NEW Location label (used in UI + embed)
+  const MAPS_PLACE = 'شركة البرق للشاشات الاعلانية، المامون، بغداد، العراق';
+
+  // ✅ Embed map for the place
+  const MAPS_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(
+    MAPS_PLACE
+  )}&z=17&output=embed`;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -79,6 +82,7 @@ export default function ContactPage() {
           </motion.div>
         </div>
       </section>
+
       {/* Contact Section */}
       <section className="w-full bg-white py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -294,7 +298,7 @@ export default function ContactPage() {
                       العنوان
                     </h3>
                     <p className="font-paragraph text-base text-secondaryForeground mb-3">
-                      شارع الشيخ ضاري، بغداد، العراق
+                      {MAPS_PLACE}
                     </p>
 
                     <Button
@@ -350,7 +354,8 @@ export default function ContactPage() {
                       href="https://wa.me/9647706896134"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-secondary">
+                      className="text-secondary"
+                    >
                       <Phone className="w-4 h-4 ml-2" />
                       WhatsApp
                     </a>
@@ -361,6 +366,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
       {/* ✅ Map Section (Google Maps embed) */}
       <section className="w-full bg-gradientlightblue py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -375,7 +381,7 @@ export default function ContactPage() {
               موقعنا
             </h2>
             <p className="font-paragraph text-lg text-secondaryForeground">
-              شارع الشيخ ضاري، بغداد، العراق
+              {MAPS_PLACE}
             </p>
           </motion.div>
 
@@ -396,7 +402,8 @@ export default function ContactPage() {
                 href={MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-secondary">
+                className="text-secondary"
+              >
                 <ExternalLink className="w-4 h-4 ml-2" />
                 فتح الموقع في Google Maps
               </a>
@@ -404,6 +411,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
       <Footer />
     </div>
   );
