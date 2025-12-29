@@ -20,7 +20,7 @@ export default function AboutPage() {
               من نحن
             </h1>
             <p className="font-paragraph text-lg lg:text-xl text-secondaryForeground leading-relaxed">
-              شركة البرق للشاشات الإعلانية، رائدة في مجال تجهيز ونصب الشاشات الرقمية العملاقة في العراق
+              شركة البرق للشاشات الإعلانية، رائدة في مجال تجهيز وتركيب الشاشات الرقمية العملاقة في العراق
             </p>
           </motion.div>
         </div>
