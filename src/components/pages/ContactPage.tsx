@@ -15,7 +15,7 @@ export default function ContactPage() {
   const MAPS_URL = 'https://maps.app.goo.gl/RtadXM5vRa7MJB63A?g_st=ic';
 
   // ✅ NEW Location label (used in UI + embed)
-  const MAPS_PLACE = 'شركة البرق للشاشات الاعلانية، المامون، بغداد، العراق';
+  const MAPS_PLACE = 'شركة البرق للشاشات الاعلانية، المامون، شارع الاردن، بغداد، العراق';
 
   // ✅ Embed map for the place
   const MAPS_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(
