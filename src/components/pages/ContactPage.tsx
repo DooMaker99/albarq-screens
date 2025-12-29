@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Send, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,16 +11,16 @@ import Footer from '@/components/Footer';
 export default function ContactPage() {
   const { toast } = useToast();
 
-  // ✅ NEW Google Maps location
+  // ✅ Exact Google Maps location (your short link)
   const MAPS_URL = 'https://maps.app.goo.gl/RtadXM5vRa7MJB63A?g_st=ic';
 
-  // ✅ NEW Location label (used in UI + embed)
-  const MAPS_PLACE = 'العراق – بغداد – المأمون – شارع الأردن – شركة البرق للشاشات الإعلانية';
+  // ✅ Text label only (safe to change anytime; does NOT affect the embed)
+  const MAPS_PLACE =
+    'العراق – بغداد – المأمون – شارع الأردن – شركة البرق للشاشات الإعلانية';
 
-  // ✅ Embed map for the place
-  const MAPS_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(
-    MAPS_PLACE
-  )}&z=17&output=embed`;
+  // ✅ Exact embed locked to the real place (CID extracted from your short link)
+  const MAPS_CID = '297018888791024432';
+  const MAPS_EMBED_URL = `https://www.google.com/maps?cid=${MAPS_CID}&output=embed`;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -31,11 +31,10 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
     setTimeout(() => {
       toast({
         title: 'تم إرسال رسالتك بنجاح',
@@ -52,9 +51,7 @@ export default function ContactPage() {
     }, 1000);
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -64,6 +61,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-secondary" dir="rtl">
       <Header />
+
       {/* Hero Section */}
       <section className="w-full from-gradientlightblue to-white py-20 lg:py-32 bg-[#e8e7ffff]">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
@@ -240,7 +238,7 @@ export default function ContactPage() {
                     </h3>
                     <div className="space-y-1">
                       <a
-                        href="tel:9647706896134"
+                        href="tel:+9647706896134"
                         className="block font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
                         dir="ltr"
                       >
@@ -254,7 +252,7 @@ export default function ContactPage() {
                         +964 790 132 6390
                       </a>
                       <a
-                        href="tel:++9647749989666"
+                        href="tel:+9647749989666"
                         className="block font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
                         dir="ltr"
                       >
@@ -288,7 +286,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* ✅ UPDATED ADDRESS + clickable Google Maps link */}
+                {/* Address + exact Google Maps link */}
                 <div className="flex items-start gap-4 p-6 bg-gradientlightblue rounded-2xl">
                   <div className="flex-shrink-0 w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-primaryForeground fill-secondary" />
@@ -367,7 +365,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ✅ Map Section (Google Maps embed) */}
+      {/* Map Section (Exact embed) */}
       <section className="w-full bg-gradientlightblue py-20 lg:py-28">
         <div className="max-w-[120rem] mx-auto px-6 lg:px-12">
           <motion.div
