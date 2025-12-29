@@ -249,6 +249,20 @@ export default function ContactPage() {
                       >
                         +964 790 132 6390
                       </a>
+                      <a
+                        href="tel:++9647749989666"
+                        className="block font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
+                        dir="ltr"
+                      >
+                        +964 774 998 9666
+                      </a>
+                      <a
+                        href="tel:+9647749444469"
+                        className="block font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
+                        dir="ltr"
+                      >
+                        +964 774 944 4469
+                      </a>
                     </div>
                   </div>
                 </div>
