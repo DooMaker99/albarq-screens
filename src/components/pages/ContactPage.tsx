@@ -267,30 +267,25 @@ export default function ContactPage() {
                       </a>
                     </div>
                   </div>
-                </div>
-
-                <div className="flex items-start gap-4 p-6 bg-gradientlightblue rounded-2xl">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-primaryForeground fill-secondary" />
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-lg font-semibold text-primary mb-2">
-                      البريد الإلكتروني
-                    </h3>
-                    <a
-                      href="mailto:info@albarqscreens.com"
-                      className="font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
-                    >
-                      info@albarqscreens.com
-                    </a>
-                    <a
-                      href="mailto:ammar@albaqscreens.com"
-                      className="font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
-                    >
-                      ammar@albaqscreens.com
-                    </a>
-                  </div>
-                </div>
+                </div><div>
+  <h3 className="font-heading text-lg font-semibold text-primary mb-2">
+    البريد الإلكتروني
+  </h3>
+  <div className="flex flex-col gap-1">
+    <a
+      href="mailto:info@albarqscreens.com"
+      className="font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
+    >
+      info@albarqscreens.com
+    </a>
+    <a
+      href="mailto:ammar@albarqscreens.com"
+      className="font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
+    >
+      ammar@albarqscreens.com
+    </a>
+  </div>
+</div>
 
                 {/* Address + exact Google Maps link */}
                 <div className="flex items-start gap-4 p-6 bg-gradientlightblue rounded-2xl">
