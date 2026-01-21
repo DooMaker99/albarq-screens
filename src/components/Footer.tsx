@@ -60,7 +60,7 @@ export default function Footer() {
               <Mail className="w-5 h-5" />
               info@albarqscreens.com
             </a>
-            <a href="mailto:info@albarqscreens.com" className="flex items-center gap-3 font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground">
+            <a href="mailto:ammar@albaqscreens.com" className="flex items-center gap-3 font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground">
               <Mail className="w-5 h-5" />
               ammar@albaqscreens.com
             </a>
