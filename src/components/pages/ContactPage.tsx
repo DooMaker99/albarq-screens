@@ -283,8 +283,8 @@ export default function ContactPage() {
                     >
                       info@albarqscreens.com
                     </a>
-                     <a
-                      href="mailto:info@albarqscreens.com"
+                    <a
+                      href="mailto:ammar@albaqscreens.com"
                       className="font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
                     >
                       ammar@albaqscreens.com
