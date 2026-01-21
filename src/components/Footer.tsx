@@ -60,6 +60,10 @@ export default function Footer() {
               <Mail className="w-5 h-5" />
               info@albarqscreens.com
             </a>
+            <a href="mailto:info@albarqscreens.com" className="flex items-center gap-3 font-paragraph text-sm hover:text-primaryForeground transition-colors text-primary-foreground">
+              <Mail className="w-5 h-5" />
+              ammar@albaqscreens.com
+            </a>
             <div className="flex items-start gap-3 font-paragraph text-sm text-primaryForeground/90">
               <MapPin className="w-5 h-5 mt-1 flex-shrink-0 fill-primary-foreground" />
               <span className="text-primary-foreground">بغداد، العراق</span>
