@@ -51,7 +51,9 @@ export default function ContactPage() {
     }, 1000);
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -75,7 +77,8 @@ export default function ContactPage() {
               تواصل معنا
             </h1>
             <p className="font-paragraph text-lg lg:text-xl text-secondaryForeground leading-relaxed">
-              نحن هنا لمساعدتك. تواصل معنا للحصول على استشارة مجانية أو عرض سعر مخصص
+              نحن هنا لمساعدتك. تواصل معنا للحصول على استشارة مجانية أو عرض سعر
+              مخصص
             </p>
           </motion.div>
         </div>
@@ -228,6 +231,7 @@ export default function ContactPage() {
               </div>
 
               <div className="space-y-6">
+                {/* Phone */}
                 <div className="flex items-start gap-4 p-6 bg-gradientlightblue rounded-2xl">
                   <div className="flex-shrink-0 w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
                     <Phone className="w-6 h-6 text-primaryForeground fill-secondary" />
@@ -267,25 +271,35 @@ export default function ContactPage() {
                       </a>
                     </div>
                   </div>
-                </div><div>
-  <h3 className="font-heading text-lg font-semibold text-primary mb-2">
-    البريد الإلكتروني
-  </h3>
-  <div className="flex flex-col gap-1">
-    <a
-      href="mailto:info@albarqscreens.com"
-      className="font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
-    >
-      info@albarqscreens.com
-    </a>
-    <a
-      href="mailto:ammar@albarqscreens.com"
-      className="font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
-    >
-      ammar@albarqscreens.com
-    </a>
-  </div>
-</div>
+                </div>
+
+                {/* Email (FIXED: stacked vertically) */}
+                <div className="flex items-start gap-4 p-6 bg-gradientlightblue rounded-2xl">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
+                    <Mail className="w-6 h-6 text-primaryForeground fill-secondary" />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <h3 className="font-heading text-lg font-semibold text-primary mb-2">
+                      البريد الإلكتروني
+                    </h3>
+
+                    <div className="flex flex-col gap-1">
+                      <a
+                        href="mailto:info@albarqscreens.com"
+                        className="font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
+                      >
+                        info@albarqscreens.com
+                      </a>
+                      <a
+                        href="mailto:ammar@albaqscreens.com"
+                        className="font-paragraph text-base text-secondaryForeground hover:text-primary transition-colors"
+                      >
+                        ammar@albaqscreens.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Address + exact Google Maps link */}
                 <div className="flex items-start gap-4 p-6 bg-gradientlightblue rounded-2xl">
@@ -305,7 +319,11 @@ export default function ContactPage() {
                       className="border-buttonoutline text-buttonoutline hover:bg-primary hover:text-primaryForeground"
                       asChild
                     >
-                      <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={MAPS_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <ExternalLink className="w-4 h-4 ml-2" />
                         فتح الموقع على خرائط Google
                       </a>
@@ -348,7 +366,10 @@ export default function ContactPage() {
                     </a>
                   </Button>
 
-                  <Button className="bg-primary text-primaryForeground hover:bg-primary/90" asChild>
+                  <Button
+                    className="bg-primary text-primaryForeground hover:bg-primary/90"
+                    asChild
+                  >
                     <a
                       href="https://wa.me/9647706896134"
                       target="_blank"
@@ -396,7 +417,10 @@ export default function ContactPage() {
           </div>
 
           <div className="mt-6 flex justify-center">
-            <Button className="bg-primary text-primaryForeground hover:bg-primary/90" asChild>
+            <Button
+              className="bg-primary text-primaryForeground hover:bg-primary/90"
+              asChild
+            >
               <a
                 href={MAPS_URL}
                 target="_blank"
